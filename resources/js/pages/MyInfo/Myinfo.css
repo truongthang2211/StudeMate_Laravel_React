@@ -1,0 +1,268 @@
+:root {
+    --white: #fff;
+}
+
+body {
+    background-color: #f1f1f1;
+}
+
+div {
+    display: block;
+}
+
+@media only screen and (max-width: 982px) {
+    [class*="col-"] {
+        width: 100%;
+    }
+}
+
+.user--profile {
+    background: var(--white);
+}
+
+.user--profile-left .user--profile--list-function {
+    list-style: none;
+    padding: 30px 30px;
+}
+
+.user--profile-left .user--profile--list-function li {
+    margin-bottom: 14px;
+}
+
+.user--profile-left .user--profile--list-function li a {
+    color: #333;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: none;
+}
+
+.user--profile-left .user--profile--list-function li a:hover {
+    font-weight: bold;
+    color: var(--main-blue);
+    text-decoration: none;
+}
+
+/* thông tin */
+.user--profile-group {
+    background: var(--white);
+    padding: 30px;
+}
+
+.user--profile-right .user--profile-title-group {
+    padding: 0;
+    margin: 0;
+    color: var(--main-blue);
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+.user--profile-right .row {
+    margin: 0;
+}
+
+.user--profile-right .row>* {
+    padding: 0;
+}
+
+.form-control:focus {
+    border-color: var(--main-blue);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px var(--main-blue);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px var(--main-blue);
+}
+
+.form-select:focus {
+    border-color: var(--main-blue);
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px var(--main-blue);
+}
+
+/* anh dai dien va anh bia */
+.myinfo-avt {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #d8d8d8;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.myinfo-background {
+    height: 100px;
+    width: 160px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #d8d8d8;
+
+}
+
+#BackGroundPreview {
+    width: 100%;
+
+}
+
+.no-img {
+    background-color: #d8d8d8;
+}
+
+.avatar-selector {
+    text-align: center;
+}
+
+.user--profile-right.editing .form-group {
+    margin-bottom: 30px;
+}
+
+.UploadAvatar {
+    margin-top: 20px;
+    width: 100px;
+}
+.UploadBackground{
+    margin-top: 20px;
+
+    width: 160px;
+}
+.user--profile-right .form-group label {
+    color: #898989;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
+}
+
+.form-group label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.UploadBackground .browse,
+.UploadAvatar .browse {
+    margin: 0 auto;
+    padding: 12px 12px;
+    width: 104px;
+    border-radius: 3px !important;
+    background-color: var(--main-blue) !important;
+    border: 1px solid transparent;
+    color: #fff !important;
+}
+.UploadBackground .browse:hover,
+.UploadBackground .browse:active,
+.UploadAvatar .browse:hover,
+.UploadAvatar .browse:active {
+    background-color: #fff !important;
+    border: 1px solid var(--main-blue);
+    color: var(--main-blue) !important;
+}
+
+.file {
+    display: none;
+}
+
+.input-group .btn {
+    margin-left: -15px;
+}
+
+/*info  */
+#frm-info .col-md-9 .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+label {
+    cursor: default;
+}
+
+.user--profile .span-display {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.span-display {
+    height: 16px;
+    color: #333;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.form-group .required:after {
+    content: "*";
+    color: #f00;
+    /* padding: 0 5px; */
+    display: inline-block;
+}
+
+.user--profile-right .form-group label.error {
+    color: #f00;
+}
+
+label.error {
+    font-size: 12px;
+    color: #f44336;
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+
+
+/* button luu, huy */
+
+.pull-right {
+    float: right !important;
+}
+
+.user--profile-right .btn-save,
+.user--profile-right .btn-save:focus,
+.user--profile-right .btn-save:active {
+    height: 45px;
+    width: 167px;
+    border-radius: 31.5px;
+    background-color: var(--main-blue);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 34px;
+    text-align: center;
+    outline: none;
+}
+
+.user--profile-right .btn-save:hover {
+    color: var(--main-blue);
+    background-color: var(--white);
+    border-color: var(--main-blue);
+    box-shadow: 0 10px 10px 0 #d1e6ff;
+}
+
+.user--profile-right .btn-save.disabled {
+    background-color: #c8c8c8;
+    border-color: #c8c8c8;
+    color: #fff;
+}
+
+.user--profile-right .btn-cancel {
+    color: var(--main-red);
+    background-color: var(--white);
+    border: var(--main-red);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 34px;
+    text-align: center;
+    height: 45px;
+    width: 100px;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+}
+
+.user--profile-right .btn-cancel:hover {
+    background-color: var(--main-red);
+    color: #fff
+}
+
+.my--cus-button{
+    height: 35px; width: 104px; border-radius: 3px; margin-right: 18px; line-height: inherit; display: block;
+}

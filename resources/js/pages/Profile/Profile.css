@@ -1,0 +1,268 @@
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+video {
+    object-fit: contain;
+}
+
+.all-profile {
+    min-height: 100vh;
+    background-image: linear-gradient(180deg, #ebebeb 75%,#aaa);
+    position: relative;
+}
+
+.main-profile {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: relative;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.profile-background {
+    position: absolute;
+    max-height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.profile-background img,
+.profile-background video{
+    width: 100%;
+}
+.profile-header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 24px 0;
+    flex-wrap: wrap;
+}
+
+.profile-avt {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    overflow: hidden;
+
+}
+
+.profile-avt img {
+    width: 100%;
+    max-width: 100%;
+    transform: scale(1);
+}
+
+.profile-personalinfo {
+    flex-basis: 50%;
+    padding: 8px 24px;
+}
+
+.profile-name {
+    font-size: 32px;
+}
+
+.profile-info {
+    margin-top: 16px;
+    margin-left: 8px;
+
+}
+
+.profile-info-section {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-info-section i {
+    width: 21px;
+    height: 21px;
+}
+
+.profile-info-section span {
+    color: #333;
+}
+
+.profile-badgeinfo {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+    align-content: flex-start;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.profile-level {
+    padding: 8px 0;
+}
+
+.level {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+    display: inline-block;
+    font: 20px Arial, sans-serif;
+    font-weight: 600;
+    margin-left: 16px;
+
+}
+
+.standard-progress-bar {
+    width: 100%;
+    height: auto;
+    display: flex;
+    border-radius: 20px;
+    border: 2px solid var(--main-blue);
+    justify-content: center;
+    align-items: center;
+    color: #444;
+    position: relative; 
+    overflow: hidden;
+}
+.standard-progress-bar .background{
+    overflow: hidden; 
+    position: absolute; 
+    left: 0px; top: 0px;
+    height: 100%;
+}
+.standard-progress-bar span{
+    z-index: 1;
+    font-weight: 600;
+}
+
+.standard-progress-bar .background-render{
+    background: linear-gradient(to right, var(--main-yellow), var(--main-red)); 
+    height: 100%; 
+    width: 100%;
+}
+
+.profile-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left-content {
+    margin-right: 12px;
+    flex-basis: 65%;
+    flex-grow: 1;
+
+}
+
+
+
+.all-profile .course-item {
+    display: flex;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin-top: 8px;
+    transition: all 0.3s;
+}
+
+.all-profile .course-item:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+
+}
+
+.all-profile .course-avt {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.all-profile .course-avt img {
+    width: 184px;
+}
+
+.all-profile .course-info {
+    margin-left: 12px;
+}
+
+.right-content {
+    flex-grow: 1;
+
+}
+
+.recent-learn,
+.course-profile-info,
+.life-info {
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s;
+}
+
+.recent-learn:hover,
+.course-profile-info:hover,
+.life-info:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 5px 15px 0 #dedede;
+}
+
+.course-profile-info a {
+    text-decoration: none;
+    color: #333;
+}
+
+.course-profile-info span {
+    font-size: 20px;
+    margin-left: 12px;
+}
+
+.life-info {
+    margin-top: 12px;
+}
+
+.section-info-content {
+    margin: 15px 0 0 5px;
+    padding-left: 10px;
+    border-left: 1px solid #979797;
+    display: inline-block;
+    width: calc(100% - 15px);
+}
+
+.section-info-content span.circle {
+    width: 8px;
+    height: 8px;
+    background-color: #979797;
+    border-radius: 50%;
+    float: left;
+    margin-left: -14px;
+}
+
+.section-info-content .time {
+    height: 14px;
+    color: #898989;
+    font-size: 13px;
+    line-height: 14px;
+}
+
+.section-info-content .title {
+    color: #2c31cf;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    margin-bottom: 5px;
+    word-break: break-word;
+}
+
+.section-info-content .description {
+    color: #333;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+
+
+@media (max-width: 768px){
+    .left-content{
+        margin-right: 0;
+    }
+    .course-profile-info{
+        margin-top: 12px;
+    }
+}
