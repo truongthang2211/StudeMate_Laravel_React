@@ -6907,8 +6907,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _components_Navigation_Navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Navigation/Navbar */ "./resources/js/components/Navigation/Navbar.jsx");
 /* harmony import */ var _pages_Profile_Profile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Profile/Profile */ "./resources/js/pages/Profile/Profile.jsx");
 /* harmony import */ var _pages_Login_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Login/Login */ "./resources/js/pages/Login/Login.jsx");
@@ -6916,7 +6916,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_My404__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/My404 */ "./resources/js/components/My404.jsx");
 /* harmony import */ var _pages_MyInfo_MyInfo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/MyInfo/MyInfo */ "./resources/js/pages/MyInfo/MyInfo.jsx");
 /* harmony import */ var _pages_Course_Course__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/Course/Course */ "./resources/js/pages/Course/Course.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _pages_Learn_Learn__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/Learn/Learn */ "./resources/js/pages/Learn/Learn.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -6934,6 +6935,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -6988,41 +6990,47 @@ function Index() {
   };
 
   console.log(User);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.BrowserRouter, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_Navigation_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.BrowserRouter, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_Navigation_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         User: User,
         ShowForm: ShowForm,
         handleShowForm: handleShowForm
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Routes, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Routes, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
           exact: true,
           path: "/",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
           exact: true,
           path: "/course",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Course_Course__WEBPACK_IMPORTED_MODULE_10__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Course_Course__WEBPACK_IMPORTED_MODULE_10__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          exact: true,
+          path: "/learn",
+          element: !User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Learn_Learn__WEBPACK_IMPORTED_MODULE_11__["default"], {
+            User: User
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
           exact: true,
           path: "/profile",
-          element: !User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Profile_Profile__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          element: !User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Profile_Profile__WEBPACK_IMPORTED_MODULE_5__["default"], {
             User: User
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
           exact: true,
           path: "/myinfo",
-          element: !User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_MyInfo_MyInfo__WEBPACK_IMPORTED_MODULE_9__["default"], {
+          element: !User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_MyInfo_MyInfo__WEBPACK_IMPORTED_MODULE_9__["default"], {
             User: User
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
           exact: true,
           path: "/login",
-          element: User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Login_Login__WEBPACK_IMPORTED_MODULE_6__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+          element: User ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Home_Home__WEBPACK_IMPORTED_MODULE_7__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_pages_Login_Login__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
           path: "*",
           exact: true,
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_My404__WEBPACK_IMPORTED_MODULE_8__["default"], {})
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_My404__WEBPACK_IMPORTED_MODULE_8__["default"], {})
         })]
       })]
     })
@@ -7032,7 +7040,7 @@ function Index() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Index);
 
 if (document.getElementById('root')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Index, {}), document.getElementById('root'));
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(Index, {}), document.getElementById('root'));
 }
 
 /***/ }),
@@ -7049,8 +7057,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Course)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _Course_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Course.css */ "./resources/js/pages/Course/Course.css");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -7324,7 +7334,8 @@ function Course(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
                 className: "course-fee",
                 children: "Mi\u1EC5n ph\xED"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+                to: "/learn",
                 className: "course-btn",
                 children: "\u0110\u0102NG K\xDD H\u1ECCC"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
@@ -8123,6 +8134,757 @@ function Home() {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Learn/Learn.jsx":
+/*!********************************************!*\
+  !*** ./resources/js/pages/Learn/Learn.jsx ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Learn)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Learn_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Learn.css */ "./resources/js/pages/Learn/Learn.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+function Learn(_ref) {
+  var User = _ref.User;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      id: "left-learning",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "breadcrumb",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+          className: "breadcrumb-item",
+          href: "/",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+            className: "fas fa-home"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+          className: "breadcrumb-item",
+          href: "/learn",
+          children: "Kh\xF3a h\u1ECDc"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+          className: "breadcrumb-item",
+          href: "/learn/lap-trinh-7",
+          children: "L\u1EADp tr\xECnh"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "breadcrumb-item active",
+          children: "HTML, CSS t\u1EEB con g\xE0 \u0111\u1EBFn th\u1EA7n th\xE1nh"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "video-learning",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("iframe", {
+          src: "https://www.youtube.com/embed/E7wJTI-1dvQ",
+          frameBorder: "0",
+          allow: "autoplay; encrypted-media",
+          allowFullScreen: true,
+          title: "video"
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "info-learning",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "container",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "info-learning-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "tabs-bar",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "tab-item selected-tab",
+                children: "Trao \u0111\u1ED5i"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "tab-item",
+                children: "B\xE0i gi\u1EA3ng"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "tab-item",
+                children: "File \u0111\xEDnh k\xE8m"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "info-learning-comment",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                id: "user-comment-block",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "comment-block",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: "comment-avt",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                      className: "CommentBox_myAvatar__3Mi09",
+                      src: "https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=RgcZJjsDznYAX8z8I7d&_nc_ht=scontent.fsgn5-11.fna&oh=7adb61cf34a3a80f2a8d55187cbd42b7&oe=619C89A0",
+                      alt: "Thang Nguyen"
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    className: "comment-content align-items-end",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                      className: "comment-input",
+                      contentEditable: "true",
+                      placeholder: "Vi\u1EBFt g\xEC g\xEC \u0111\xF3 \u0111i...",
+                      tabIndex: "0",
+                      dir: "ltr",
+                      spellCheck: "false",
+                      autoComplete: "off",
+                      autoCorrect: "off",
+                      autoCapitalize: "off"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                      className: "btn btn-comment",
+                      children: "B\xECnh lu\u1EADn"
+                    })]
+                  })]
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "person-comment-block",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "comment-block",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "comment-avt",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                          className: "CommentBox_myAvatar__3Mi09",
+                          src: "https://danviet.mediacdn.vn/upload/2-2019/images/2019-04-02/Vi-sao-Kha-Banh-tro-thanh-hien-tuong-dinh-dam-tren-mang-xa-hoi-khabanh-1554192528-width660height597.jpg",
+                          alt: "Banh Ngo"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "comment-content",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-user-name",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                            href: "",
+                            children: "Kh\xE1 B\u1EA3nh"
+                          })
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-body",
+                          children: "Th\u1EAFng \u0111\u1EB9p trai"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                          className: "comment-footer",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                            className: "comment-vote",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "upvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-up font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "1025"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "downvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-down font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "0"
+                              })]
+                            })]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-repl",
+                            href: "",
+                            children: "Tr\u1EA3 l\u1EDDi"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-datetime",
+                            children: "H\xF4m qua"
+                          })]
+                        })]
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "comment-block comment-block-repl",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "comment-avt",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                          className: "CommentBox_myAvatar__3Mi09",
+                          src: "https://scontent.fsgn5-1.fna.fbcdn.net/v/t1.6435-9/240679543_1519728035044432_6519949385141440995_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=bCZ_HXjQx7gAX-fynHN&_nc_ht=scontent.fsgn5-1.fna&oh=cd292c66ff07f89ff018b441aacb5351&oe=619A91F5",
+                          alt: "Son Chu"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "comment-content",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-user-name",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                            href: "",
+                            children: "Xu\xE2n S\u01A1n"
+                          })
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-body",
+                          children: "+1 Confirm"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                          className: "comment-footer",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                            className: "comment-vote",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "upvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-up font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "1025"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "downvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-down font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "0"
+                              })]
+                            })]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-repl",
+                            href: "",
+                            children: "Tr\u1EA3 l\u1EDDi"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-datetime",
+                            children: "H\xF4m qua"
+                          })]
+                        })]
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "comment-block comment-block-repl",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "comment-avt",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                          className: "CommentBox_myAvatar__3Mi09",
+                          src: "https://scontent.fsgn5-8.fna.fbcdn.net/v/t1.6435-9/148452596_1416726315326312_7062280632353748357_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=K1sAQvVWdpAAX9jhm6C&_nc_ht=scontent.fsgn5-8.fna&oh=d48b92962f4e460b701bed3866625fdd&oe=619DAAFC",
+                          alt: "Thu Huynh"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "comment-content",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-user-name",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                            href: "",
+                            children: "Minh Th\u01B0 Hu\u1EF3nh"
+                          })
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-body",
+                          children: "+1 Confirm"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                          className: "comment-footer",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                            className: "comment-vote",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "upvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-up font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "1025"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "downvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-down font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "0"
+                              })]
+                            })]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-repl",
+                            href: "#",
+                            children: "Tr\u1EA3 l\u1EDDi"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-datetime",
+                            children: "H\xF4m qua"
+                          })]
+                        })]
+                      })]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "comment-block",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "comment-avt",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                          className: "CommentBox_myAvatar__3Mi09",
+                          src: "https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=RgcZJjsDznYAX8z8I7d&_nc_ht=scontent.fsgn5-11.fna&oh=7adb61cf34a3a80f2a8d55187cbd42b7&oe=619C89A0",
+                          alt: "Thang Nguyen"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "comment-content",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-user-name",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                            href: "",
+                            children: "Nguy\u1EC5n Th\u1EAFng"
+                          })
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                          className: "comment-body",
+                          children: "B\xE0i h\u1ECDc r\u1EA5t hay!!"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                          className: "comment-footer",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                            className: "comment-vote",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "upvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-up font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "1025"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                              className: "downvote",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                  className: "fas fa-arrow-down font-size-h5 fa-fw"
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                children: "0"
+                              })]
+                            })]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-repl",
+                            children: "Tr\u1EA3 l\u1EDDi"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                            className: "comment-datetime",
+                            children: "H\xF4m qua"
+                          })]
+                        })]
+                      })]
+                    })
+                  })]
+                })
+              })]
+            })]
+          })
+        })
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      id: "right-learning",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("header", {
+        className: "playlist-header",
+        style: {
+          '--process': "67%"
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "background-process"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-header-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+            className: "playlist-title",
+            children: "HTML, CSS t\u1EEB con g\xE0 \u0111\u1EBFn th\u1EA7n th\xE1nh"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "playlist-info",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+              className: "playlist-description",
+              children: ["Ho\xE0n th\xE0nh", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+                children: "76"
+              }), "/", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+                children: "113"
+              }), "b\xE0i h\u1ECDc (", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+                children: "67%"
+              }), ")"]
+            })
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "playlist-wrapper",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playplist-wrapper-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "wrapper-header-title",
+            children: "Ph\u1EA7n 1: Gi\u1EDBi thi\u1EC7u"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+            className: "wrapper-header-detail",
+            children: "2/2 | 05:44"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item learnt-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "1. L\xE0m \u0111\u01B0\u1EE3c g\xEC sau kh\xF3a h\u1ECDc?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item learnt-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "2. B\u1EA1n c\xF3 ph\xF9 h\u1EE3p \u0111\u1EC3 h\u1ECDc HTML, CSS?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item learnt-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "3. HTML, CSS l\xE0 c\xE1i g\xEC?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "playlist-wrapper",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playplist-wrapper-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "wrapper-header-title",
+            children: "Ph\u1EA7n 2: B\xED quy\u1EBFt kinh doanh"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+            className: "wrapper-header-detail",
+            children: "2/2 | 05:44"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item learnt-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "4. B\xE1n kem \u0111\xE1nh r\u0103ng hi\u1EC7u qu\u1EA3"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item learning-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "5. Nh\u1EA1c Rasputin c\u1EF1c c\u0103ng"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "6. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "7. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "8. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "9. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "playlist-wrapper",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playplist-wrapper-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "wrapper-header-title",
+            children: "Ph\u1EA7n 3: C\xE2u h\u1ECFi c\u1EA7n \u0111\u01B0\u1EE3c tr\u1EA3 l\u1EDDi"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+            className: "wrapper-header-detail",
+            children: "2/2 | 05:44"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "10. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "11. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "12. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "13. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "14. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "playlist-wrapper-item block-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-icon-status",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-check"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+              className: "fas fa-lock"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "wrapper-item-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "wrapper-item-title",
+              children: "15. Bao nhi\xEAu l\xE2u n\u1EEFa th\xEC b\xE1n \u0111\u01B0\u1EE3c 1 t\u1EF7 g\xF3i m\xE8?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "wrapper-item-detail",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "far fa-play-circle"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                children: "03:15"
+              })]
+            })]
+          })]
+        })]
+      })]
+    })]
+  });
+}
 
 /***/ }),
 
@@ -14103,7 +14865,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n    padding: 0;\r\n    margin: 0;\r\n    box-sizing: border-box;\r\n}\r\nhtml, body {\r\nscroll-behavior: smooth;\r\nfont-size: 15px;\r\nbackground-color: #f1f1f1;\r\n}\r\n\r\n/* COMMON */\r\n#main ul{\r\ndisplay: flex;\r\nflex-wrap: wrap;\r\nlist-style: none;\r\npadding: 0;\r\nmargin-bottom: 0;\r\n}\r\n#main li{\r\npadding-bottom: 12px;\r\nfont-size: 14px;\r\n}\r\n#main li i{\r\ncolor: #f05122;\r\nfont-size: 16px;\r\n}\r\n#main .center{\r\ndisplay: block;\r\nmargin-left: auto;\r\nmargin-right: auto;\r\n}\r\n#main .mt-16{\r\nmargin-top: 16px;\r\n}\r\n#main .mb-16{\r\nmargin-bottom: 16px;\r\n}\r\n\r\n/* RESPONSIVE */\r\n.grid{\r\nwidth: 1300px;\r\nmax-width: 100%;\r\nmargin: 0 auto;\r\n}\r\n#main .grid__full-width{\r\nwidth: 100%;\r\n}\r\n#main .grid__row{\r\ndisplay: flex;\r\nflex-wrap: wrap;\r\nmargin-left: -12px;\r\nmargin-right: -12px;\r\n}\r\n#main .grid__column-4{\r\npadding-left: 12px;\r\npadding-right: 12px;\r\nwidth: calc(100% / 12 * 4);\r\nposition: relative;\r\n}\r\n#main .grid__column-8{\r\npadding-left: 12px;\r\npadding-right: 12px;\r\nwidth: calc(100% / 12 * 8);\r\n}\r\n\r\n/* MAIN */\r\n#main{\r\npadding-top: 30px;\r\n}\r\n#main .course-summary-title{\r\nfont-size: 32px;\r\nfont-weight: 700;\r\npadding-bottom: 16px;\r\n}\r\n#main .course-summary-intro{\r\nfont-size: 14px;\r\npadding-bottom: 16px;\r\n}\r\n#main .course-gain-title{\r\nfont-size: 20px;\r\nfont-weight: 700;\r\npadding-bottom: 10px;\r\n}\r\n#main .course-gain-list ul{\r\nflex-direction: column;\r\npadding-left: 24px;\r\nmargin: 0;\r\n}\r\n#main .course-detail-title{\r\nfont-weight: 700;\r\nfont-size: 20px;\r\npadding-top: 14px;\r\npadding-bottom: 8px;\r\n}\r\n#main .course-detail-summary{\r\nmargin-bottom: 0;\r\ndisplay: flex;\r\nflex-direction: row;\r\n}\r\n#main .course-detail-summary li{\r\nfont-size: 14px;\r\njustify-content: space-around;\r\npadding-right: 8px;\r\n}\r\n#main .course-detail-summary .divider{\r\nfont-weight: 700;\r\ntext-align: center;\r\n}\r\n#main .list{\r\ncursor: pointer;\r\n}\r\n#main .list-title,\r\n#main .list-title:before{\r\nheight: 50px;\r\nborder-radius: 4px;\r\n}\r\n#main .list-title{\r\nfont-weight: 600;\r\nbackground-color: #fbf8f8;\r\npadding: 14px 30px 14px 48px;\r\nposition: relative;\r\n}\r\n#main .list-title:before{\r\ncontent: \"-\";\r\nfont-size: 40px;\r\nposition: absolute;\r\nleft: 14px;\r\ntop: -8px;\r\ncolor: #f05122;\r\n}\r\n#main .list-title .video-count{\r\nposition: absolute;\r\nright: 30px;\r\nfont-weight: 300;\r\n}\r\n#main .collapse-item{\r\npadding-top: 16px;\r\npadding-bottom: 16px;\r\npadding-left: 32px;\r\nfont-size: 14px;\r\nborder-top: 1px solid #fbf8f8;\r\nborder-bottom: 1px solid #fbf8f8;\r\n}\r\n#main .collapse-item i{\r\npadding-right: 12px;\r\ncolor: #f05122;\r\n}\r\n\r\n#main .course-require .require-title{\r\nfont-size: 20px;\r\nfont-weight: 700;\r\nmargin-top: 36px;\r\nmargin-bottom: 14px;\r\n}\r\n#main .course-require ul{\r\nflex-direction: column;\r\npadding-left: 24px;\r\nmargin: 0;\r\n}\r\n\r\n#main .course-purchase{\r\ndisplay: flex;\r\nflex-direction: column;\r\nalign-items: center;\r\nline-height: 11.5px;\r\nposition: fixed;\r\n}\r\n#main .course-thumb{\r\nposition: relative;\r\ncursor: pointer;\r\n}\r\n#main .course-thumb i{\r\nposition: absolute;\r\nfont-size: 54px;\r\ncolor: #f1f1f1;\r\nposition: absolute;\r\ntop: 40%;\r\nleft: 44%;\r\n}\r\n#main .course-thumb p{\r\nfont-weight: 600;\r\ncolor: #f1f1f1;\r\nposition: absolute;\r\ntop: 85%;\r\nleft: 30%;\r\n}\r\n#main .course-fee{\r\ncolor: #f05123;\r\nfont-size: 32px;\r\nfont-weight: 300;\r\npadding-top: 24px;\r\npadding-bottom: 14px;\r\n}\r\n#main .course-btn{\r\nborder: none;\r\npadding: 1px 18px;\r\nborder-radius: 14px;\r\nalign-items: flex-start;\r\nbackground-color:#f05123;\r\ncolor:#ffffff;\r\n/* font-family: Montserrat; */\r\nletter-spacing: 1.5px;\r\nline-height: 40px;\r\ntext-align: center;\r\ntext-transform: uppercase;\r\n}\r\n#main .course-purchase ul{\r\nflex-direction: column;\r\nmargin-top: 32px;\r\n}\r\n#main .course-purchase ul i{\r\ncolor: #494949;\r\n}\r\n#main .course-purchase ul span{\r\npadding-left: 18px;\r\n}\r\n#main .course-thumb img{\r\nwidth: 98%;\r\nfilter: brightness(0.7);\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n    padding: 0;\r\n    margin: 0;\r\n    box-sizing: border-box;\r\n}\r\nhtml, body {\r\nscroll-behavior: smooth;\r\nfont-size: 16px;\r\nbackground-color: #f1f1f1;\r\n}\r\n\r\n/* COMMON */\r\n#main ul{\r\ndisplay: flex;\r\nflex-wrap: wrap;\r\nlist-style: none;\r\npadding: 0;\r\nmargin-bottom: 0;\r\n}\r\n#main li{\r\npadding-bottom: 12px;\r\nfont-size: 14px;\r\n}\r\n#main li i{\r\ncolor: #f05122;\r\nfont-size: 16px;\r\n}\r\n#main .center{\r\ndisplay: block;\r\nmargin-left: auto;\r\nmargin-right: auto;\r\n}\r\n#main .mt-16{\r\nmargin-top: 16px;\r\n}\r\n#main .mb-16{\r\nmargin-bottom: 16px;\r\n}\r\n\r\n/* RESPONSIVE */\r\n.grid{\r\nwidth: 1300px;\r\nmax-width: 100%;\r\nmargin: 0 auto;\r\n}\r\n#main .grid__full-width{\r\nwidth: 100%;\r\n}\r\n#main .grid__row{\r\ndisplay: flex;\r\nflex-wrap: wrap;\r\nmargin-left: -12px;\r\nmargin-right: -12px;\r\n}\r\n#main .grid__column-4{\r\npadding-left: 12px;\r\npadding-right: 12px;\r\nwidth: calc(100% / 12 * 4);\r\nposition: relative;\r\n}\r\n#main .grid__column-8{\r\npadding-left: 12px;\r\npadding-right: 12px;\r\nwidth: calc(100% / 12 * 8);\r\n}\r\n\r\n/* MAIN */\r\n#main{\r\npadding-top: 30px;\r\n}\r\n#main .course-summary-title{\r\nfont-size: 32px;\r\nfont-weight: 700;\r\npadding-bottom: 16px;\r\n}\r\n#main .course-summary-intro{\r\nfont-size: 14px;\r\npadding-bottom: 16px;\r\n}\r\n#main .course-gain-title{\r\nfont-size: 20px;\r\nfont-weight: 700;\r\npadding-bottom: 10px;\r\n}\r\n#main .course-gain-list ul{\r\nflex-direction: column;\r\npadding-left: 24px;\r\nmargin: 0;\r\n}\r\n#main .course-detail-title{\r\nfont-weight: 700;\r\nfont-size: 20px;\r\npadding-top: 14px;\r\npadding-bottom: 8px;\r\n}\r\n#main .course-detail-summary{\r\nmargin-bottom: 0;\r\ndisplay: flex;\r\nflex-direction: row;\r\n}\r\n#main .course-detail-summary li{\r\nfont-size: 14px;\r\njustify-content: space-around;\r\npadding-right: 8px;\r\n}\r\n#main .course-detail-summary .divider{\r\nfont-weight: 700;\r\ntext-align: center;\r\n}\r\n#main .list{\r\ncursor: pointer;\r\n}\r\n#main .list-title,\r\n#main .list-title:before{\r\nheight: 50px;\r\nborder-radius: 4px;\r\n}\r\n#main .list-title{\r\nfont-weight: 600;\r\nbackground-color: #fbf8f8;\r\npadding: 14px 30px 14px 48px;\r\nposition: relative;\r\n}\r\n#main .list-title:before{\r\ncontent: \"-\";\r\nfont-size: 40px;\r\nposition: absolute;\r\nleft: 14px;\r\ntop: -8px;\r\ncolor: #f05122;\r\n}\r\n#main .list-title .video-count{\r\nposition: absolute;\r\nright: 30px;\r\nfont-weight: 300;\r\n}\r\n#main .collapse-item{\r\npadding-top: 16px;\r\npadding-bottom: 16px;\r\npadding-left: 32px;\r\nfont-size: 14px;\r\nborder-top: 1px solid #fbf8f8;\r\nborder-bottom: 1px solid #fbf8f8;\r\n}\r\n#main .collapse-item i{\r\npadding-right: 12px;\r\ncolor: #f05122;\r\n}\r\n\r\n#main .course-require .require-title{\r\nfont-size: 20px;\r\nfont-weight: 700;\r\nmargin-top: 36px;\r\nmargin-bottom: 14px;\r\n}\r\n#main .course-require ul{\r\nflex-direction: column;\r\npadding-left: 24px;\r\nmargin: 0;\r\n}\r\n\r\n#main .course-purchase{\r\ndisplay: flex;\r\nflex-direction: column;\r\nalign-items: center;\r\nline-height: 11.5px;\r\nposition: fixed;\r\n}\r\n#main .course-thumb{\r\nposition: relative;\r\ncursor: pointer;\r\n}\r\n#main .course-thumb i{\r\nposition: absolute;\r\nfont-size: 54px;\r\ncolor: #f1f1f1;\r\nposition: absolute;\r\ntop: 40%;\r\nleft: 44%;\r\n}\r\n#main .course-thumb p{\r\nfont-weight: 600;\r\ncolor: #f1f1f1;\r\nposition: absolute;\r\ntop: 85%;\r\nleft: 30%;\r\n}\r\n#main .course-fee{\r\ncolor: #f05123;\r\nfont-size: 32px;\r\nfont-weight: 300;\r\npadding-top: 24px;\r\npadding-bottom: 14px;\r\n}\r\n#main .course-btn{\r\nborder: none;\r\npadding: 1px 18px;\r\nborder-radius: 14px;\r\nalign-items: flex-start;\r\nbackground-color:#f05123;\r\ncolor:#ffffff;\r\n/* font-family: Montserrat; */\r\nletter-spacing: 1.5px;\r\nline-height: 40px;\r\ntext-align: center;\r\ntext-transform: uppercase;\r\n}\r\n#main .course-purchase ul{\r\nflex-direction: column;\r\nmargin-top: 32px;\r\n}\r\n#main .course-purchase ul i{\r\ncolor: #494949;\r\n}\r\n#main .course-purchase ul span{\r\npadding-left: 18px;\r\n}\r\n#main .course-thumb img{\r\nwidth: 98%;\r\nfilter: brightness(0.7);\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14127,7 +14889,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n:root {\r\n    --main-blue: #00A19D;\r\n    --main-yellow: #FFB344;\r\n    --main-red: #E05D5D;\r\n    --white: #fff;\r\n    --title: #3b3c54;\r\n    --text: #42526e;\r\n    --menu-transition: 0.7s;\r\n    --box-shadow-color: rgba(188, 188, 188, .5);\r\n}\r\n\r\n* {\r\n    padding: 0;\r\n    margin: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\nhtml,\r\nbody {\r\n    scroll-behavior: smooth;\r\n    font-size: 15px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n/* HEADER */\r\n\r\n#header {\r\n    \r\n    padding: 30px 0;\r\n}\r\n\r\n#header  .container h2 {\r\n    font-size: 28px;\r\n    color: var(--white);\r\n}\r\n\r\n#header  .container #search {\r\n    margin: 0;\r\n    padding-top: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n}\r\n\r\n#search .input-group {\r\n    display: inline-block;\r\n    width: 100%;\r\n}\r\n\r\n#header .input-group #form-search {\r\n    position: relative;\r\n    display: inline-block;\r\n    width: 380px;\r\n    background: var(--white);\r\n    border-radius: 3px;\r\n}\r\n\r\n#form-search .form-control {\r\n    height: 45px;\r\n    padding-right: 45px;\r\n    padding-left: 10px;\r\n    background: none;\r\n    position: relative;\r\n}\r\n\r\n#form-search span {\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    font-size: 24px;\r\n    width: 45px;\r\n    height: 45px;\r\n    padding-top: 5px;\r\n    padding-left: 10px;\r\n}\r\n\r\n#form-search span:hover {\r\n    border-radius: 3px;\r\n    background-color: var(--main-yellow);\r\n    cursor: pointer;\r\n    color: var(--white);\r\n}\r\n\r\n/* Slider */\r\n.slider {\r\n    padding-top: 32px;\r\n    padding-bottom: 32px;\r\n}\r\n\r\n.menu {\r\n    min-width: 235px;\r\n    line-height: 15px;\r\n    position: relative;\r\n    padding: 16px 8px;\r\n    margin: 0;\r\n    border-radius: 5px;\r\n    background-color: #fff;\r\n    box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);\r\n}\r\n.menu li{\r\n    list-style: none;\r\n}\r\n.menu>li {\r\n    padding: 8px;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n.menu>li>.megadrop {\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    position: absolute;\r\n    list-style: none;\r\n    top: 0px;\r\n    left: 102%;\r\n    width: 100%;\r\n    min-height: 100%;\r\n    text-align: left;\r\n    margin-top: 30px;\r\n    padding: 16px 8px;\r\n    z-index: 99;\r\n    overflow: hidden;\r\n    background: #fff;\r\n    transition: 0.3s ease-in-out;\r\n}\r\n.menu>li:hover {\r\n    background-color: #ebebeb;\r\n}\r\n.menu>li:hover .megadrop {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    margin-top: 0px;\r\n}\r\n\r\n.menu i {\r\n    margin-right: 12px;\r\n    width: 30px;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    color: var(--main-yellow);\r\n}\r\n\r\n.menu a {\r\n    text-decoration: none;\r\n    color: #333;\r\n    display: block;\r\n\r\n}\r\n.megadrop a{\r\n    padding: 8px 12px;\r\n}\r\n.megadrop li:hover {\r\n    background-color: #ebebeb;\r\n}\r\n.megadrop ul{\r\n    padding: 0;\r\n    \r\n}\r\n.banner-right-new img {\r\n    width: 100%;\r\n    height: 495px;\r\n    border-radius: 5px;\r\n}\r\n\r\n/* CONTENT */\r\n\r\n#content .content-section {\r\n\r\n    width: 1472px;\r\n    width: 100%;\r\n    max-width: 100%;\r\n\r\n}\r\n\r\n.content-section .section-heading {\r\n    font-size: 28px;\r\n    color: var(--title);\r\n    padding-bottom: 18px;\r\n}\r\n\r\n.content-section .section-courses {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n    margin-left: -30px;\r\n}\r\n\r\n.section-courses .wrap-course-item {\r\n    align-content: space-around;\r\n    min-width: 330px;\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.wrap-course-item .course-item {\r\n    display: flex;\r\n    flex-direction: column;\r\n    background-color: #fff;\r\n    border-radius: 8px;\r\n    overflow: hidden;\r\n    margin-left: 30px;\r\n    box-shadow: 0 5px 15px 0 rgb(133 142 176 / 15%);\r\n}\r\n\r\n.wrap-course-item .course-thumb {\r\n    overflow: hidden;\r\n}\r\n\r\n.wrap-course-item .course-content {\r\n    padding: 15px;\r\n    flex: 1;\r\n}\r\n\r\n.course-thumb .course-img {\r\n    width: 100%;\r\n    height: 220px;\r\n    flex-shrink: 0;\r\n}\r\n\r\n.course-content .course-rating {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n    width: 100%;\r\n    padding-right: 15px;\r\n    padding-bottom: 7px;\r\n}\r\n\r\n.course-content .course-rating ul {\r\n    padding: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.course-content .course-rating li {\r\n    list-style: none;\r\n    display: inline-block;\r\n    color: #fec000;\r\n    font-size: 15px;\r\n}\r\n\r\n.course-content .course-type {\r\n    padding: 4px 6px 3px;\r\n    font-size: 10px;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: #fec000;\r\n    color: #fff;\r\n    border-radius: 13px;\r\n}\r\n\r\n.course-content .course-title a {\r\n    display: -webkit-box;\r\n    font-size: 20px;\r\n    line-height: 22px;\r\n    margin-bottom: 10px;\r\n    text-decoration: none;\r\n    color: var(--title);\r\n    -webkit-line-clamp: 2;\r\n    -webkit-box-orient: vertical;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    height: 46px;\r\n}\r\n\r\n\r\n\r\n.course-content .course-title a:hover {\r\n    color: #2c31cf;\r\n}\r\n\r\n.course-content .course-author {\r\n    font-size: 13px;\r\n    margin-bottom: 15px;\r\n    display: block;\r\n    text-decoration: none;\r\n    color: var(--text);\r\n    -webkit-line-clamp: 1;\r\n    -webkit-box-orient: vertical;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n\r\n.course-content .course-author:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.course-content .course-des {\r\n    margin-bottom: 20px;\r\n    color: var(--text);\r\n    line-height: 1.5;\r\n    white-space: normal;\r\n    display: -webkit-box;\r\n    -webkit-line-clamp: 2;\r\n    -webkit-box-orient: vertical;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    word-break: break-word;\r\n    min-height: 44px;\r\n    max-height: 3em;\r\n}\r\n\r\n.course-content .course-footer {\r\n    display: flex;\r\n    width: calc(100% - 30px);\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin-top: auto;\r\n}\r\n\r\n.course-footer .course-footer-left {\r\n    font-weight: 600;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n:root {\r\n    --main-blue: #00A19D;\r\n    --main-yellow: #FFB344;\r\n    --main-red: #E05D5D;\r\n    --white: #fff;\r\n    --title: #3b3c54;\r\n    --text: #42526e;\r\n    --menu-transition: 0.7s;\r\n    --box-shadow-color: rgba(188, 188, 188, .5);\r\n}\r\n\r\n\r\n\r\n\r\n\r\n/* HEADER */\r\n\r\n#header {\r\n    \r\n    padding: 30px 0;\r\n}\r\n\r\n#header  .container h2 {\r\n    font-size: 28px;\r\n    color: var(--white);\r\n}\r\n\r\n#header  .container #search {\r\n    margin: 0;\r\n    padding-top: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n}\r\n\r\n#search .input-group {\r\n    display: inline-block;\r\n    width: 100%;\r\n}\r\n\r\n#header .input-group #form-search {\r\n    position: relative;\r\n    display: inline-block;\r\n    width: 380px;\r\n    background: var(--white);\r\n    border-radius: 3px;\r\n}\r\n\r\n#form-search .form-control {\r\n    height: 45px;\r\n    padding-right: 45px;\r\n    padding-left: 10px;\r\n    background: none;\r\n    position: relative;\r\n}\r\n\r\n#form-search span {\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    font-size: 24px;\r\n    width: 45px;\r\n    height: 45px;\r\n    padding-top: 5px;\r\n    padding-left: 10px;\r\n}\r\n\r\n#form-search span:hover {\r\n    border-radius: 3px;\r\n    background-color: var(--main-yellow);\r\n    cursor: pointer;\r\n    color: var(--white);\r\n}\r\n\r\n/* Slider */\r\n.slider {\r\n    padding-top: 32px;\r\n    padding-bottom: 32px;\r\n}\r\n\r\n.menu {\r\n    min-width: 235px;\r\n    line-height: 15px;\r\n    position: relative;\r\n    padding: 16px 8px;\r\n    margin: 0;\r\n    border-radius: 5px;\r\n    background-color: #fff;\r\n    box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);\r\n}\r\n.menu li{\r\n    list-style: none;\r\n}\r\n.menu>li {\r\n    padding: 8px;\r\n    display: block;\r\n    text-align: left;\r\n}\r\n\r\n.menu>li>.megadrop {\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    position: absolute;\r\n    list-style: none;\r\n    top: 0px;\r\n    left: 102%;\r\n    width: 100%;\r\n    min-height: 100%;\r\n    text-align: left;\r\n    margin-top: 30px;\r\n    padding: 16px 8px;\r\n    z-index: 99;\r\n    overflow: hidden;\r\n    background: #fff;\r\n    transition: 0.3s ease-in-out;\r\n}\r\n.menu>li:hover {\r\n    background-color: #ebebeb;\r\n}\r\n.menu>li:hover .megadrop {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    margin-top: 0px;\r\n}\r\n\r\n.menu i {\r\n    margin-right: 12px;\r\n    width: 30px;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    color: var(--main-yellow);\r\n}\r\n\r\n.menu a {\r\n    text-decoration: none;\r\n    color: #333;\r\n    display: block;\r\n\r\n}\r\n.megadrop a{\r\n    padding: 8px 12px;\r\n}\r\n.megadrop li:hover {\r\n    background-color: #ebebeb;\r\n}\r\n.megadrop ul{\r\n    padding: 0;\r\n    \r\n}\r\n.banner-right-new img {\r\n    width: 100%;\r\n    height: 495px;\r\n    border-radius: 5px;\r\n}\r\n\r\n/* CONTENT */\r\n\r\n#content .content-section {\r\n\r\n    width: 1472px;\r\n    width: 100%;\r\n    max-width: 100%;\r\n\r\n}\r\n\r\n.content-section .section-heading {\r\n    font-size: 28px;\r\n    color: var(--title);\r\n    padding-bottom: 18px;\r\n}\r\n\r\n.content-section .section-courses {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    flex-wrap: wrap;\r\n    margin-left: -30px;\r\n}\r\n\r\n.section-courses .wrap-course-item {\r\n    align-content: space-around;\r\n    min-width: 330px;\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.wrap-course-item .course-item {\r\n    display: flex;\r\n    flex-direction: column;\r\n    background-color: #fff;\r\n    border-radius: 8px;\r\n    overflow: hidden;\r\n    margin-left: 30px;\r\n    box-shadow: 0 5px 15px 0 rgb(133 142 176 / 15%);\r\n}\r\n\r\n.wrap-course-item .course-thumb {\r\n    overflow: hidden;\r\n}\r\n\r\n.wrap-course-item .course-content {\r\n    padding: 15px;\r\n    flex: 1;\r\n}\r\n\r\n.course-thumb .course-img {\r\n    width: 100%;\r\n    height: 220px;\r\n    flex-shrink: 0;\r\n}\r\n\r\n.course-content .course-rating {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n    width: 100%;\r\n    padding-right: 15px;\r\n    padding-bottom: 7px;\r\n}\r\n\r\n.course-content .course-rating ul {\r\n    padding: 0;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.course-content .course-rating li {\r\n    list-style: none;\r\n    display: inline-block;\r\n    color: #fec000;\r\n    font-size: 15px;\r\n}\r\n\r\n.course-content .course-type {\r\n    padding: 4px 6px 3px;\r\n    font-size: 10px;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: #fec000;\r\n    color: #fff;\r\n    border-radius: 13px;\r\n}\r\n\r\n.course-content .course-title a {\r\n    display: -webkit-box;\r\n    font-size: 20px;\r\n    line-height: 22px;\r\n    margin-bottom: 10px;\r\n    text-decoration: none;\r\n    color: var(--title);\r\n    -webkit-line-clamp: 2;\r\n    -webkit-box-orient: vertical;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    height: 46px;\r\n}\r\n\r\n\r\n\r\n.course-content .course-title a:hover {\r\n    color: #2c31cf;\r\n}\r\n\r\n.course-content .course-author {\r\n    font-size: 13px;\r\n    margin-bottom: 15px;\r\n    display: block;\r\n    text-decoration: none;\r\n    color: var(--text);\r\n    -webkit-line-clamp: 1;\r\n    -webkit-box-orient: vertical;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n\r\n.course-content .course-author:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.course-content .course-des {\r\n    margin-bottom: 20px;\r\n    color: var(--text);\r\n    line-height: 1.5;\r\n    white-space: normal;\r\n    display: -webkit-box;\r\n    -webkit-line-clamp: 2;\r\n    -webkit-box-orient: vertical;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    word-break: break-word;\r\n    min-height: 44px;\r\n    max-height: 3em;\r\n}\r\n\r\n.course-content .course-footer {\r\n    display: flex;\r\n    width: calc(100% - 30px);\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin-top: auto;\r\n}\r\n\r\n.course-footer .course-footer-left {\r\n    font-weight: 600;\r\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/pages/Learn/Learn.css":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/pages/Learn/Learn.css ***!
+  \******************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "#left-learning {\r\n    width: 75%;\r\n    background-color: #f5f6f7;\r\n    overflow: hidden;\r\n    overflow-y: scroll;\r\n    overflow-x: hidden;\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    margin-top: 62px;\r\n\r\n\r\n}\r\n\r\n#left-learning::-webkit-scrollbar {\r\n    display: none;\r\n}\r\n\r\n\r\n#left-learning iframe {\r\n    width: 100%;\r\n    height: 80vh;\r\n\r\n}\r\n\r\n.breadcrumb {\r\n    padding: 8px;\r\n    margin: 12px 8px;\r\n    background-color: #fff;\r\n    box-shadow: 0 4px 20px rgb(0 0 0 /8%);\r\n}\r\n\r\n\r\n\r\n.info-learning-content {\r\n    min-height: 150vh;\r\n    height: auto;\r\n    background-color: #fff;\r\n\r\n}\r\n\r\n.tabs-bar {\r\n    display: flex;\r\n    box-shadow: inset 0 -1px 0 0 #bfafaf;\r\n\r\n}\r\n\r\n.tab-item {\r\n    padding: 0 12px;\r\n    color: #666;\r\n    font-size: 16px;\r\n    padding: 16px;\r\n}\r\n\r\n.selected-tab {\r\n    color: #000;\r\n    font-weight: 600;\r\n    border-bottom: 2px solid;\r\n}\r\n\r\n.info-learning-comment {\r\n    padding: 40px 0;\r\n}\r\n\r\n.info-learning-comment ul {\r\n    padding: 0;\r\n    margin: 0;\r\n}\r\n\r\n.comment-block {\r\n    padding: 0 30px 30px 30px;\r\n    display: flex;\r\n}\r\n\r\n.comment-avt {\r\n    flex-shrink: 0;\r\n}\r\n\r\n.comment-avt img {\r\n    border-radius: 50%;\r\n    height: 64px;\r\n    width: 64px;\r\n}\r\n\r\n.comment-content {\r\n    padding: 12px;\r\n    background-color: #ebebeb;\r\n    min-height: 120px;\r\n    height: auto;\r\n    display: flex;\r\n    flex-direction: column;\r\n    border-radius: 0.5rem;\r\n    flex-grow: 1;\r\n    margin-left: 16px;\r\n}\r\n\r\n.comment-user-name {\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n}\r\n\r\n.comment-body,\r\n.comment-input {\r\n    width: 100%;\r\n    height: auto;\r\n    background-color: transparent;\r\n    display: block;\r\n    overflow: auto;\r\n    flex-grow: 1;\r\n    word-break: break-word;\r\n}\r\n\r\n.comment-input::before {\r\n    content: attr(placeholder);\r\n}\r\n\r\n[contenteditable] {\r\n    outline: 0px solid transparent;\r\n}\r\n\r\n.comment-box .comment-input::before {\r\n    content: none;\r\n}\r\n\r\n.btn-comment {\r\n    background-color: var(--main-red);\r\n    color: #fff;\r\n    padding: 4px 16px;\r\n    float: right;\r\n}\r\n\r\n.btn-comment:hover {\r\n    background-color: var(--main-yellow);\r\n    color: #fff;\r\n}\r\n\r\n.btn-comment-remove {\r\n    background-color: transparent;\r\n    color: #000;\r\n\r\n}\r\n\r\n.btn-comment-remove:hover {\r\n    background-color: #b4b4b4;\r\n}\r\n\r\n.btn-comment+.btn-comment {\r\n    margin-right: 16px;\r\n}\r\n\r\n.comment-block a {\r\n    text-decoration: none;\r\n}\r\n\r\n.upvote {\r\n    padding-right: 8px;\r\n    border-right: 1px solid #bbb;\r\n}\r\n\r\n.upvote a:hover {\r\n    color: var(--main-yellow)\r\n}\r\n\r\n.downvote {\r\n    padding-left: 8px;\r\n}\r\n\r\n.downvote a:hover {\r\n    color: var(--main-red)\r\n}\r\n\r\n\r\n.comment-repl {\r\n    margin-left: 16px;\r\n    color: #0d6efd;\r\n    cursor: pointer;\r\n}\r\n\r\n.comment-datetime {\r\n    margin-left: 16px;\r\n    color: var(--main-gray-color);\r\n}\r\n\r\n.comment-block-repl {\r\n    margin-left: calc(10%);\r\n    border-left: 1px solid var(--main-yellow);\r\n}\r\n\r\nli {\r\n    list-style: none;\r\n}\r\n\r\n#right-learning {\r\n    background-color: #fff;\r\n    width: 25%;\r\n    position: fixed;\r\n    margin-top: 62px;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    overflow-y: scroll;\r\n    overflow-x: hidden;\r\n}\r\n\r\n#right-learning::-webkit-scrollbar {\r\n    display: none;\r\n}\r\n\r\n#right-learning .playlist-header {\r\n    height: 64px;\r\n    padding: 8px 12px 8px 12px;\r\n    position: relative;\r\n}\r\n\r\n#right-learning .playlist-header-content {\r\n    position: relative;\r\n}\r\n\r\n#right-learning .background-process {\r\n    top: 0;\r\n    left: 0;\r\n    height: 100%;\r\n    position: absolute;\r\n    width: var(--process);\r\n    background-color: rgba(255, 179, 68, 0.4);\r\n}\r\n\r\n#right-learning .playlist-title {\r\n    font-size: 18px;\r\n    margin-bottom: 4px;\r\n    opacity: .8;\r\n\r\n}\r\n\r\n#right-learning .playlist-description {\r\n    opacity: .8;\r\n    font-size: 16px;\r\n    margin: 0;\r\n}\r\n\r\n .playlist-title,\r\n .playlist-description {\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    -moz-white-space: nowrap;\r\n    overflow: hidden;\r\n}\r\n\r\n\r\n#right-learning .playplist-wrapper-header {\r\n    background-color: #f3f4f5;\r\n    padding: 8px 12px 8px 12px;\r\n    border-bottom: 1px solid #ababab;\r\n\r\n\r\n}\r\n\r\n#right-learning .wrapper-header-title {\r\n    margin-bottom: 4px;\r\n    font-size: 20px;\r\n\r\n}\r\n\r\n#right-learning .wrapper-header-detail {\r\n    font-size: 14px;\r\n    opacity: 0.6;\r\n    margin: 0;\r\n}\r\n\r\n.playlist-wrapper-item {\r\n    display: flex;\r\n    padding: 8px 0;\r\n    transition: all ease-in 0.1s;\r\n}\r\n\r\n.learnt-item:hover {\r\n    background-color: #ebebeb;\r\n    cursor: pointer;\r\n}\r\n\r\n#right-learning .block-item {\r\n    background-color: #ebebeb;\r\n}\r\n\r\n#right-learning .learning-item {\r\n    background-color: rgba(0, 161, 157, .4);\r\n}\r\n\r\n.wrapper-icon-status {\r\n    width: 40px;\r\n    margin: auto 0;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    flex-shrink: 0;\r\n}\r\n\r\n.playlist-wrapper-item .fa-check {\r\n    display: none;\r\n}\r\n\r\n.playlist-wrapper-item .fa-lock {\r\n    display: none;\r\n}\r\n\r\n.playlist-wrapper .learnt-item .fa-check {\r\n    color: lightgreen;\r\n    display: block;\r\n}\r\n\r\n.playlist-wrapper .block-item .fa-lock {\r\n    display: block;\r\n    color: #666;\r\n}\r\n\r\n.wrapper-item-info {\r\n    padding-right: 24px;\r\n    overflow: hidden;\r\n    flex: 1 1;\r\n}\r\n\r\n.wrapper-item-title {\r\n    margin-bottom: 4px;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    -moz-white-space: nowrap;\r\n    overflow: hidden;\r\n}\r\n\r\n.wrapper-item-detail {\r\n    font-size: 14px;\r\n    opacity: .8;\r\n}\r\n.wrapper-item-detail span{\r\n    margin-left: 4px;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14166,7 +14952,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_g
 var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_public_img_login_cta_illustration_light_svg__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var ___CSS_LOADER_URL_REPLACEMENT_3___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_public_img_login_cta_illustration_dark_svg__WEBPACK_IMPORTED_MODULE_5__["default"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n\r\n\r\n\r\n\r\n@media (min-width: 641px) {\r\n\th1,\r\n\t.h1 {\r\n\t\tfont-size: 44px;\r\n\t\tline-height: 54px;\r\n\t\tletter-spacing: 0px\r\n\t}\r\n}\r\n\r\n\r\n@media (min-width: 641px) {\r\n\th2,\r\n\t.h2 {\r\n\t\tfont-size: 38px;\r\n\t\tline-height: 48px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n}\r\n\r\n\r\n\r\n\r\n\r\n@media (max-width: 640px) {\r\n\t.h1-mobile {\r\n\t\tfont-size: 38px;\r\n\t\tline-height: 48px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n\t.h2-mobile {\r\n\t\tfont-size: 32px;\r\n\t\tline-height: 42px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n\t.h3-mobile {\r\n\t\tfont-size: 24px;\r\n\t\tline-height: 34px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n\t.h4-mobile,\r\n\t.h5-mobile,\r\n\t.h6-mobile {\r\n\t\tfont-size: 20px;\r\n\t\tline-height: 30px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n}\r\n\r\n.text-light {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.text-light a {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.text-light h1,\r\n.text-light h2,\r\n.text-light h3,\r\n.text-light h4,\r\n.text-light h5,\r\n.text-light h6,\r\n.text-light .h1,\r\n.text-light .h2,\r\n.text-light .h3,\r\n.text-light .h4,\r\n.text-light .h5,\r\n.text-light .h6 {\r\n\tcolor: #fff !important\r\n}\r\n\r\n.text-sm {\r\n\tfont-size: 18px;\r\n\tline-height: 27px;\r\n\tletter-spacing: -0.1px\r\n}\r\n\r\n.text-xs {\r\n\tfont-size: 16px;\r\n\tline-height: 24px;\r\n\tletter-spacing: -0.1px\r\n}\r\n\r\n\r\n\r\n.screen-reader-text {\r\n\tclip: rect(1px, 1px, 1px, 1px);\r\n\tposition: absolute !important;\r\n\theight: 1px;\r\n\twidth: 1px;\r\n\toverflow: hidden;\r\n\tword-wrap: normal !important\r\n}\r\n\r\n.screen-reader-text:focus {\r\n\tborder-radius: 2px;\r\n\tbox-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);\r\n\tclip: auto !important;\r\n\tdisplay: block;\r\n\tfont-family: \"IBM Plex Sans\", sans-serif;\r\n\tfont-size: 14px;\r\n\tletter-spacing: 0px;\r\n\tfont-weight: 600;\r\n\tline-height: 16px;\r\n\ttext-decoration: none;\r\n\ttext-transform: uppercase;\r\n\tbackground-color: #fff;\r\n\tcolor: #535FD7 !important;\r\n\tborder: none;\r\n\theight: auto;\r\n\tleft: 8px;\r\n\tpadding: 16px 32px;\r\n\ttop: 8px;\r\n\twidth: auto;\r\n\tz-index: 100000\r\n}\r\n\r\n.list-reset {\r\n\tlist-style: none;\r\n\tpadding: 0\r\n}\r\n\r\n.text-left {\r\n\ttext-align: left\r\n}\r\n\r\n.text-center {\r\n\ttext-align: center\r\n}\r\n\r\n.text-right {\r\n\ttext-align: right\r\n}\r\n\r\n.text-primary {\r\n\tcolor: #535FD7\r\n}\r\n\r\n.text-secondary {\r\n\tcolor: #61EFFD\r\n}\r\n\r\n.has-top-divider {\r\n\tposition: relative\r\n}\r\n\r\n.has-top-divider::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.has-bottom-divider {\r\n\tposition: relative\r\n}\r\n\r\n.has-bottom-divider::after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.m-0 {\r\n\tmargin: 0\r\n}\r\n\r\n.mt-0 {\r\n\tmargin-top: 0\r\n}\r\n\r\n.mr-0 {\r\n\tmargin-right: 0\r\n}\r\n\r\n.mb-0 {\r\n\tmargin-bottom: 0\r\n}\r\n\r\n.ml-0 {\r\n\tmargin-left: 0\r\n}\r\n\r\n.m-8 {\r\n\tmargin: 8px\r\n}\r\n\r\n.mt-8 {\r\n\tmargin-top: 8px\r\n}\r\n\r\n.mr-8 {\r\n\tmargin-right: 8px\r\n}\r\n\r\n.mb-8 {\r\n\tmargin-bottom: 8px\r\n}\r\n\r\n.ml-8 {\r\n\tmargin-left: 8px\r\n}\r\n\r\n.m-16 {\r\n\tmargin: 16px\r\n}\r\n\r\n.mt-16 {\r\n\tmargin-top: 16px\r\n}\r\n\r\n.mr-16 {\r\n\tmargin-right: 16px\r\n}\r\n\r\n.mb-16 {\r\n\tmargin-bottom: 16px\r\n}\r\n\r\n.ml-16 {\r\n\tmargin-left: 16px\r\n}\r\n\r\n.m-24 {\r\n\tmargin: 24px\r\n}\r\n\r\n.mt-24 {\r\n\tmargin-top: 24px\r\n}\r\n\r\n.mr-24 {\r\n\tmargin-right: 24px\r\n}\r\n\r\n.mb-24 {\r\n\tmargin-bottom: 24px\r\n}\r\n\r\n.ml-24 {\r\n\tmargin-left: 24px\r\n}\r\n\r\n.m-32 {\r\n\tmargin: 32px\r\n}\r\n\r\n.mt-32 {\r\n\tmargin-top: 32px\r\n}\r\n\r\n.mr-32 {\r\n\tmargin-right: 32px\r\n}\r\n\r\n.mb-32 {\r\n\tmargin-bottom: 32px\r\n}\r\n\r\n.ml-32 {\r\n\tmargin-left: 32px\r\n}\r\n\r\n.m-40 {\r\n\tmargin: 40px\r\n}\r\n\r\n.mt-40 {\r\n\tmargin-top: 40px\r\n}\r\n\r\n.mr-40 {\r\n\tmargin-right: 40px\r\n}\r\n\r\n.mb-40 {\r\n\tmargin-bottom: 40px\r\n}\r\n\r\n.ml-40 {\r\n\tmargin-left: 40px\r\n}\r\n\r\n.m-48 {\r\n\tmargin: 48px\r\n}\r\n\r\n.mt-48 {\r\n\tmargin-top: 48px\r\n}\r\n\r\n.mr-48 {\r\n\tmargin-right: 48px\r\n}\r\n\r\n.mb-48 {\r\n\tmargin-bottom: 48px\r\n}\r\n\r\n.ml-48 {\r\n\tmargin-left: 48px\r\n}\r\n\r\n.m-56 {\r\n\tmargin: 56px\r\n}\r\n\r\n.mt-56 {\r\n\tmargin-top: 56px\r\n}\r\n\r\n.mr-56 {\r\n\tmargin-right: 56px\r\n}\r\n\r\n.mb-56 {\r\n\tmargin-bottom: 56px\r\n}\r\n\r\n.ml-56 {\r\n\tmargin-left: 56px\r\n}\r\n\r\n.m-64 {\r\n\tmargin: 64px\r\n}\r\n\r\n.mt-64 {\r\n\tmargin-top: 64px\r\n}\r\n\r\n.mr-64 {\r\n\tmargin-right: 64px\r\n}\r\n\r\n.mb-64 {\r\n\tmargin-bottom: 64px\r\n}\r\n\r\n.ml-64 {\r\n\tmargin-left: 64px\r\n}\r\n\r\n.p-0 {\r\n\tpadding: 0\r\n}\r\n\r\n.pt-0 {\r\n\tpadding-top: 0\r\n}\r\n\r\n.pr-0 {\r\n\tpadding-right: 0\r\n}\r\n\r\n.pb-0 {\r\n\tpadding-bottom: 0\r\n}\r\n\r\n.pl-0 {\r\n\tpadding-left: 0\r\n}\r\n\r\n.p-8 {\r\n\tpadding: 8px\r\n}\r\n\r\n.pt-8 {\r\n\tpadding-top: 8px\r\n}\r\n\r\n.pr-8 {\r\n\tpadding-right: 8px\r\n}\r\n\r\n.pb-8 {\r\n\tpadding-bottom: 8px\r\n}\r\n\r\n.pl-8 {\r\n\tpadding-left: 8px\r\n}\r\n\r\n.p-16 {\r\n\tpadding: 16px\r\n}\r\n\r\n.pt-16 {\r\n\tpadding-top: 16px\r\n}\r\n\r\n.pr-16 {\r\n\tpadding-right: 16px\r\n}\r\n\r\n.pb-16 {\r\n\tpadding-bottom: 16px\r\n}\r\n\r\n.pl-16 {\r\n\tpadding-left: 16px\r\n}\r\n\r\n.p-24 {\r\n\tpadding: 24px\r\n}\r\n\r\n.pt-24 {\r\n\tpadding-top: 24px\r\n}\r\n\r\n.pr-24 {\r\n\tpadding-right: 24px\r\n}\r\n\r\n.pb-24 {\r\n\tpadding-bottom: 24px\r\n}\r\n\r\n.pl-24 {\r\n\tpadding-left: 24px\r\n}\r\n\r\n.p-32 {\r\n\tpadding: 32px\r\n}\r\n\r\n.pt-32 {\r\n\tpadding-top: 32px\r\n}\r\n\r\n.pr-32 {\r\n\tpadding-right: 32px\r\n}\r\n\r\n.pb-32 {\r\n\tpadding-bottom: 32px\r\n}\r\n\r\n.pl-32 {\r\n\tpadding-left: 32px\r\n}\r\n\r\n.p-40 {\r\n\tpadding: 40px\r\n}\r\n\r\n.pt-40 {\r\n\tpadding-top: 40px\r\n}\r\n\r\n.pr-40 {\r\n\tpadding-right: 40px\r\n}\r\n\r\n.pb-40 {\r\n\tpadding-bottom: 40px\r\n}\r\n\r\n.pl-40 {\r\n\tpadding-left: 40px\r\n}\r\n\r\n.p-48 {\r\n\tpadding: 48px\r\n}\r\n\r\n.pt-48 {\r\n\tpadding-top: 48px\r\n}\r\n\r\n.pr-48 {\r\n\tpadding-right: 48px\r\n}\r\n\r\n.pb-48 {\r\n\tpadding-bottom: 48px\r\n}\r\n\r\n.pl-48 {\r\n\tpadding-left: 48px\r\n}\r\n\r\n.p-56 {\r\n\tpadding: 56px\r\n}\r\n\r\n.pt-56 {\r\n\tpadding-top: 56px\r\n}\r\n\r\n.pr-56 {\r\n\tpadding-right: 56px\r\n}\r\n\r\n.pb-56 {\r\n\tpadding-bottom: 56px\r\n}\r\n\r\n.pl-56 {\r\n\tpadding-left: 56px\r\n}\r\n\r\n.p-64 {\r\n\tpadding: 64px\r\n}\r\n\r\n.pt-64 {\r\n\tpadding-top: 64px\r\n}\r\n\r\n.pr-64 {\r\n\tpadding-right: 64px\r\n}\r\n\r\n.pb-64 {\r\n\tpadding-bottom: 64px\r\n}\r\n\r\n.pl-64 {\r\n\tpadding-left: 64px\r\n}\r\n\r\n.sr .has-animations .is-revealing {\r\n\tvisibility: hidden\r\n}\r\n\r\n.input,\r\n.textarea {\r\n\tbackground-color: #182538;\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n\tborder-color: #E9EDF3;\r\n\tborder-radius: 2px;\r\n\tcolor: #6B7A90;\r\n\tmax-width: 100%;\r\n\twidth: 100%\r\n}\r\n\r\n.input:-ms-input-placeholder,\r\n.textarea:-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input::-moz-placeholder, .textarea::-moz-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input:-ms-input-placeholder, .textarea:-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input::placeholder,\r\n.textarea::placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input::-ms-input-placeholder,\r\n.textarea::-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input:-ms-input-placeholder,\r\n.textarea:-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input:hover,\r\n.textarea:hover {\r\n\tborder-color: #d9e0ea\r\n}\r\n\r\n.input:active,\r\n.input:focus,\r\n.textarea:active,\r\n.textarea:focus {\r\n\toutline: none;\r\n\tborder-color: #E9EDF3\r\n}\r\n\r\n.input[disabled],\r\n.textarea[disabled] {\r\n\tcursor: not-allowed;\r\n\tbackground-color: #F8F9FB;\r\n\tborder-color: #F8F9FB\r\n}\r\n\r\n.input {\r\n\t-moz-appearance: none;\r\n\t-webkit-appearance: none;\r\n\tfont-size: 16px;\r\n\tletter-spacing: -0.1px;\r\n\tline-height: 20px;\r\n\tpadding: 13px 16px;\r\n\theight: 48px;\r\n\tbox-shadow: none\r\n}\r\n\r\n.input .inline-input {\r\n\tdisplay: inline;\r\n\twidth: auto\r\n}\r\n\r\n.textarea {\r\n\tdisplay: block;\r\n\tmin-width: 100%;\r\n\tresize: vertical\r\n}\r\n\r\n.textarea .inline-textarea {\r\n\tdisplay: inline;\r\n\twidth: auto\r\n}\r\n\r\n.field-grouped>.control:not(:last-child) {\r\n\tmargin-bottom: 8px\r\n}\r\n\r\n.switch[type=\"checkbox\"] {\r\n\toutline: 0;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\tposition: absolute;\r\n\topacity: 0\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label {\r\n\tdisplay: inline-flex;\r\n\tposition: relative;\r\n\tline-height: 36px;\r\n\tpadding-left: 78px;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\tcursor: pointer\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::before,\r\n.switch[type=\"checkbox\"]+label::after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tdisplay: block\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::before {\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 64px;\r\n\theight: 36px;\r\n\tborder-radius: 18px;\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::after {\r\n\ttop: 6px;\r\n\tleft: 6px;\r\n\twidth: 24px;\r\n\theight: 24px;\r\n\tborder-radius: 12px;\r\n\tbackground: #fff;\r\n\ttransition: all .15s ease-out\r\n}\r\n\r\n.switch[type=\"checkbox\"]:checked+label::before {\r\n\tbackground: #535FD7\r\n}\r\n\r\n.switch[type=\"checkbox\"]:checked+label::after {\r\n\tleft: 34px\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.field-grouped {\r\n\t\tdisplay: flex\r\n\t}\r\n\t.field-grouped>.control {\r\n\t\tflex-shrink: 0\r\n\t}\r\n\t.field-grouped>.control.control-expanded {\r\n\t\tflex-grow: 1;\r\n\t\tflex-shrink: 1\r\n\t}\r\n\t.field-grouped>.control:not(:last-child) {\r\n\t\tmargin-bottom: 0;\r\n\t\tmargin-right: 8px\r\n\t}\r\n}\r\n#signin-form .button,\r\n#root2 .button {\r\n\tdisplay: inline-flex;\r\n\tfont-family: \"IBM Plex Sans\", sans-serif;\r\n\tfont-size: 14px;\r\n\tletter-spacing: 0px;\r\n\tfont-weight: 600;\r\n\tline-height: 16px;\r\n\ttext-decoration: none !important;\r\n\ttext-transform: uppercase;\r\n\tbackground-color: #E9EDF3;\r\n\tborder: none;\r\n\tborder-radius: 2px;\r\n\tcursor: pointer;\r\n\tjustify-content: center;\r\n\tpadding: 16px 32px;\r\n\theight: 48px;\r\n\ttext-align: center;\r\n\twhite-space: nowrap;\r\n\ttransition: all 0.5s;\r\n\r\n}\r\n\r\n#root2 .cta-cta a{\r\n\tbackground-color: #535FD7 ;\r\n\tcolor: #fff;\r\n}\r\n#root2 .cta-cta a:hover{\r\n\tbackground-color: transparent ;\r\n\tcolor: #333;\r\n\tborder: 1px solid #535FD7;\r\n}\r\n.button-shadow {\r\n\tposition: relative\r\n}\r\n\r\n.button-shadow::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\tbox-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);\r\n\tmix-blend-mode: multiply;\r\n\ttransition: box-shadow .15s ease\r\n}\r\n\r\n.button-shadow:hover::before {\r\n\tbox-shadow: 0 8px 24px rgba(255, 255, 255, 0.35)\r\n}\r\n\r\n\r\n.site-header {\r\n\tposition: relative;\r\n\tpadding: 24px 0;\r\n\tz-index: 2\r\n}\r\n\r\n.site-header::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: -140px;\r\n\tright: -100px;\r\n\twidth: 1440px;\r\n\theight: 324px;\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")\r\n}\r\n\r\n.lights-off .site-header::before {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")\r\n}\r\n\r\n.site-header-inner {\r\n\tposition: relative;\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\talign-items: center\r\n}\r\n\r\n.header-links {\r\n\tdisplay: inline-flex\r\n}\r\n\r\n.header-links li {\r\n\tdisplay: inline-flex\r\n}\r\n\r\n.header-links a:not(.button) {\r\n\tfont-size: 16px;\r\n\tline-height: 24px;\r\n\tletter-spacing: -0.1px;\r\n\tfont-weight: 600;\r\n\tcolor: #8595AE;\r\n\ttext-transform: uppercase;\r\n\ttext-decoration: none;\r\n\tline-height: 16px;\r\n\tpadding: 8px 24px\r\n}\r\n\r\n.header-links a:not(.button):hover,\r\n.header-links a:not(.button):active {\r\n\tcolor: #fff\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.site-header::before {\r\n\t\tdisplay: none\r\n\t}\r\n}\r\n\r\n.hero {\r\n\ttext-align: center;\r\n\tpadding-top: 48px;\r\n\tpadding-bottom: 88px\r\n}\r\n\r\n.hero-copy {\r\n\tposition: relative\r\n}\r\n\r\n.hero-paragraph {\r\n\tmargin-bottom: 32px\r\n}\r\n\r\n.hero-cta {\r\n\tmax-width: 400px;\r\n\tmargin-left: auto;\r\n\tmargin-right: auto;\r\n\tmargin-bottom: 80px\r\n}\r\n\r\n.lights-toggle {\r\n\tcolor: rgba(107, 122, 144, 0.64)\r\n}\r\n\r\n.header-illustration {\r\n\tdisplay: none\r\n}\r\n\r\n.header-illustration img,\r\n.header-illustration svg {\r\n\tmax-width: none\r\n}\r\n\r\n.header-illustration-image {\r\n\tdisplay: none\r\n}\r\n\r\n.hero-media {\r\n\tposition: relative\r\n}\r\n\r\n.hero-media-illustration {\r\n\tposition: absolute;\r\n\ttop: -10%;\r\n\tleft: -15px\r\n}\r\n\r\n.hero-media-illustration img,\r\n.hero-media-illustration svg {\r\n\tmax-width: 136%\r\n}\r\n\r\n.hero-media-container {\r\n\tposition: relative\r\n}\r\n\r\n.hero-media-image {\r\n\tmargin: 0 auto;\r\n\tbox-shadow: 48px 16px 48px rgba(24, 37, 56, 0.12);\r\n\tborder-radius: 4px;\r\n\ttransform: perspective(1000px) rotateY(16deg) rotateX(2deg) rotateZ(-7deg) scaleY(0.95) translatex(2%)\r\n}\r\n\r\n.lights-off .hero-media-image {\r\n\tbox-shadow: 48px 16px 48px rgba(0, 0, 0, 0.2)\r\n}\r\n\r\n@media (max-width: 639px) {\r\n\t.hero-cta>* {\r\n\t\tdisplay: flex\r\n\t}\r\n\t.hero-cta>*+* {\r\n\t\tmargin-top: 32px\r\n\t}\r\n\t.lights-toggle {\r\n\t\tjustify-content: center\r\n\t}\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.hero {\r\n\t\ttext-align: left;\r\n\t\tpadding-top: 88px;\r\n\t\tpadding-bottom: 120px\r\n\t}\r\n\t.hero-inner {\r\n\t\tdisplay: flex;\r\n\t\tjustify-content: space-between\r\n\t}\r\n\t.hero-copy {\r\n\t\tpadding-top: 40px;\r\n\t\tpadding-right: 48px;\r\n\t\tmin-width: 448px;\r\n\t\tmax-width: 512px;\r\n\t\tz-index: 1\r\n\t}\r\n\t.hero-title {\r\n\t\tmargin-bottom: 16px\r\n\t}\r\n\t.hero-paragraph {\r\n\t\tmargin-bottom: 32px\r\n\t}\r\n\t.hero-cta {\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tmargin: 0\r\n\t}\r\n\t.hero-cta .button {\r\n\t\tmin-width: 170px\r\n\t}\r\n\t.hero-cta .button:first-child {\r\n\t\tmargin-right: 32px\r\n\t}\r\n\t.header-illustration {\r\n\t\tdisplay: block\r\n\t}\r\n\t.hero-media {\r\n\t\tz-index: 0\r\n\t}\r\n\t.hero-media img,\r\n\t.hero-media svg {\r\n\t\tmax-width: none\r\n\t}\r\n\t.header-illustration-image {\r\n\t\tdisplay: block;\r\n\t\tposition: absolute;\r\n\t\ttop: -168px;\r\n\t\tleft: -722px;\r\n\t\twidth: 1440px;\r\n\t\theight: 324px\r\n\t}\r\n}\r\n\r\n.features-wrap {\r\n\tmax-width: 540px;\r\n\tmargin: 0 auto\r\n}\r\n\r\n.features-image {\r\n\tposition: relative;\r\n\tmargin-top: 64px;\r\n\tmargin-bottom: 112px\r\n}\r\n\r\n.features-illustration {\r\n\tposition: absolute;\r\n\ttop: -2%;\r\n\tleft: 50%;\r\n\ttransform: translateX(-50%);\r\n\tmax-width: 136%\r\n}\r\n\r\n.features-box {\r\n\tmargin: 0 auto;\r\n\tbox-shadow: 48px 16px 48px rgba(24, 37, 56, 0.12);\r\n\ttransform: perspective(1000px) rotateY(10deg) translateY(2%)\r\n}\r\n\r\n.lights-off .features-box {\r\n\tbox-shadow: 48px 16px 48px rgba(0, 0, 0, 0.2)\r\n}\r\n\r\n.feature {\r\n\ttext-align: center;\r\n\tmargin-bottom: 48px\r\n}\r\n\r\n.feature:last-of-type {\r\n\tmargin-bottom: 0\r\n}\r\n\r\n.feature-icon {\r\n\tdisplay: inline-flex;\r\n\tmargin-bottom: 16px\r\n}\r\n\r\n.feature-icon img,\r\n.feature-icon svg {\r\n\tmax-width: none\r\n}\r\n\r\n.feature-title {\r\n\tposition: relative;\r\n\tmargin-bottom: 26px\r\n}\r\n\r\n.feature-title::after {\r\n\tcontent: '';\r\n\twidth: 32px;\r\n\theight: 2px;\r\n\tposition: absolute;\r\n\tbottom: -14px;\r\n\tleft: calc(50% - 16px);\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.lights-off .feature-title::after {\r\n\tbackground: #304057\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.features {\r\n\t\tposition: relative\r\n\t}\r\n\t.features .section-inner {\r\n\t\tpadding-bottom: 100px\r\n\t}\r\n\t.features .section-paragraph {\r\n\t\tpadding-left: 72px;\r\n\t\tpadding-right: 72px\r\n\t}\r\n\t.features::before {\r\n\t\tcontent: '';\r\n\t\twidth: 100%;\r\n\t\theight: 300px;\r\n\t\tposition: absolute;\r\n\t\tleft: 0;\r\n\t\ttop: 168px;\r\n\t\tbackground: linear-gradient(to bottom, rgba(83, 95, 215, 0), rgba(83, 95, 215, 0.04))\r\n\t}\r\n\t.lights-off .features::before {\r\n\t\tdisplay: none\r\n\t}\r\n\t.feature {\r\n\t\ttext-align: left\r\n\t}\r\n\t.feature-inner {\r\n\t\tdisplay: flex\r\n\t}\r\n\t.feature-icon {\r\n\t\tdisplay: block;\r\n\t\tmargin-top: 8px;\r\n\t\tmargin-right: 32px;\r\n\t\tmargin-bottom: 0\r\n\t}\r\n\t.feature-title::after {\r\n\t\tleft: 0\r\n\t}\r\n}\r\n\r\n.cta {\r\n\tposition: relative\r\n}\r\n\r\n.cta .section-inner {\r\n\tpadding-bottom: 64px\r\n}\r\n\r\n.cta .section-paragraph {\r\n\tmargin-bottom: 32px\r\n}\r\n\r\n.cta::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tbottom: -32px;\r\n\tleft: calc(50% - 720px);\r\n\theight: 263px;\r\n\twidth: 1440px;\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")\r\n}\r\n\r\n.lights-off .cta::before {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")\r\n}\r\n\r\n.cta-cta {\r\n\tmax-width: 400px;\r\n\tmargin-left: auto;\r\n\tmargin-right: auto\r\n}\r\n\r\n@media (max-width: 639px) {\r\n\t.cta-cta .button {\r\n\t\tdisplay: flex\r\n\t}\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.cta .section-inner {\r\n\t\tpadding-bottom: 128px\r\n\t}\r\n\t.cta .section-paragraph {\r\n\t\tmargin-bottom: 40px;\r\n\t\tpadding-left: 72px;\r\n\t\tpadding-right: 72px\r\n\t}\r\n\t.cta::before {\r\n\t\tbottom: 0\r\n\t}\r\n\t.cta-cta .button {\r\n\t\tmin-width: 170px\r\n\t}\r\n}\r\n\r\n.is-boxed {\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.body-wrap {\r\n\tbackground: #fff;\r\n\toverflow: hidden;\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\tmin-height: 100vh\r\n}\r\n\r\n.boxed-container {\r\n\tmax-width: 1440px;\r\n\tmargin: 0 auto;\r\n\tbox-shadow: 0 16px 48px rgba(255, 255, 255, 0.5)\r\n}\r\n\r\nmain {\r\n\tflex: 1 0 auto\r\n}\r\n\r\n.section-inner {\r\n\tposition: relative;\r\n\tpadding-top: 48px;\r\n\tpadding-bottom: 48px\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.section-inner {\r\n\t\tpadding-top: 88px;\r\n\t\tpadding-bottom: 88px\r\n\t}\r\n}\r\n\r\n.site-footer {\r\n\tfont-size: 14px;\r\n\tline-height: 20px;\r\n\tletter-spacing: 0px;\r\n\tbackground: #182538;\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.site-footer a {\r\n\tcolor: #6B7A90;\r\n\ttext-decoration: none\r\n}\r\n\r\n.site-footer a:hover,\r\n.site-footer a:active {\r\n\ttext-decoration: underline\r\n}\r\n\r\n.site-footer::before {\r\n\tdisplay: none\r\n}\r\n\r\n.lights-off .site-footer::before {\r\n\tdisplay: block\r\n}\r\n\r\n.site-footer-inner {\r\n\tposition: relative;\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\tpadding-top: 48px;\r\n\tpadding-bottom: 48px\r\n}\r\n\r\n.footer-brand,\r\n.footer-links,\r\n.footer-social-links,\r\n.footer-copyright {\r\n\tflex: none;\r\n\twidth: 100%;\r\n\tdisplay: inline-flex;\r\n\tjustify-content: center\r\n}\r\n\r\n.footer-brand,\r\n.footer-links,\r\n.footer-social-links {\r\n\tmargin-bottom: 24px\r\n}\r\n\r\n.footer-links li+li,\r\n.footer-social-links li+li {\r\n\tmargin-left: 16px\r\n}\r\n\r\n.footer-social-links li {\r\n\tdisplay: inline-flex\r\n}\r\n\r\n.footer-social-links li a {\r\n\tpadding: 8px\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.site-footer-inner {\r\n\t\tjustify-content: space-between;\r\n\t\tpadding-top: 72px;\r\n\t\tpadding-bottom: 72px\r\n\t}\r\n\t.footer-brand,\r\n\t.footer-links,\r\n\t.footer-social-links,\r\n\t.footer-copyright {\r\n\t\tflex: 50%\r\n\t}\r\n\t.footer-brand,\r\n\t.footer-copyright {\r\n\t\tjustify-content: flex-start\r\n\t}\r\n\t.footer-links,\r\n\t.footer-social-links {\r\n\t\tjustify-content: flex-end\r\n\t}\r\n\t.footer-links {\r\n\t\torder: 1;\r\n\t\tmargin-bottom: 0\r\n\t}\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::before {\r\n\tbackground: #41a5ea;\r\n\tbackground: linear-gradient(to right, #2FEAFC 0, #535FD7 100%)\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::after {\r\n\tbackground: #fff\r\n}\r\n\r\n.switch[type=\"checkbox\"]:checked+label::before {\r\n\tbackground: #ff9d34;\r\n\tbackground: linear-gradient(to right, #FFBC48 0, #FE7E1F 100%)\r\n}\r\n\r\n.asset-light,\r\n.asset-dark {\r\n\tvisibility: hidden;\r\n\topacity: 0\r\n}\r\n\r\n.is-loaded .asset-light,\r\n.is-loaded .asset-dark {\r\n\tvisibility: visible;\r\n\topacity: 1\r\n}\r\n\r\n.asset-dark {\r\n\tdisplay: none\r\n}\r\n\r\n.lights-off {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.lights-off .asset-light {\r\n\tdisplay: none\r\n}\r\n\r\n.lights-off .asset-dark {\r\n\tdisplay: block\r\n}\r\n\r\n.lights-off a {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.lights-off h1,\r\n.lights-off h2,\r\n.lights-off h3,\r\n.lights-off h4,\r\n.lights-off h5,\r\n.lights-off h6,\r\n.lights-off .h1,\r\n.lights-off .h2,\r\n.lights-off .h3,\r\n.lights-off .h4,\r\n.lights-off .h5,\r\n.lights-off .h6 {\r\n\tcolor: #fff !important\r\n}\r\n\r\n.lights-off.is-boxed {\r\n\tbackground: #202d3f\r\n}\r\n\r\n.lights-off .body-wrap {\r\n\tbackground: #182538\r\n}\r\n\r\n.lights-off .boxed-container {\r\n\tbox-shadow: 0 16px 48px rgba(0, 0, 0, 0.2)\r\n}\r\n\r\n.lights-off hr {\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #304057\r\n}\r\n\r\n.lights-off .has-top-divider {\r\n\tposition: relative\r\n}\r\n\r\n.lights-off .has-top-divider::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #304057\r\n}\r\n\r\n.lights-off .has-bottom-divider {\r\n\tposition: relative\r\n}\r\n\r\n.lights-off .has-bottom-divider::after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #304057\r\n}\r\n\r\nbody,\r\na,\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6,\r\n.h1,\r\n.h2,\r\n.h3,\r\n.h4,\r\n.h5,\r\n.h6 {\r\n\ttransition: color .25s ease\r\n}\r\n\r\n.is-boxed,\r\n.body-wrap,\r\n.has-top-divider,\r\n.has-bottom-divider::after,\r\nhr::after,\r\n.feature-title::after {\r\n\ttransition: background .25s ease\r\n}\r\n\r\n.boxed-container {\r\n\ttransition: box-shadow .15s ease\r\n}\r\n\r\n@-webkit-keyframes fadeInLogo {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.5)\r\n\t}\r\n}\r\n\r\n@keyframes fadeInLogo {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.5)\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeInLeftMedia {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.8) translate3d(40px, 10px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@keyframes fadeInLeftMedia {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.8) translate3d(40px, 10px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeInLeftIllustration {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(40px, 10px, 0)\r\n\t}\r\n}\r\n\r\n@keyframes fadeInLeftIllustration {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(40px, 10px, 0)\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeUpBox {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(-40px, 20px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@keyframes fadeUpBox {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(-40px, 20px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeIn {\r\n\t0% {\r\n\t\topacity: 0\r\n\t}\r\n}\r\n\r\n@keyframes fadeIn {\r\n\t0% {\r\n\t\topacity: 0\r\n\t}\r\n}\r\n\r\n.is-loaded .header-logo-image {\r\n\t-webkit-animation: fadeInLogo 0.35s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeInLogo 0.35s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .hero-media-image {\r\n\t-webkit-animation: fadeInLeftMedia 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeInLeftMedia 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .hero-media-illustration-image {\r\n\t-webkit-animation: fadeInLeftIllustration 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeInLeftIllustration 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .features-box {\r\n\t-webkit-animation: fadeUpBox 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeUpBox 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .header-illustration-image {\r\n\t-webkit-animation: fadeIn 1s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeIn 1s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .features-illustration {\r\n\t-webkit-animation: fadeIn 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeIn 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n.wrap-form-head-register {\r\n\tposition: relative;\r\n\tflex-basis: 32%;\r\n\tmin-width: 415px;\r\n}\r\n\r\n.form-head-register {\r\n\tposition: relative;\r\n\twidth: 100%;\r\n\tbackground-color: var(--white);\r\n\tmin-height: 50vh;\r\n\toverflow: hidden;\r\n\tborder-radius: 20px;\r\n\tbox-shadow: 0 0 20px 0 rgb(29 31 89 / 10%);\r\n\tpadding: 35px 25px;\r\n\tz-index: 1;\r\n}\r\n\r\n.forms-container {\r\n\tposition: relative;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tbox-sizing: inherit;\r\n}\r\n\r\n.forms-container form {\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n}\r\n\r\n.wrap-form-head-register .title {\r\n\tfont-size: 2.2rem;\r\n\tmargin-top: 10px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.wrap-form-head-register .input-field {\r\n\tmax-width: 300px;\r\n\twidth: 100%;\r\n\theight: 50px;\r\n\tbackground-color: #f0f0f0;\r\n\tmargin: 12px 0;\r\n\tborder-radius: 15px;\r\n\tdisplay: grid;\r\n\tgrid-template-columns: 15% 85%;\r\n\tpadding: 0 0.4rem;\r\n\tposition: relative;\r\n\r\n}\r\n\r\n.wrap-form-head-register .input-field i {\r\n\ttext-align: center;\r\n\tline-height: 50px;\r\n\tcolor: #555;\r\n\t/*đổi màu */\r\n\tfont-size: 1.5rem;\r\n}\r\n\r\n.wrap-form-head-register .input-field input {\r\n\tbackground: none;\r\n\toutline: none;\r\n\tborder: none;\r\n\tline-height: 1;\r\n\tfont-weight: 400;\r\n\tfont-size: 1.2rem;\r\n\tcolor: black;\r\n\t/*đổi màu */\r\n}\r\n\r\n.wrap-form-head-register input[type=text]:focus,\r\n.wrap-form-head-register input[type=password]:focus,\r\n.wrap-form-head-register input[type=email]:focus {\r\n\tborder-bottom: 2px solid var(--main-red);\r\n}\r\n\r\n.wrap-form-head-register .input-field input:-moz-placeholder-shown {\r\n\tcolor: #aaa;\r\n\t/*đổi màu */\r\n\tfont-weight: 400;\r\n}\r\n\r\n.wrap-form-head-register .input-field input:-ms-input-placeholder {\r\n\tcolor: #aaa;\r\n\t/*đổi màu */\r\n\tfont-weight: 400;\r\n}\r\n\r\n.wrap-form-head-register .input-field input:placeholder-shown {\r\n\tcolor: #aaa;\r\n\t/*đổi màu */\r\n\tfont-weight: 400;\r\n}\r\n#signin-form .button,\r\n#root2 .wrap-form-head-register .button {\r\n\twidth: 150px;\r\n\toutline: none;\r\n\tborder: none;\r\n\tborder-radius: 48px;\r\n\ttext-transform: uppercase;\r\n\tfont-weight: 600;\r\n\tmargin: 12px 0;\r\n}\r\n#signin-form .button,\r\n#root2 .forms-container .button {\r\n\tcolor: white;\r\n\tbackground-color: var(--main-yellow);\r\n}\r\n#signin-form .button:hover ,\r\n#root2 .forms-container .button:hover {\r\n\tbackground-color: var(--main-red);\r\n}\r\n\r\n.social-text {\r\n\tpadding: 0.7rem 0;\r\n}\r\n\r\n.social-media {\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n}\r\n\r\n.social-icon {\r\n\theight: 46px;\r\n\twidth: 46px;\r\n\tmargin: 0 0.45rem;\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\ttext-decoration: none;\r\n\tcolor: var(--dark-blue-color-2);\r\n\tfont-size: 1.3rem;\r\n\tborder-radius: 50%;\r\n\ttransition: all 0.5s;\r\n}\r\n.social-icon:hover{\r\n\tcolor: #fff;\r\n}\r\n.social-icon__facebook{\r\n\t--facebook-color:#36589d; \r\n\tcolor: var(--facebook-color);\r\n\tborder: 1px solid var(--facebook-color);\r\n\r\n}\r\n.social-icon__facebook:hover{\r\n\tbackground-color: var(--facebook-color);\r\n}\r\n.social-icon__google{\r\n\t--google-color:#ea230f; \r\n\tcolor: var(--google-color);\r\n\tborder: 1px solid var(--google-color);\r\n}\r\n.social-icon__google:hover{\r\n\tbackground-color: var(--google-color);\r\n}\r\n\r\n.login-form{\r\n\tmargin-top: 60px;\r\n\tdisplay: flex;\r\n\theight: 100%;\r\n\twidth: 100%;\r\n\tposition: fixed;\r\n\tbackground-color: rgba(0, 0, 0, .2);\r\n\tz-index: 10;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n}\r\n\r\n.login-form .wrap-form-head-register{\r\n\tflex-basis: 25%;\r\n\r\n}\r\n.login-form .form-head-register{\r\n\theight: 500px;\r\n}\r\n\r\n#signin-form .close-icon{\r\n\tjustify-content: flex-end;\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.close-icon .fa-times{\r\n\tfont-size: 28px;\r\n}\r\n.close-icon .fa-times:hover{\r\n\tcolor: var(--main-red);\r\n\tcursor: pointer;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n@media (max-width: 640px) {\r\n\t.h1-mobile {\r\n\t\tfont-size: 38px;\r\n\t\tline-height: 48px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n\t.h2-mobile {\r\n\t\tfont-size: 32px;\r\n\t\tline-height: 42px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n\t.h3-mobile {\r\n\t\tfont-size: 24px;\r\n\t\tline-height: 34px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n\t.h4-mobile,\r\n\t.h5-mobile,\r\n\t.h6-mobile {\r\n\t\tfont-size: 20px;\r\n\t\tline-height: 30px;\r\n\t\tletter-spacing: -0.1px\r\n\t}\r\n}\r\n\r\n.text-light {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.text-light a {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.text-light h1,\r\n.text-light h2,\r\n.text-light h3,\r\n.text-light h4,\r\n.text-light h5,\r\n.text-light h6,\r\n.text-light .h1,\r\n.text-light .h2,\r\n.text-light .h3,\r\n.text-light .h4,\r\n.text-light .h5,\r\n.text-light .h6 {\r\n\tcolor: #fff !important\r\n}\r\n\r\n.text-sm {\r\n\tfont-size: 18px;\r\n\tline-height: 27px;\r\n\tletter-spacing: -0.1px\r\n}\r\n\r\n.text-xs {\r\n\tfont-size: 16px;\r\n\tline-height: 24px;\r\n\tletter-spacing: -0.1px\r\n}\r\n\r\n\r\n\r\n.screen-reader-text {\r\n\tclip: rect(1px, 1px, 1px, 1px);\r\n\tposition: absolute !important;\r\n\theight: 1px;\r\n\twidth: 1px;\r\n\toverflow: hidden;\r\n\tword-wrap: normal !important\r\n}\r\n\r\n.screen-reader-text:focus {\r\n\tborder-radius: 2px;\r\n\tbox-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);\r\n\tclip: auto !important;\r\n\tdisplay: block;\r\n\tfont-family: \"IBM Plex Sans\", sans-serif;\r\n\tfont-size: 14px;\r\n\tletter-spacing: 0px;\r\n\tfont-weight: 600;\r\n\tline-height: 16px;\r\n\ttext-decoration: none;\r\n\ttext-transform: uppercase;\r\n\tbackground-color: #fff;\r\n\tcolor: #535FD7 !important;\r\n\tborder: none;\r\n\theight: auto;\r\n\tleft: 8px;\r\n\tpadding: 16px 32px;\r\n\ttop: 8px;\r\n\twidth: auto;\r\n\tz-index: 100000\r\n}\r\n\r\n.list-reset {\r\n\tlist-style: none;\r\n\tpadding: 0\r\n}\r\n\r\n.text-left {\r\n\ttext-align: left\r\n}\r\n\r\n.text-center {\r\n\ttext-align: center\r\n}\r\n\r\n.text-right {\r\n\ttext-align: right\r\n}\r\n\r\n.text-primary {\r\n\tcolor: #535FD7\r\n}\r\n\r\n.text-secondary {\r\n\tcolor: #61EFFD\r\n}\r\n\r\n.has-top-divider {\r\n\tposition: relative\r\n}\r\n\r\n.has-top-divider::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.has-bottom-divider {\r\n\tposition: relative\r\n}\r\n\r\n.has-bottom-divider::after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.m-0 {\r\n\tmargin: 0\r\n}\r\n\r\n.mt-0 {\r\n\tmargin-top: 0\r\n}\r\n\r\n.mr-0 {\r\n\tmargin-right: 0\r\n}\r\n\r\n.mb-0 {\r\n\tmargin-bottom: 0\r\n}\r\n\r\n.ml-0 {\r\n\tmargin-left: 0\r\n}\r\n\r\n.m-8 {\r\n\tmargin: 8px\r\n}\r\n\r\n.mt-8 {\r\n\tmargin-top: 8px\r\n}\r\n\r\n.mr-8 {\r\n\tmargin-right: 8px\r\n}\r\n\r\n.mb-8 {\r\n\tmargin-bottom: 8px\r\n}\r\n\r\n.ml-8 {\r\n\tmargin-left: 8px\r\n}\r\n\r\n.m-16 {\r\n\tmargin: 16px\r\n}\r\n\r\n.mt-16 {\r\n\tmargin-top: 16px\r\n}\r\n\r\n.mr-16 {\r\n\tmargin-right: 16px\r\n}\r\n\r\n.mb-16 {\r\n\tmargin-bottom: 16px\r\n}\r\n\r\n.ml-16 {\r\n\tmargin-left: 16px\r\n}\r\n\r\n.m-24 {\r\n\tmargin: 24px\r\n}\r\n\r\n.mt-24 {\r\n\tmargin-top: 24px\r\n}\r\n\r\n.mr-24 {\r\n\tmargin-right: 24px\r\n}\r\n\r\n.mb-24 {\r\n\tmargin-bottom: 24px\r\n}\r\n\r\n.ml-24 {\r\n\tmargin-left: 24px\r\n}\r\n\r\n.m-32 {\r\n\tmargin: 32px\r\n}\r\n\r\n.mt-32 {\r\n\tmargin-top: 32px\r\n}\r\n\r\n.mr-32 {\r\n\tmargin-right: 32px\r\n}\r\n\r\n.mb-32 {\r\n\tmargin-bottom: 32px\r\n}\r\n\r\n.ml-32 {\r\n\tmargin-left: 32px\r\n}\r\n\r\n.m-40 {\r\n\tmargin: 40px\r\n}\r\n\r\n.mt-40 {\r\n\tmargin-top: 40px\r\n}\r\n\r\n.mr-40 {\r\n\tmargin-right: 40px\r\n}\r\n\r\n.mb-40 {\r\n\tmargin-bottom: 40px\r\n}\r\n\r\n.ml-40 {\r\n\tmargin-left: 40px\r\n}\r\n\r\n.m-48 {\r\n\tmargin: 48px\r\n}\r\n\r\n.mt-48 {\r\n\tmargin-top: 48px\r\n}\r\n\r\n.mr-48 {\r\n\tmargin-right: 48px\r\n}\r\n\r\n.mb-48 {\r\n\tmargin-bottom: 48px\r\n}\r\n\r\n.ml-48 {\r\n\tmargin-left: 48px\r\n}\r\n\r\n.m-56 {\r\n\tmargin: 56px\r\n}\r\n\r\n.mt-56 {\r\n\tmargin-top: 56px\r\n}\r\n\r\n.mr-56 {\r\n\tmargin-right: 56px\r\n}\r\n\r\n.mb-56 {\r\n\tmargin-bottom: 56px\r\n}\r\n\r\n.ml-56 {\r\n\tmargin-left: 56px\r\n}\r\n\r\n.m-64 {\r\n\tmargin: 64px\r\n}\r\n\r\n.mt-64 {\r\n\tmargin-top: 64px\r\n}\r\n\r\n.mr-64 {\r\n\tmargin-right: 64px\r\n}\r\n\r\n.mb-64 {\r\n\tmargin-bottom: 64px\r\n}\r\n\r\n.ml-64 {\r\n\tmargin-left: 64px\r\n}\r\n\r\n.p-0 {\r\n\tpadding: 0\r\n}\r\n\r\n.pt-0 {\r\n\tpadding-top: 0\r\n}\r\n\r\n.pr-0 {\r\n\tpadding-right: 0\r\n}\r\n\r\n.pb-0 {\r\n\tpadding-bottom: 0\r\n}\r\n\r\n.pl-0 {\r\n\tpadding-left: 0\r\n}\r\n\r\n.p-8 {\r\n\tpadding: 8px\r\n}\r\n\r\n.pt-8 {\r\n\tpadding-top: 8px\r\n}\r\n\r\n.pr-8 {\r\n\tpadding-right: 8px\r\n}\r\n\r\n.pb-8 {\r\n\tpadding-bottom: 8px\r\n}\r\n\r\n.pl-8 {\r\n\tpadding-left: 8px\r\n}\r\n\r\n.p-16 {\r\n\tpadding: 16px\r\n}\r\n\r\n.pt-16 {\r\n\tpadding-top: 16px\r\n}\r\n\r\n.pr-16 {\r\n\tpadding-right: 16px\r\n}\r\n\r\n.pb-16 {\r\n\tpadding-bottom: 16px\r\n}\r\n\r\n.pl-16 {\r\n\tpadding-left: 16px\r\n}\r\n\r\n.p-24 {\r\n\tpadding: 24px\r\n}\r\n\r\n.pt-24 {\r\n\tpadding-top: 24px\r\n}\r\n\r\n.pr-24 {\r\n\tpadding-right: 24px\r\n}\r\n\r\n.pb-24 {\r\n\tpadding-bottom: 24px\r\n}\r\n\r\n.pl-24 {\r\n\tpadding-left: 24px\r\n}\r\n\r\n.p-32 {\r\n\tpadding: 32px\r\n}\r\n\r\n.pt-32 {\r\n\tpadding-top: 32px\r\n}\r\n\r\n.pr-32 {\r\n\tpadding-right: 32px\r\n}\r\n\r\n.pb-32 {\r\n\tpadding-bottom: 32px\r\n}\r\n\r\n.pl-32 {\r\n\tpadding-left: 32px\r\n}\r\n\r\n.p-40 {\r\n\tpadding: 40px\r\n}\r\n\r\n.pt-40 {\r\n\tpadding-top: 40px\r\n}\r\n\r\n.pr-40 {\r\n\tpadding-right: 40px\r\n}\r\n\r\n.pb-40 {\r\n\tpadding-bottom: 40px\r\n}\r\n\r\n.pl-40 {\r\n\tpadding-left: 40px\r\n}\r\n\r\n.p-48 {\r\n\tpadding: 48px\r\n}\r\n\r\n.pt-48 {\r\n\tpadding-top: 48px\r\n}\r\n\r\n.pr-48 {\r\n\tpadding-right: 48px\r\n}\r\n\r\n.pb-48 {\r\n\tpadding-bottom: 48px\r\n}\r\n\r\n.pl-48 {\r\n\tpadding-left: 48px\r\n}\r\n\r\n.p-56 {\r\n\tpadding: 56px\r\n}\r\n\r\n.pt-56 {\r\n\tpadding-top: 56px\r\n}\r\n\r\n.pr-56 {\r\n\tpadding-right: 56px\r\n}\r\n\r\n.pb-56 {\r\n\tpadding-bottom: 56px\r\n}\r\n\r\n.pl-56 {\r\n\tpadding-left: 56px\r\n}\r\n\r\n.p-64 {\r\n\tpadding: 64px\r\n}\r\n\r\n.pt-64 {\r\n\tpadding-top: 64px\r\n}\r\n\r\n.pr-64 {\r\n\tpadding-right: 64px\r\n}\r\n\r\n.pb-64 {\r\n\tpadding-bottom: 64px\r\n}\r\n\r\n.pl-64 {\r\n\tpadding-left: 64px\r\n}\r\n\r\n.sr .has-animations .is-revealing {\r\n\tvisibility: hidden\r\n}\r\n\r\n.input,\r\n.textarea {\r\n\tbackground-color: #182538;\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n\tborder-color: #E9EDF3;\r\n\tborder-radius: 2px;\r\n\tcolor: #6B7A90;\r\n\tmax-width: 100%;\r\n\twidth: 100%\r\n}\r\n\r\n.input:-ms-input-placeholder,\r\n.textarea:-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input::-moz-placeholder, .textarea::-moz-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input:-ms-input-placeholder, .textarea:-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input::placeholder,\r\n.textarea::placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input::-ms-input-placeholder,\r\n.textarea::-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input:-ms-input-placeholder,\r\n.textarea:-ms-input-placeholder {\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.input:hover,\r\n.textarea:hover {\r\n\tborder-color: #d9e0ea\r\n}\r\n\r\n.input:active,\r\n.input:focus,\r\n.textarea:active,\r\n.textarea:focus {\r\n\toutline: none;\r\n\tborder-color: #E9EDF3\r\n}\r\n\r\n.input[disabled],\r\n.textarea[disabled] {\r\n\tcursor: not-allowed;\r\n\tbackground-color: #F8F9FB;\r\n\tborder-color: #F8F9FB\r\n}\r\n\r\n.input {\r\n\t-moz-appearance: none;\r\n\t-webkit-appearance: none;\r\n\tfont-size: 16px;\r\n\tletter-spacing: -0.1px;\r\n\tline-height: 20px;\r\n\tpadding: 13px 16px;\r\n\theight: 48px;\r\n\tbox-shadow: none\r\n}\r\n\r\n.input .inline-input {\r\n\tdisplay: inline;\r\n\twidth: auto\r\n}\r\n\r\n.textarea {\r\n\tdisplay: block;\r\n\tmin-width: 100%;\r\n\tresize: vertical\r\n}\r\n\r\n.textarea .inline-textarea {\r\n\tdisplay: inline;\r\n\twidth: auto\r\n}\r\n\r\n.field-grouped>.control:not(:last-child) {\r\n\tmargin-bottom: 8px\r\n}\r\n\r\n.switch[type=\"checkbox\"] {\r\n\toutline: 0;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\tposition: absolute;\r\n\topacity: 0\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label {\r\n\tdisplay: inline-flex;\r\n\tposition: relative;\r\n\tline-height: 36px;\r\n\tpadding-left: 78px;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\tcursor: pointer\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::before,\r\n.switch[type=\"checkbox\"]+label::after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tdisplay: block\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::before {\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 64px;\r\n\theight: 36px;\r\n\tborder-radius: 18px;\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::after {\r\n\ttop: 6px;\r\n\tleft: 6px;\r\n\twidth: 24px;\r\n\theight: 24px;\r\n\tborder-radius: 12px;\r\n\tbackground: #fff;\r\n\ttransition: all .15s ease-out\r\n}\r\n\r\n.switch[type=\"checkbox\"]:checked+label::before {\r\n\tbackground: #535FD7\r\n}\r\n\r\n.switch[type=\"checkbox\"]:checked+label::after {\r\n\tleft: 34px\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.field-grouped {\r\n\t\tdisplay: flex\r\n\t}\r\n\t.field-grouped>.control {\r\n\t\tflex-shrink: 0\r\n\t}\r\n\t.field-grouped>.control.control-expanded {\r\n\t\tflex-grow: 1;\r\n\t\tflex-shrink: 1\r\n\t}\r\n\t.field-grouped>.control:not(:last-child) {\r\n\t\tmargin-bottom: 0;\r\n\t\tmargin-right: 8px\r\n\t}\r\n}\r\n#signin-form .button,\r\n#root2 .button {\r\n\tdisplay: inline-flex;\r\n\tfont-family: \"IBM Plex Sans\", sans-serif;\r\n\tfont-size: 14px;\r\n\tletter-spacing: 0px;\r\n\tfont-weight: 600;\r\n\tline-height: 16px;\r\n\ttext-decoration: none !important;\r\n\ttext-transform: uppercase;\r\n\tbackground-color: #E9EDF3;\r\n\tborder: none;\r\n\tborder-radius: 2px;\r\n\tcursor: pointer;\r\n\tjustify-content: center;\r\n\tpadding: 16px 32px;\r\n\theight: 48px;\r\n\ttext-align: center;\r\n\twhite-space: nowrap;\r\n\ttransition: all 0.5s;\r\n\r\n}\r\n\r\n#root2 .cta-cta a{\r\n\tbackground-color: #535FD7 ;\r\n\tcolor: #fff;\r\n}\r\n#root2 .cta-cta a:hover{\r\n\tbackground-color: transparent ;\r\n\tcolor: #333;\r\n\tborder: 1px solid #535FD7;\r\n}\r\n.button-shadow {\r\n\tposition: relative\r\n}\r\n\r\n.button-shadow::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\tbox-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);\r\n\tmix-blend-mode: multiply;\r\n\ttransition: box-shadow .15s ease\r\n}\r\n\r\n.button-shadow:hover::before {\r\n\tbox-shadow: 0 8px 24px rgba(255, 255, 255, 0.35)\r\n}\r\n\r\n\r\n.site-header {\r\n\tposition: relative;\r\n\tpadding: 24px 0;\r\n\tz-index: 2\r\n}\r\n\r\n.site-header::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: -140px;\r\n\tright: -100px;\r\n\twidth: 1440px;\r\n\theight: 324px;\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")\r\n}\r\n\r\n.lights-off .site-header::before {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")\r\n}\r\n\r\n.site-header-inner {\r\n\tposition: relative;\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\talign-items: center\r\n}\r\n\r\n.header-links {\r\n\tdisplay: inline-flex\r\n}\r\n\r\n.header-links li {\r\n\tdisplay: inline-flex\r\n}\r\n\r\n.header-links a:not(.button) {\r\n\tfont-size: 16px;\r\n\tline-height: 24px;\r\n\tletter-spacing: -0.1px;\r\n\tfont-weight: 600;\r\n\tcolor: #8595AE;\r\n\ttext-transform: uppercase;\r\n\ttext-decoration: none;\r\n\tline-height: 16px;\r\n\tpadding: 8px 24px\r\n}\r\n\r\n.header-links a:not(.button):hover,\r\n.header-links a:not(.button):active {\r\n\tcolor: #fff\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.site-header::before {\r\n\t\tdisplay: none\r\n\t}\r\n}\r\n\r\n.hero {\r\n\ttext-align: center;\r\n\tpadding-top: 48px;\r\n\tpadding-bottom: 88px\r\n}\r\n\r\n.hero-copy {\r\n\tposition: relative\r\n}\r\n\r\n.hero-paragraph {\r\n\tmargin-bottom: 32px\r\n}\r\n\r\n.hero-cta {\r\n\tmax-width: 400px;\r\n\tmargin-left: auto;\r\n\tmargin-right: auto;\r\n\tmargin-bottom: 80px\r\n}\r\n\r\n.lights-toggle {\r\n\tcolor: rgba(107, 122, 144, 0.64)\r\n}\r\n\r\n.header-illustration {\r\n\tdisplay: none\r\n}\r\n\r\n.header-illustration img,\r\n.header-illustration svg {\r\n\tmax-width: none\r\n}\r\n\r\n.header-illustration-image {\r\n\tdisplay: none\r\n}\r\n\r\n.hero-media {\r\n\tposition: relative\r\n}\r\n\r\n.hero-media-illustration {\r\n\tposition: absolute;\r\n\ttop: -10%;\r\n\tleft: -15px\r\n}\r\n\r\n.hero-media-illustration img,\r\n.hero-media-illustration svg {\r\n\tmax-width: 136%\r\n}\r\n\r\n.hero-media-container {\r\n\tposition: relative\r\n}\r\n\r\n.hero-media-image {\r\n\tmargin: 0 auto;\r\n\tbox-shadow: 48px 16px 48px rgba(24, 37, 56, 0.12);\r\n\tborder-radius: 4px;\r\n\ttransform: perspective(1000px) rotateY(16deg) rotateX(2deg) rotateZ(-7deg) scaleY(0.95) translatex(2%)\r\n}\r\n\r\n.lights-off .hero-media-image {\r\n\tbox-shadow: 48px 16px 48px rgba(0, 0, 0, 0.2)\r\n}\r\n\r\n@media (max-width: 639px) {\r\n\t.hero-cta>* {\r\n\t\tdisplay: flex\r\n\t}\r\n\t.hero-cta>*+* {\r\n\t\tmargin-top: 32px\r\n\t}\r\n\t.lights-toggle {\r\n\t\tjustify-content: center\r\n\t}\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.hero {\r\n\t\ttext-align: left;\r\n\t\tpadding-top: 88px;\r\n\t\tpadding-bottom: 120px\r\n\t}\r\n\t.hero-inner {\r\n\t\tdisplay: flex;\r\n\t\tjustify-content: space-between\r\n\t}\r\n\t.hero-copy {\r\n\t\tpadding-top: 40px;\r\n\t\tpadding-right: 48px;\r\n\t\tmin-width: 448px;\r\n\t\tmax-width: 512px;\r\n\t\tz-index: 1\r\n\t}\r\n\t.hero-title {\r\n\t\tmargin-bottom: 16px\r\n\t}\r\n\t.hero-paragraph {\r\n\t\tmargin-bottom: 32px\r\n\t}\r\n\t.hero-cta {\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tmargin: 0\r\n\t}\r\n\t.hero-cta .button {\r\n\t\tmin-width: 170px\r\n\t}\r\n\t.hero-cta .button:first-child {\r\n\t\tmargin-right: 32px\r\n\t}\r\n\t.header-illustration {\r\n\t\tdisplay: block\r\n\t}\r\n\t.hero-media {\r\n\t\tz-index: 0\r\n\t}\r\n\t.hero-media img,\r\n\t.hero-media svg {\r\n\t\tmax-width: none\r\n\t}\r\n\t.header-illustration-image {\r\n\t\tdisplay: block;\r\n\t\tposition: absolute;\r\n\t\ttop: -168px;\r\n\t\tleft: -722px;\r\n\t\twidth: 1440px;\r\n\t\theight: 324px\r\n\t}\r\n}\r\n\r\n.features-wrap {\r\n\tmax-width: 540px;\r\n\tmargin: 0 auto\r\n}\r\n\r\n.features-image {\r\n\tposition: relative;\r\n\tmargin-top: 64px;\r\n\tmargin-bottom: 112px\r\n}\r\n\r\n.features-illustration {\r\n\tposition: absolute;\r\n\ttop: -2%;\r\n\tleft: 50%;\r\n\ttransform: translateX(-50%);\r\n\tmax-width: 136%\r\n}\r\n\r\n.features-box {\r\n\tmargin: 0 auto;\r\n\tbox-shadow: 48px 16px 48px rgba(24, 37, 56, 0.12);\r\n\ttransform: perspective(1000px) rotateY(10deg) translateY(2%)\r\n}\r\n\r\n.lights-off .features-box {\r\n\tbox-shadow: 48px 16px 48px rgba(0, 0, 0, 0.2)\r\n}\r\n\r\n.feature {\r\n\ttext-align: center;\r\n\tmargin-bottom: 48px\r\n}\r\n\r\n.feature:last-of-type {\r\n\tmargin-bottom: 0\r\n}\r\n\r\n.feature-icon {\r\n\tdisplay: inline-flex;\r\n\tmargin-bottom: 16px\r\n}\r\n\r\n.feature-icon img,\r\n.feature-icon svg {\r\n\tmax-width: none\r\n}\r\n\r\n.feature-title {\r\n\tposition: relative;\r\n\tmargin-bottom: 26px\r\n}\r\n\r\n.feature-title::after {\r\n\tcontent: '';\r\n\twidth: 32px;\r\n\theight: 2px;\r\n\tposition: absolute;\r\n\tbottom: -14px;\r\n\tleft: calc(50% - 16px);\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.lights-off .feature-title::after {\r\n\tbackground: #304057\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.features {\r\n\t\tposition: relative\r\n\t}\r\n\t.features .section-inner {\r\n\t\tpadding-bottom: 100px\r\n\t}\r\n\t.features .section-paragraph {\r\n\t\tpadding-left: 72px;\r\n\t\tpadding-right: 72px\r\n\t}\r\n\t.features::before {\r\n\t\tcontent: '';\r\n\t\twidth: 100%;\r\n\t\theight: 300px;\r\n\t\tposition: absolute;\r\n\t\tleft: 0;\r\n\t\ttop: 168px;\r\n\t\tbackground: linear-gradient(to bottom, rgba(83, 95, 215, 0), rgba(83, 95, 215, 0.04))\r\n\t}\r\n\t.lights-off .features::before {\r\n\t\tdisplay: none\r\n\t}\r\n\t.feature {\r\n\t\ttext-align: left\r\n\t}\r\n\t.feature-inner {\r\n\t\tdisplay: flex\r\n\t}\r\n\t.feature-icon {\r\n\t\tdisplay: block;\r\n\t\tmargin-top: 8px;\r\n\t\tmargin-right: 32px;\r\n\t\tmargin-bottom: 0\r\n\t}\r\n\t.feature-title::after {\r\n\t\tleft: 0\r\n\t}\r\n}\r\n\r\n.cta {\r\n\tposition: relative\r\n}\r\n\r\n.cta .section-inner {\r\n\tpadding-bottom: 64px\r\n}\r\n\r\n.cta .section-paragraph {\r\n\tmargin-bottom: 32px\r\n}\r\n\r\n.cta::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tbottom: -32px;\r\n\tleft: calc(50% - 720px);\r\n\theight: 263px;\r\n\twidth: 1440px;\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")\r\n}\r\n\r\n.lights-off .cta::before {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")\r\n}\r\n\r\n.cta-cta {\r\n\tmax-width: 400px;\r\n\tmargin-left: auto;\r\n\tmargin-right: auto\r\n}\r\n\r\n@media (max-width: 639px) {\r\n\t.cta-cta .button {\r\n\t\tdisplay: flex\r\n\t}\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.cta .section-inner {\r\n\t\tpadding-bottom: 128px\r\n\t}\r\n\t.cta .section-paragraph {\r\n\t\tmargin-bottom: 40px;\r\n\t\tpadding-left: 72px;\r\n\t\tpadding-right: 72px\r\n\t}\r\n\t.cta::before {\r\n\t\tbottom: 0\r\n\t}\r\n\t.cta-cta .button {\r\n\t\tmin-width: 170px\r\n\t}\r\n}\r\n\r\n.is-boxed {\r\n\tbackground: #E9EDF3\r\n}\r\n\r\n.body-wrap {\r\n\tbackground: #fff;\r\n\toverflow: hidden;\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\tmin-height: 100vh\r\n}\r\n\r\n.boxed-container {\r\n\tmax-width: 1440px;\r\n\tmargin: 0 auto;\r\n\tbox-shadow: 0 16px 48px rgba(255, 255, 255, 0.5)\r\n}\r\n\r\nmain {\r\n\tflex: 1 0 auto\r\n}\r\n\r\n.section-inner {\r\n\tposition: relative;\r\n\tpadding-top: 48px;\r\n\tpadding-bottom: 48px\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.section-inner {\r\n\t\tpadding-top: 88px;\r\n\t\tpadding-bottom: 88px\r\n\t}\r\n}\r\n\r\n.site-footer {\r\n\tfont-size: 14px;\r\n\tline-height: 20px;\r\n\tletter-spacing: 0px;\r\n\tbackground: #182538;\r\n\tcolor: #6B7A90\r\n}\r\n\r\n.site-footer a {\r\n\tcolor: #6B7A90;\r\n\ttext-decoration: none\r\n}\r\n\r\n.site-footer a:hover,\r\n.site-footer a:active {\r\n\ttext-decoration: underline\r\n}\r\n\r\n.site-footer::before {\r\n\tdisplay: none\r\n}\r\n\r\n.lights-off .site-footer::before {\r\n\tdisplay: block\r\n}\r\n\r\n.site-footer-inner {\r\n\tposition: relative;\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\tpadding-top: 48px;\r\n\tpadding-bottom: 48px\r\n}\r\n\r\n.footer-brand,\r\n.footer-links,\r\n.footer-social-links,\r\n.footer-copyright {\r\n\tflex: none;\r\n\twidth: 100%;\r\n\tdisplay: inline-flex;\r\n\tjustify-content: center\r\n}\r\n\r\n.footer-brand,\r\n.footer-links,\r\n.footer-social-links {\r\n\tmargin-bottom: 24px\r\n}\r\n\r\n.footer-links li+li,\r\n.footer-social-links li+li {\r\n\tmargin-left: 16px\r\n}\r\n\r\n.footer-social-links li {\r\n\tdisplay: inline-flex\r\n}\r\n\r\n.footer-social-links li a {\r\n\tpadding: 8px\r\n}\r\n\r\n@media (min-width: 641px) {\r\n\t.site-footer-inner {\r\n\t\tjustify-content: space-between;\r\n\t\tpadding-top: 72px;\r\n\t\tpadding-bottom: 72px\r\n\t}\r\n\t.footer-brand,\r\n\t.footer-links,\r\n\t.footer-social-links,\r\n\t.footer-copyright {\r\n\t\tflex: 50%\r\n\t}\r\n\t.footer-brand,\r\n\t.footer-copyright {\r\n\t\tjustify-content: flex-start\r\n\t}\r\n\t.footer-links,\r\n\t.footer-social-links {\r\n\t\tjustify-content: flex-end\r\n\t}\r\n\t.footer-links {\r\n\t\torder: 1;\r\n\t\tmargin-bottom: 0\r\n\t}\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::before {\r\n\tbackground: #41a5ea;\r\n\tbackground: linear-gradient(to right, #2FEAFC 0, #535FD7 100%)\r\n}\r\n\r\n.switch[type=\"checkbox\"]+label::after {\r\n\tbackground: #fff\r\n}\r\n\r\n.switch[type=\"checkbox\"]:checked+label::before {\r\n\tbackground: #ff9d34;\r\n\tbackground: linear-gradient(to right, #FFBC48 0, #FE7E1F 100%)\r\n}\r\n\r\n.asset-light,\r\n.asset-dark {\r\n\tvisibility: hidden;\r\n\topacity: 0\r\n}\r\n\r\n.is-loaded .asset-light,\r\n.is-loaded .asset-dark {\r\n\tvisibility: visible;\r\n\topacity: 1\r\n}\r\n\r\n.asset-dark {\r\n\tdisplay: none\r\n}\r\n\r\n.lights-off {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.lights-off .asset-light {\r\n\tdisplay: none\r\n}\r\n\r\n.lights-off .asset-dark {\r\n\tdisplay: block\r\n}\r\n\r\n.lights-off a {\r\n\tcolor: #8595AE\r\n}\r\n\r\n.lights-off h1,\r\n.lights-off h2,\r\n.lights-off h3,\r\n.lights-off h4,\r\n.lights-off h5,\r\n.lights-off h6,\r\n.lights-off .h1,\r\n.lights-off .h2,\r\n.lights-off .h3,\r\n.lights-off .h4,\r\n.lights-off .h5,\r\n.lights-off .h6 {\r\n\tcolor: #fff !important\r\n}\r\n\r\n.lights-off.is-boxed {\r\n\tbackground: #202d3f\r\n}\r\n\r\n.lights-off .body-wrap {\r\n\tbackground: #182538\r\n}\r\n\r\n.lights-off .boxed-container {\r\n\tbox-shadow: 0 16px 48px rgba(0, 0, 0, 0.2)\r\n}\r\n\r\n.lights-off hr {\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #304057\r\n}\r\n\r\n.lights-off .has-top-divider {\r\n\tposition: relative\r\n}\r\n\r\n.lights-off .has-top-divider::before {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #304057\r\n}\r\n\r\n.lights-off .has-bottom-divider {\r\n\tposition: relative\r\n}\r\n\r\n.lights-off .has-bottom-divider::after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\tdisplay: block;\r\n\theight: 1px;\r\n\tbackground: #304057\r\n}\r\n\r\nbody,\r\na,\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6,\r\n.h1,\r\n.h2,\r\n.h3,\r\n.h4,\r\n.h5,\r\n.h6 {\r\n\ttransition: color .25s ease\r\n}\r\n\r\n.is-boxed,\r\n.body-wrap,\r\n.has-top-divider,\r\n.has-bottom-divider::after,\r\nhr::after,\r\n.feature-title::after {\r\n\ttransition: background .25s ease\r\n}\r\n\r\n.boxed-container {\r\n\ttransition: box-shadow .15s ease\r\n}\r\n\r\n@-webkit-keyframes fadeInLogo {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.5)\r\n\t}\r\n}\r\n\r\n@keyframes fadeInLogo {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.5)\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeInLeftMedia {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.8) translate3d(40px, 10px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@keyframes fadeInLeftMedia {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.8) translate3d(40px, 10px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeInLeftIllustration {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(40px, 10px, 0)\r\n\t}\r\n}\r\n\r\n@keyframes fadeInLeftIllustration {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(40px, 10px, 0)\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeUpBox {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(-40px, 20px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@keyframes fadeUpBox {\r\n\t0% {\r\n\t\topacity: 0;\r\n\t\ttransform: scale(0.95) translate3d(-40px, 20px, 0)\r\n\t}\r\n\t30% {\r\n\t\topacity: 1\r\n\t}\r\n}\r\n\r\n@-webkit-keyframes fadeIn {\r\n\t0% {\r\n\t\topacity: 0\r\n\t}\r\n}\r\n\r\n@keyframes fadeIn {\r\n\t0% {\r\n\t\topacity: 0\r\n\t}\r\n}\r\n\r\n.is-loaded .header-logo-image {\r\n\t-webkit-animation: fadeInLogo 0.35s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeInLogo 0.35s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .hero-media-image {\r\n\t-webkit-animation: fadeInLeftMedia 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeInLeftMedia 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .hero-media-illustration-image {\r\n\t-webkit-animation: fadeInLeftIllustration 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeInLeftIllustration 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .features-box {\r\n\t-webkit-animation: fadeUpBox 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeUpBox 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .header-illustration-image {\r\n\t-webkit-animation: fadeIn 1s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeIn 1s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n\r\n.is-loaded .features-illustration {\r\n\t-webkit-animation: fadeIn 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\tanimation: fadeIn 1s 0.2s both cubic-bezier(0.3, 0, 0.2, 1);\r\n\twill-change: transform\r\n}\r\n.wrap-form-head-register {\r\n\tposition: relative;\r\n\tflex-basis: 32%;\r\n\tmin-width: 415px;\r\n}\r\n\r\n.form-head-register {\r\n\tposition: relative;\r\n\twidth: 100%;\r\n\tbackground-color: var(--white);\r\n\tmin-height: 50vh;\r\n\toverflow: hidden;\r\n\tborder-radius: 20px;\r\n\tbox-shadow: 0 0 20px 0 rgb(29 31 89 / 10%);\r\n\tpadding: 35px 25px;\r\n\tz-index: 1;\r\n}\r\n\r\n.forms-container {\r\n\tposition: relative;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tbox-sizing: inherit;\r\n}\r\n\r\n.forms-container form {\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n}\r\n\r\n.wrap-form-head-register .title {\r\n\tfont-size: 2.2rem;\r\n\tmargin-top: 10px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.wrap-form-head-register .input-field {\r\n\tmax-width: 300px;\r\n\twidth: 100%;\r\n\theight: 50px;\r\n\tbackground-color: #f0f0f0;\r\n\tmargin: 12px 0;\r\n\tborder-radius: 15px;\r\n\tdisplay: grid;\r\n\tgrid-template-columns: 15% 85%;\r\n\tpadding: 0 0.4rem;\r\n\tposition: relative;\r\n\r\n}\r\n\r\n.wrap-form-head-register .input-field i {\r\n\ttext-align: center;\r\n\tline-height: 50px;\r\n\tcolor: #555;\r\n\t/*đổi màu */\r\n\tfont-size: 1.5rem;\r\n}\r\n\r\n.wrap-form-head-register .input-field input {\r\n\tbackground: none;\r\n\toutline: none;\r\n\tborder: none;\r\n\tline-height: 1;\r\n\tfont-weight: 400;\r\n\tfont-size: 1.2rem;\r\n\tcolor: black;\r\n\t/*đổi màu */\r\n}\r\n\r\n.wrap-form-head-register input[type=text]:focus,\r\n.wrap-form-head-register input[type=password]:focus,\r\n.wrap-form-head-register input[type=email]:focus {\r\n\tborder-bottom: 2px solid var(--main-red);\r\n}\r\n\r\n.wrap-form-head-register .input-field input:-moz-placeholder-shown {\r\n\tcolor: #aaa;\r\n\t/*đổi màu */\r\n\tfont-weight: 400;\r\n}\r\n\r\n.wrap-form-head-register .input-field input:-ms-input-placeholder {\r\n\tcolor: #aaa;\r\n\t/*đổi màu */\r\n\tfont-weight: 400;\r\n}\r\n\r\n.wrap-form-head-register .input-field input:placeholder-shown {\r\n\tcolor: #aaa;\r\n\t/*đổi màu */\r\n\tfont-weight: 400;\r\n}\r\n#signin-form .button,\r\n#root2 .wrap-form-head-register .button {\r\n\twidth: 150px;\r\n\toutline: none;\r\n\tborder: none;\r\n\tborder-radius: 48px;\r\n\ttext-transform: uppercase;\r\n\tfont-weight: 600;\r\n\tmargin: 12px 0;\r\n}\r\n#signin-form .button,\r\n#root2 .forms-container .button {\r\n\tcolor: white;\r\n\tbackground-color: var(--main-yellow);\r\n}\r\n#signin-form .button:hover ,\r\n#root2 .forms-container .button:hover {\r\n\tbackground-color: var(--main-red);\r\n}\r\n\r\n.social-text {\r\n\tpadding: 0.7rem 0;\r\n}\r\n\r\n.social-media {\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n}\r\n\r\n.social-icon {\r\n\theight: 46px;\r\n\twidth: 46px;\r\n\tmargin: 0 0.45rem;\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\ttext-decoration: none;\r\n\tcolor: var(--dark-blue-color-2);\r\n\tfont-size: 1.3rem;\r\n\tborder-radius: 50%;\r\n\ttransition: all 0.5s;\r\n}\r\n.social-icon:hover{\r\n\tcolor: #fff;\r\n}\r\n.social-icon__facebook{\r\n\t--facebook-color:#36589d; \r\n\tcolor: var(--facebook-color);\r\n\tborder: 1px solid var(--facebook-color);\r\n\r\n}\r\n.social-icon__facebook:hover{\r\n\tbackground-color: var(--facebook-color);\r\n}\r\n.social-icon__google{\r\n\t--google-color:#ea230f; \r\n\tcolor: var(--google-color);\r\n\tborder: 1px solid var(--google-color);\r\n}\r\n.social-icon__google:hover{\r\n\tbackground-color: var(--google-color);\r\n}\r\n\r\n.login-form{\r\n\tmargin-top: 60px;\r\n\tdisplay: flex;\r\n\theight: 100%;\r\n\twidth: 100%;\r\n\tposition: fixed;\r\n\tbackground-color: rgba(0, 0, 0, .2);\r\n\tz-index: 10;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n}\r\n\r\n.login-form .wrap-form-head-register{\r\n\tflex-basis: 25%;\r\n\r\n}\r\n.login-form .form-head-register{\r\n\theight: 500px;\r\n}\r\n\r\n#signin-form .close-icon{\r\n\tjustify-content: flex-end;\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.close-icon .fa-times{\r\n\tfont-size: 28px;\r\n}\r\n.close-icon .fa-times:hover{\r\n\tcolor: var(--main-red);\r\n\tcursor: pointer;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -78691,6 +79477,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_Home_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./resources/js/pages/Learn/Learn.css":
+/*!********************************************!*\
+  !*** ./resources/js/pages/Learn/Learn.css ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_Learn_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./Learn.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/pages/Learn/Learn.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_Learn_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_Learn_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 

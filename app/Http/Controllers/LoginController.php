@@ -19,7 +19,7 @@ class LoginController extends Controller
             $user->password = bcrypt($request->input('password'));
             $user->email = $request->input('email');
             $user->save();
-            setcookie("email", $user->email, time() + 60 * 5, "/");
+            setcookie("email", $user->email, time() + 60 * 15, "/");
             return response()->json([
                 'status' => 200,
                 'message' => 'Sign up thanh cong'
@@ -41,7 +41,7 @@ class LoginController extends Controller
         
         $User = User::where('email',$request->username)->orWhere('username',$request->username)->first();
         if ($User && password_verify($request->password, $User->password)) {
-            setcookie("email", $User->email, time() + 60 * 5, "/");
+            setcookie("email", $User->email, time() + 60 * 15, "/");
             return response()->json([
                 'status' => 200,
                 'message' => 'Sign in thanh cong',

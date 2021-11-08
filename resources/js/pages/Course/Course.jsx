@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Course.css'
 export default function Course({ User }) {
     return (
@@ -99,7 +100,7 @@ export default function Course({ User }) {
                                     <p>Xem giới thiệu khóa học</p>
                                 </div>
                                 <h5 className="course-fee">Miễn phí</h5>
-                                <button className="course-btn">ĐĂNG KÝ HỌC</button>
+                                <Link to="/learn" className="course-btn">ĐĂNG KÝ HỌC</Link>
                                 <ul>
                                     <li>
                                         <i className="fas fa-seedling"></i>

@@ -3,24 +3,7 @@
 
 
 
-@media (min-width: 641px) {
-	h1,
-	.h1 {
-		font-size: 44px;
-		line-height: 54px;
-		letter-spacing: 0px
-	}
-}
 
-
-@media (min-width: 641px) {
-	h2,
-	.h2 {
-		font-size: 38px;
-		line-height: 48px;
-		letter-spacing: -0.1px
-	}
-}
 
 
 

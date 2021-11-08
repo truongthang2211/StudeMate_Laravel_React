@@ -10,6 +10,7 @@ import Home from './pages/Home/Home';
 import My404 from './components/My404';
 import MyInfo from './pages/MyInfo/MyInfo';
 import Course from './pages/Course/Course';
+import Learn from './pages/Learn/Learn';
 function Index() {
     const [ShowForm, setShowForm] = useState(false)
     const [User, setUser] = useState(async()=>{
@@ -29,6 +30,7 @@ function Index() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/course" element={<Course />} />
+                    <Route exact path="/learn" element={!User?<Home/>:<Learn User={User}/>} />
                     <Route exact path="/profile" element={!User?<Home/>:<Profile User={User}/>} />
                     <Route exact path="/myinfo" element={!User?<Home/>:<MyInfo User={User}/>} />
                     <Route exact path="/login" element={User?<Home/>:<Login />} />

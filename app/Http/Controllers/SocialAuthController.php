@@ -38,7 +38,7 @@ class SocialAuthController extends Controller
         $user = Socialite::driver($provider)->stateless()->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         // dd($authUser->email);
-        setcookie("email", $authUser->email, time() + 60 * 5, "/");
+        setcookie("email", $authUser->email, time() + 60 * 15, "/");
         // dd(Auth::check());
         return Redirect::to(Session::get('pre_url'));
     }
