@@ -5,6 +5,7 @@ import './Navbar.css'
 import LoginForm from '../../components/LoginForm';
 import axios from 'axios';
 function Navbar({ ShowForm, handleShowForm, User }) {
+ 
   const animation = useSpring({
     config: {
       duration: 200
@@ -114,7 +115,7 @@ function Navbar({ ShowForm, handleShowForm, User }) {
                   <li><Link to="/myinfo">Thông tin của tôi</Link></li>
                   <li><Link to="/profile">Hồ sơ của tôi</Link></li>
                   <li><a href="/classmanagement">Quản lý khóa học</a></li>
-                  <li><a href="/tasks">Tạo khóa học</a></li>
+                  <li><Link to="/create-course">Tạo khóa học</Link></li>
                   <li><a id="cick-logoff" onClick={handleLogout} href="#">Thoát</a></li>
                 </ul>
               </div>

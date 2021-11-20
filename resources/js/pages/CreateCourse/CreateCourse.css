@@ -1,0 +1,289 @@
+
+.page-one-form{
+    height:auto;
+    flex-wrap: wrap;
+}
+.page-one-input{
+    display:flex;
+    flex-direction: column;
+    flex-basis: 50%;
+    
+}
+.page-one-input-desc{
+    flex-basis: 50%;
+    max-height: 388px;
+}
+.create-course-input-item{
+    margin: 18px 0;
+    justify-content: space-between;
+}
+
+.create-course-form{
+    background-color: #fff;
+    padding: 32px 48px;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field{
+    position: relative;
+    flex-basis: 80%;
+}
+.create-course-form-input{
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    height: 40px;
+    max-width: 500px;
+    width: 100%;
+    border-radius:4px;
+    transition: 0.2s ease;
+    outline: none;
+}
+.create-course-input-item .input-desc{
+    height: 200px;
+}
+.create-course-form-input:focus{
+    border-color: var(--main-yellow);
+}
+
+.create-course-form-label{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 13px;
+    user-select: none;
+    color: #999;
+    transition: 0.2s ease;
+    pointer-events: none;
+    font-size: 16px;
+}
+.create-course-form-input:not(:placeholder-shown) +
+.create-course-form-label,
+.create-course-form-input:focus + .create-course-form-label{
+    color: var(--main-red);
+    top: 0;
+    left: 5px;
+    padding: 0 6px;
+    background-color: #fff;
+    font-size: 13px;
+    font-weight:600;
+}
+
+.course-form-area{
+    height: 100%;
+    padding-top: 12px;
+    resize: none;
+}
+.course-form-label{
+    top: 10%;
+    transform: translateY(-50%);
+}
+.create-course-img{
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    margin-top: 18px;
+}
+.create-course-img img{
+    width: 100%;
+    max-width: 350px;
+    max-height: 300px;
+    border-radius: 5px;
+}
+.create-course-input-text{
+    color: #777;
+    margin-top: 18px;
+    margin-bottom:0;
+}
+
+#create-coure-file{
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+    color: transparent;
+    transition:0.25s ease-in-out;
+    opacity: 0;
+}
+#create-coure-file::-webkit-file-upload-button{
+    visibility: hidden;
+}
+#create-coure-file:hover{
+    border: 1px solid var(--main-yellow);
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.2)
+}
+.category-list{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: calc(100% - 36px);
+    display:flex;
+    width: 100%;
+    min-width: 400px;
+
+}
+.scroll-item{
+    flex-basis: 50%;
+    padding: 0;
+    margin: 0;
+    border-right: 1px solid #ddd;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.scroll-item .selected p,
+.scroll-item .selected i
+{
+    color: var(--main-red);
+    font-weight:600;
+}
+
+.category-item{
+    display: flex;
+    justify-content: space-between;
+    height: 32px;
+    align-items: center;
+    padding: 8px 12px;
+}
+.category-item:hover{
+    background-color: rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+.category-item p{
+    padding: 0;
+    margin: 0;
+    color: #555;
+}
+.category-item i{
+    font-size:14px;
+    color: #999;
+}
+.todo-button{
+    height: 40px;
+    padding: 8px 20px;
+    transition:0.2s ease-in-out;
+    font-weight: 600;
+    color: #fafafa;
+    background-color: var(--main-yellow);
+    border: 1px solid transparent;
+}
+.todo-button:hover{
+    background-color:transparent;
+    color: #555;
+    border: 1px solid #ddd;
+}
+.create-course-in-out{
+    justify-content: space-between;
+}
+.create-course-in-out,
+.create-course-input-item,
+.page-one-form
+{
+    display: flex;
+}
+.create-course-in,
+.create-course-out{
+    flex-basis: 45%;
+    overflow: hidden;
+}
+
+.page-two-form{
+    justify-content: start;
+    flex-direction: column;
+    text-align:center;
+}
+
+.page-one-form,
+.page-two-form,
+.page-three-form,
+.page-four-form{
+    min-height: 388px;
+}
+.my-custom-button-default{
+    background-color: var(--main-yellow);
+    border-radius: 5px;
+    color: #fff;
+
+}
+.my-custom-button-default:hover{
+    background-color: var(--main-red);
+    color: #fff;
+}
+.my-custom-button-default + .my-custom-button-default{
+    margin-left: 12px;    
+}
+.my-custom-button-simple{
+    background-color: transparent;
+    border-color: #ddd;
+    color: #555;
+
+}
+.fa-trash{
+    float: right;
+    color: #555;
+}
+.fa-trash:hover{
+    color: var(--main-yellow);
+    cursor: pointer;
+}
+.checkbox-item{
+    min-height: 32px;
+    height: auto;
+}
+.checkbox-item label{
+    margin-left: 12px;
+}
+.auto-create-input .create-course-input-item{
+    max-width: 50%;
+}
+.chapter-input{
+    position: relative;
+}
+.text-input-simple{
+    outline: none;
+    border:none;
+    border-bottom: 1px solid #898989;
+    max-width:50%;
+    width: 100%;
+    padding: 4px 8px;
+    background-color:transparent;
+}
+.page-four-form i{
+    position:absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+.list-course-create{
+    width: 100%;
+    max-width:50%;
+    padding: 18px 0;
+}
+.list-item-create-course{
+    background-color: aliceblue;
+    padding: 8px;
+    margin: 0 0 6px 16px;
+}
+.list-course-create .list-title,
+.list-item-create-course{
+    position: relative;
+}
+.page-four-form .fa-plus-circle{
+    left: -24px;
+}
+
+.page-four-form .fa-trash{
+    right: -24px;
+}
+
+.PriceInput::after{
+    content: 'VND';
+    position: absolute;
+    top: 8px;
+    right: 1.5em;
+}

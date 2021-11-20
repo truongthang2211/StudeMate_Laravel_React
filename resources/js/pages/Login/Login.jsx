@@ -1,12 +1,9 @@
-import React, { useEffect, useState, memo } from 'react';
-import axios from 'axios';
+import React, { useEffect, memo } from 'react';
+import SignUpForm from '../../components/SignUpForm';
+
 import './Login.css'
-function Login({ ShowForm, handleShowForm }) {
-    const [state, setState] = useState({
-        username: '',
-        email: '',
-        password: '',
-    });
+function Login() {
+ 
     const revealAnimations = () => {
         const sr = window.sr = ScrollReveal()
         sr.reveal('.feature', {
@@ -24,42 +21,16 @@ function Login({ ShowForm, handleShowForm }) {
             revealAnimations()
 
         }
-        FocusSignUp();
     }
     const FocusSignUp = () => {
         document.getElementsByName('username')[0].focus()
 
     }
-    let SignUpButton;
     useEffect(() => {
         LoginLoad();
-        SignUpButton = document.getElementsByClassName('btn__user--signup')[0]
-        SignUpButton.addEventListener('click', FocusSignUp)
-        return () => {
-            SignUpButton.removeEventListener('click', FocusSignUp)
-        }
-    }, [])
-
-    const handleInput = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value
-        });
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // res = await axios.post('http://127.0.0.1:8000/sign-up', state)
-        axios.post('/api/sign-up',state)
-            .then(function (response) {
-                console.log(response);
-                window.location.reload()
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        // console.log(res.data.message);
-    }
+        FocusSignUp();
+    })
+    console.log('render login-page')
     return (
         <>
             <div className="is-boxed has-animations" id="root2">
@@ -84,38 +55,7 @@ function Login({ ShowForm, handleShowForm }) {
                         <section className="hero">
                             <div className="container">
                                 <div className="hero-inner">
-                                    <div className="wrap-form-head-register">
-                                        <div className="form-head-register">
-                                            <div className="forms-container">
-                                                <form action="#" id="signup-form" onSubmit={handleSubmit}>
-                                                    <h2 className="title">Sign up</h2>
-                                                    <div className="input-field">
-                                                        <i className="fas fa-user"></i>
-                                                        <input type="text" onChange={handleInput} value={state.username} name="username" placeholder="Username" />
-                                                    </div>
-                                                    <div className="input-field">
-                                                        <i className="fas fa-envelope"></i>
-                                                        <input type="email" onChange={handleInput} value={state.email} name="email" placeholder="Email" />
-                                                    </div>
-                                                    <div className="input-field">
-                                                        <i className="fas fa-lock"></i>
-                                                        <input type="password" onChange={handleInput} value={state.password} name="password" placeholder="Password" />
-                                                    </div>
-                                                    <button type="submit" className="button solid">Sign Up</button>
-                                                    <p className="socil-text">Or Sign Up with social platforms</p>
-                                                    <div className="social-media">
-                                                        <a href="#" className="social-icon social-icon__facebook">
-                                                            <i className="fab fa-facebook-f"></i>
-                                                        </a>
-                                                        <a href="#" className="social-icon social-icon__google">
-                                                            <i className="fab fa-google"></i>
-                                                        </a>
-
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <SignUpForm/>
                                     <div className="hero-media">
                                         <div className="header-illustration">
                                             <img className="header-illustration-image asset-light"

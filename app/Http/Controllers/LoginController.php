@@ -19,15 +19,15 @@ class LoginController extends Controller
             $user->password = bcrypt($request->input('password'));
             $user->email = $request->input('email');
             $user->save();
-            setcookie("email", $user->email, time() + 60 * 15, "/");
+            setcookie("email", $user->email, time() + 60 * 60*24, "/");
             return response()->json([
                 'status' => 200,
-                'message' => 'Sign up thanh cong'
+                'message' => 'Đăng ký thành công'
             ]);
         }
         return response()->json([
-            'status' => 404,
-            'message' => 'Sign up 0 thanh cong'
+            'status' => 400,
+            'message' => 'Email hoặc username đã tồn tại'
         ]);
     }
     public function test(Request $request)
@@ -38,21 +38,33 @@ class LoginController extends Controller
     }
     public function SignIn(Request $request)
     {
-        
+        $status_code = 200;
+        $message = "Đăng nhập thành công";
+        try {
         $User = User::where('email',$request->username)->orWhere('username',$request->username)->first();
-        if ($User && password_verify($request->password, $User->password)) {
-            setcookie("email", $User->email, time() + 60 * 15, "/");
-            return response()->json([
-                'status' => 200,
-                'message' => 'Sign in thanh cong',
-                
-            ]);
+        if ($User){
+            if(!password_verify($request->password, $User->password)){
+                $status_code = 400;
+                $message = "Sai mật khẩu";
+            }else{
+                setcookie("email", $User->email, time() + 60 * 60*24, "/");
+            }
+            
         } else {
+            $status_code = 400;
+            $message = 'Email hoặc username không tồn tại';
+        }
+        return response()->json([
+            'status' => $status_code,
+            'message' => $message,
+        ]);
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => 404,
-                'message' => 'Sign in that bai',
+                'message' => $th->getMessage(),
             ]);
         }
+        
       
         
     }

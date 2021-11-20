@@ -39,7 +39,7 @@ class SocialAuthController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         // dd($authUser->email);
         setcookie("email", $authUser->email, time() + 60 * 15, "/");
-        // dd(Auth::check());
+         dd(Session::get('pre_url'));
         return Redirect::to(Session::get('pre_url'));
     }
 

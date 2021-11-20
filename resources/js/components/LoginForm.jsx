@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { React, useRef, useEffect, useState } from 'react';
 function LoginForm({ handleShowForm, setUser }) {
     const loginRef = useRef()
@@ -18,14 +19,19 @@ function LoginForm({ handleShowForm, setUser }) {
             [e.target.name]: e.target.value
         });
     }
-
+    console.log('render login-form')
     const handleSubmit = async (e) => {
         e.preventDefault();
         axios.post('/api/sign-in', state)
             .then(function (response) {
-                console.log(response);
                 if (response.data.status == 200) {
-                    window.location.reload(); 
+                    window.location.reload();
+                }else{
+                    Swal.fire({
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'Hay'
+                    })
                 }
             })
             .catch(function (error) {

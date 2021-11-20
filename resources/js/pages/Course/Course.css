@@ -17,11 +17,12 @@ list-style: none;
 padding: 0;
 margin-bottom: 0;
 }
-#main li{
+#main li,.create-course-in-out li{
 padding-bottom: 12px;
 font-size: 14px;
 }
-#main li i{
+#main li i,
+.create-course-in-out i{
 color: #f05122;
 font-size: 16px;
 }
@@ -110,18 +111,18 @@ text-align: center;
 #main .list{
 cursor: pointer;
 }
-#main .list-title,
-#main .list-title:before{
+.list-title,
+.list-title:before{
 height: 50px;
 border-radius: 4px;
 }
-#main .list-title{
+.list-title{
 font-weight: 600;
 background-color: #fbf8f8;
 padding: 14px 30px 14px 48px;
 position: relative;
 }
-#main .list-title:before{
+.list-title:before{
 content: "-";
 font-size: 40px;
 position: absolute;
@@ -134,7 +135,7 @@ position: absolute;
 right: 30px;
 font-weight: 300;
 }
-#main .collapse-item{
+.collapse-item{
 padding-top: 16px;
 padding-bottom: 16px;
 padding-left: 32px;
@@ -142,7 +143,8 @@ font-size: 14px;
 border-top: 1px solid #fbf8f8;
 border-bottom: 1px solid #fbf8f8;
 }
-#main .collapse-item i{
+#main .collapse-item i
+{
 padding-right: 12px;
 color: #f05122;
 }
@@ -153,7 +155,8 @@ font-weight: 700;
 margin-top: 36px;
 margin-bottom: 14px;
 }
-#main .course-require ul{
+#main .course-require ul,
+.create-course-in-out ul{
 flex-direction: column;
 padding-left: 24px;
 margin: 0;

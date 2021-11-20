@@ -1,4 +1,5 @@
 import React from 'react';
+import Collapsible from '../../components/Collapsible/Collapsible';
 import './Learn.css'
 export default function Learn({ User }) {
     return (<>
@@ -195,53 +196,56 @@ export default function Learn({ User }) {
                     </div>
                 </div>
             </header>
-            <div className="playlist-wrapper">
+            <Collapsible className="playlist-wrapper">
                 <div className="playplist-wrapper-header">
                     <h2 className="wrapper-header-title">Phần 1: Giới thiệu</h2>
                     <p className="wrapper-header-detail">2/2 | 05:44</p>
                 </div>
-                <div className="playlist-wrapper-item learnt-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
+                <div className="playlist-wrapper-list">
+                    <div className="playlist-wrapper-item learnt-item">
+                        <div className="wrapper-icon-status">
+                            <i className="fas fa-check"></i>
+                            <i className="fas fa-lock"></i>
 
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">1. Làm được gì sau khóa học?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
+                        </div>
+                        <div className="wrapper-item-info">
+                            <p className="wrapper-item-title">1. Làm được gì sau khóa học?</p>
+                            <div className="wrapper-item-detail">
+                                <i className="far fa-play-circle"></i>
+                                <span>03:15</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="playlist-wrapper-item learnt-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">2. Bạn có phù hợp để học HTML, CSS?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
+                    <div className="playlist-wrapper-item learnt-item">
+                        <div className="wrapper-icon-status">
+                            <i className="fas fa-check"></i>
+                            <i className="fas fa-lock"></i>
+                        </div>
+                        <div className="wrapper-item-info">
+                            <p className="wrapper-item-title">2. Bạn có phù hợp để học HTML, CSS?</p>
+                            <div className="wrapper-item-detail">
+                                <i className="far fa-play-circle"></i>
+                                <span>03:15</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="playlist-wrapper-item learnt-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
+                    <div className="playlist-wrapper-item learnt-item">
+                        <div className="wrapper-icon-status">
+                            <i className="fas fa-check"></i>
+                            <i className="fas fa-lock"></i>
 
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">3. HTML, CSS là cái gì?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
+                        </div>
+                        <div className="wrapper-item-info">
+                            <p className="wrapper-item-title">3. HTML, CSS là cái gì?</p>
+                            <div className="wrapper-item-detail">
+                                <i className="far fa-play-circle"></i>
+                                <span>03:15</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Collapsible>
+
             <div className="playlist-wrapper">
                 <div className="playplist-wrapper-header">
                     <h2 className="wrapper-header-title">Phần 2: Bí quyết kinh doanh</h2>
