@@ -19,8 +19,6 @@ function Navbar({ ShowForm, handleShowForm, User }) {
     })
   }
   useEffect(() => {
-    console.log(User);
-
     const Menu_bar = document.getElementById('Menu-btn');
     const Menu_box = document.getElementById('navbarNav');
     const Mask = document.getElementById('mask')
@@ -74,12 +72,12 @@ function Navbar({ ShowForm, handleShowForm, User }) {
           </div>
 
           <div className="navbar__user">
-            {!User && <>
+            {User.loading && <>
               <a onClick={handleShowForm} className="btn btn__user btn__user--login">Đăng nhập</a>
               <Link to="/login" className="btn btn__user btn__user--signup">Đăng ký</Link>
             </>
             }
-            {User && <>
+            {!User.loading && <>
               <div className="navbar__user_notifi">
                 <i className="far fa-bell"></i>
                 <span className="noti-number">0</span>
@@ -114,7 +112,7 @@ function Navbar({ ShowForm, handleShowForm, User }) {
                 <ul className="dropdown-form dropdown-menu-user">
                   <li><Link to="/myinfo">Thông tin của tôi</Link></li>
                   <li><Link to="/profile">Hồ sơ của tôi</Link></li>
-                  <li><a href="/classmanagement">Quản lý khóa học</a></li>
+                  <li><Link to="/course-manage">Quản lý khóa học</Link></li>
                   <li><Link to="/create-course">Tạo khóa học</Link></li>
                   <li><a id="cick-logoff" onClick={handleLogout} href="#">Thoát</a></li>
                 </ul>

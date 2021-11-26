@@ -28,7 +28,6 @@ function Login() {
     }
     useEffect(() => {
         LoginLoad();
-        FocusSignUp();
     })
     console.log('render login-page')
     return (

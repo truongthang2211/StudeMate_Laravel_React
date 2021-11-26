@@ -1,7 +1,88 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+    BrowserRouter as Router,
+    generatePath,
+    Switch,
+    Route,
+    useHistory,
+    useParams
+} from "react-router-dom";
+import YouTube from 'react-youtube';
 import Collapsible from '../../components/Collapsible/Collapsible';
 import './Learn.css'
+import { ListCourse } from '../../Data.js'
+const CommentData = [
+    {
+        user: {
+            name: "Lisa",
+            avt: 'http://media.doisongphapluat.com/695/2021/2/10/Lisa.jpg',
+        },
+        content: 'Thắng đẹp trai',
+        upvote: 1025,
+        downvote: 0,
+        repl_comment: [
+            {
+                user: {
+                    name: "Nancy",
+                    avt: 'http://media.doisongphapluat.com/695/2021/2/10/Nancy.jpg',
+                },
+                content: '+1 Confirm',
+                upvote: 125,
+                downvote: 0,
+            },
+            {
+                user: {
+                    name: "Tzuyu",
+                    avt: 'https://top10az.com/wp-content/uploads/2021/05/lisa.jpg',
+                },
+                content: '+1 Confirm',
+                upvote: 125,
+                downvote: 0,
+            },
+        ]
+    },
+    {
+        user: {
+            name: "Khá Bảnh",
+            avt: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Kh%C3%A1_B%E1%BA%A3nh_khai_tr%C6%B0%C6%A1ng_shop_b%C3%A1n_qu%E1%BA%A7n_%C3%A1o_%E1%BB%9F_Qu%E1%BB%91c_Oai_2019-03-16.png/250px-Kh%C3%A1_B%E1%BA%A3nh_khai_tr%C6%B0%C6%A1ng_shop_b%C3%A1n_qu%E1%BA%A7n_%C3%A1o_%E1%BB%9F_Qu%E1%BB%91c_Oai_2019-03-16.png',
+        },
+        content: 'Bài học rat hay!',
+        upvote: 1025,
+        downvote: 0,
+        repl_comment: []
+    }]
+
 export default function Learn({ User }) {
+    // const { lesson } = useParams();
+    // console.log(id)
+    const [comments, setComments] = useState(CommentData);
+    const onClickRepl = (index, parentindex, repl) => {
+        const newcomments = [...comments];
+        if (repl) {
+            const sub_comment = newcomments[parentindex]['repl_comment'][index + 1];
+            if (!sub_comment || !sub_comment['thisuser'])
+                newcomments[parentindex]['repl_comment'].splice(index + 1, 0, { thisuser: true })
+        } else if (!newcomments[index]['repl_comment'][0] || !newcomments[index]['repl_comment'][0]['thisuser']) {
+            newcomments[index]['repl_comment'].splice(0, 0, { thisuser: true })
+        }
+        setComments(newcomments);
+    }
+    const onClickCancel = (index, parentindex) => {
+        const newcomments = [...comments];
+        newcomments[parentindex]['repl_comment'].splice(index, 1)
+        setComments(newcomments);
+
+    }
+    const _onReady = (e) => {
+        console.log(e);
+    }
+    const opts = {
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            host: 'https://www.youtube.com',
+        },
+    };
+
     return (<>
         <div id="left-learning">
             <div className="breadcrumb">
@@ -11,12 +92,7 @@ export default function Learn({ User }) {
                 <span className="breadcrumb-item active">HTML, CSS từ con gà đến thần thánh</span>
             </div>
             <div className="video-learning">
-                <iframe src='https://www.youtube.com/embed/E7wJTI-1dvQ'
-                    frameBorder='0'
-                    allow='autoplay; encrypted-media'
-                    allowFullScreen
-                    title='video'
-                />
+                <YouTube opts={opts} videoId="2g811Eo7K8U" onReady={_onReady} />
             </div>
             <div className="info-learning">
                 <div className="container">
@@ -27,156 +103,33 @@ export default function Learn({ User }) {
                             <div className="tab-item">File đính kèm</div>
                         </div>
                         <div className="info-learning-comment">
-                            <div id="user-comment-block">
-                                <div className="comment-block">
-                                    <div className="comment-avt">
-                                        <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=RgcZJjsDznYAX8z8I7d&_nc_ht=scontent.fsgn5-11.fna&oh=7adb61cf34a3a80f2a8d55187cbd42b7&oe=619C89A0" alt="Thang Nguyen" />
-                                    </div>
-                                    <div className="comment-content align-items-end">
-                                        <div className="comment-input" contentEditable="true" placeholder="Viết gì gì đó đi..." tabIndex="0" dir="ltr" spellCheck="false" autoComplete="off" autoCorrect="off" autoCapitalize="off"></div>
-                                        <button className="btn btn-comment">
-                                            Bình luận
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UserComment />
                             <div className="person-comment-block">
                                 <ul>
-                                    <li>
-                                        <div className="comment-block">
-                                            <div className="comment-avt">
-                                                <img className="CommentBox_myAvatar__3Mi09" src="https://danviet.mediacdn.vn/upload/2-2019/images/2019-04-02/Vi-sao-Kha-Banh-tro-thanh-hien-tuong-dinh-dam-tren-mang-xa-hoi-khabanh-1554192528-width660height597.jpg" alt="Banh Ngo" />
-                                            </div>
-                                            <div className="comment-content">
-                                                <div className="comment-user-name">
+                                    {comments.map((item, index) => {
+                                        return (
+                                            <li key={index}>
+                                                <Comment key={index} User={item.user} index={index} Content={item.content} Upvote={item.upvote} Downvote={item.downvote} handleRepl={onClickRepl} />
+                                                {item.repl_comment.map((item2, index2) => {
+                                                    if (item2.thisuser) {
+                                                        return (<UserComment key={index2} parent_index={index}
+                                                            index={index2} repl handleCancel={onClickCancel} />);
+                                                    } else {
+                                                        return (
+                                                            <Comment parent_index={index} index={index2} key={index2}
+                                                                repl User={item2.user} Content={item2.content} handleRepl={onClickRepl}
+                                                                Upvote={item2.upvote} Downvote={item2.downvote} />
+                                                        );
+                                                    }
+                                                })}
+                                            </li>
+                                        );
 
-                                                    <a href="">Khá Bảnh</a>
-                                                </div>
-                                                <div className="comment-body">Thắng đẹp trai</div>
-                                                <div className="comment-footer">
-                                                    <span className="comment-vote">
-                                                        <span className="upvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>1025</span>
-                                                        </span>
-                                                        <span className="downvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>0</span>
-                                                        </span>
-                                                    </span>
-                                                    <span className="comment-repl" href="">Trả lời</span>
-                                                    <span className="comment-datetime">Hôm qua</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="comment-block comment-block-repl">
-                                            <div className="comment-avt">
-                                                <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-1.fna.fbcdn.net/v/t1.6435-9/240679543_1519728035044432_6519949385141440995_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=bCZ_HXjQx7gAX-fynHN&_nc_ht=scontent.fsgn5-1.fna&oh=cd292c66ff07f89ff018b441aacb5351&oe=619A91F5" alt="Son Chu" />
-                                            </div>
-                                            <div className="comment-content">
-                                                <div className="comment-user-name">
-
-                                                    <a href="">Xuân Sơn</a>
-                                                </div>
-                                                <div className="comment-body">+1 Confirm</div>
-                                                <div className="comment-footer">
-                                                    <span className="comment-vote">
-                                                        <span className="upvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>1025</span>
-                                                        </span>
-                                                        <span className="downvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>0</span>
-                                                        </span>
-                                                    </span>
-                                                    <span className="comment-repl" href="">Trả lời</span>
-                                                    <span className="comment-datetime">Hôm qua</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="comment-block comment-block-repl">
-                                            <div className="comment-avt">
-                                                <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-8.fna.fbcdn.net/v/t1.6435-9/148452596_1416726315326312_7062280632353748357_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=K1sAQvVWdpAAX9jhm6C&_nc_ht=scontent.fsgn5-8.fna&oh=d48b92962f4e460b701bed3866625fdd&oe=619DAAFC" alt="Thu Huynh" />
-                                            </div>
-                                            <div className="comment-content">
-                                                <div className="comment-user-name">
-
-                                                    <a href="">Minh Thư Huỳnh</a>
-                                                </div>
-                                                <div className="comment-body">+1 Confirm</div>
-                                                <div className="comment-footer">
-                                                    <span className="comment-vote">
-                                                        <span className="upvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>1025</span>
-                                                        </span>
-                                                        <span className="downvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>0</span>
-                                                        </span>
-                                                    </span>
-                                                    <span className="comment-repl" href="#">Trả lời</span>
-                                                    <span className="comment-datetime">Hôm qua</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="comment-block">
-                                            <div className="comment-avt">
-                                                <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=RgcZJjsDznYAX8z8I7d&_nc_ht=scontent.fsgn5-11.fna&oh=7adb61cf34a3a80f2a8d55187cbd42b7&oe=619C89A0" alt="Thang Nguyen" />
-                                            </div>
-                                            <div className="comment-content">
-                                                <div className="comment-user-name">
-
-                                                    <a href="">Nguyễn Thắng</a>
-                                                </div>
-                                                <div className="comment-body">Bài học rất hay!!</div>
-                                                <div className="comment-footer">
-                                                    <span className="comment-vote">
-                                                        <span className="upvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>1025</span>
-                                                        </span>
-                                                        <span className="downvote">
-                                                            <a href="">
-                                                                <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
-                                                            </a>
-                                                            <span>0</span>
-                                                        </span>
-                                                    </span>
-                                                    <span className="comment-repl">Trả lời</span>
-                                                    <span className="comment-datetime">Hôm qua</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </li>
+                                    })}
                                 </ul>
-
-
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -196,226 +149,123 @@ export default function Learn({ User }) {
                     </div>
                 </div>
             </header>
-            <Collapsible className="playlist-wrapper">
-                <div className="playplist-wrapper-header">
-                    <h2 className="wrapper-header-title">Phần 1: Giới thiệu</h2>
-                    <p className="wrapper-header-detail">2/2 | 05:44</p>
+            {ListCourse[0].ListCourse.map((item, index) => {
+                return (
+                    <Collapsible className="playlist-wrapper" key={index}>
+                        <Chaper title={item.title} />
+                        <div className="playlist-wrapper-list">
+                            {item.lession.map((less, index2) => {
+                                return (
+                                    <Lession key={index2} title={less.title} duration={less.duration} />
+                                );
+                            })}
+                        </div>
+                    </Collapsible>
+                );
+            })}
+        </div>
+    </>);
+}
+function UserComment(props) {
+    const ClassName = props.repl ? "comment-block comment-block-repl" : "comment-block"
+    const commentRef = useRef()
+    useEffect(() => {
+        if (props.repl) commentRef.current.focus();
+    })
+    const handleonPaste = (e) => {
+        e.preventDefault();
+        var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand("insertHTML", false, text);
+    }
+    const handleonInput = (e) => {
+        if (e.target.innerText != "") {
+            commentRef.current.parentNode.classList.add('comment-box')
+        } else {
+            commentRef.current.parentNode.classList.remove('comment-box')
+        }
+    }
+    return (
+        <div id="user-comment-block">
+            <div className={ClassName}>
+                <div className="comment-avt">
+                    <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=i1SBPX81GKUAX_deJFe&_nc_ht=scontent.fsgn5-11.fna&oh=d685f02a12ebb0131217f4705e5c5795&oe=61C416A0" alt="Thang Nguyen" />
                 </div>
-                <div className="playlist-wrapper-list">
-                    <div className="playlist-wrapper-item learnt-item">
-                        <div className="wrapper-icon-status">
-                            <i className="fas fa-check"></i>
-                            <i className="fas fa-lock"></i>
-
-                        </div>
-                        <div className="wrapper-item-info">
-                            <p className="wrapper-item-title">1. Làm được gì sau khóa học?</p>
-                            <div className="wrapper-item-detail">
-                                <i className="far fa-play-circle"></i>
-                                <span>03:15</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="playlist-wrapper-item learnt-item">
-                        <div className="wrapper-icon-status">
-                            <i className="fas fa-check"></i>
-                            <i className="fas fa-lock"></i>
-                        </div>
-                        <div className="wrapper-item-info">
-                            <p className="wrapper-item-title">2. Bạn có phù hợp để học HTML, CSS?</p>
-                            <div className="wrapper-item-detail">
-                                <i className="far fa-play-circle"></i>
-                                <span>03:15</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="playlist-wrapper-item learnt-item">
-                        <div className="wrapper-icon-status">
-                            <i className="fas fa-check"></i>
-                            <i className="fas fa-lock"></i>
-
-                        </div>
-                        <div className="wrapper-item-info">
-                            <p className="wrapper-item-title">3. HTML, CSS là cái gì?</p>
-                            <div className="wrapper-item-detail">
-                                <i className="far fa-play-circle"></i>
-                                <span>03:15</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Collapsible>
-
-            <div className="playlist-wrapper">
-                <div className="playplist-wrapper-header">
-                    <h2 className="wrapper-header-title">Phần 2: Bí quyết kinh doanh</h2>
-                    <p className="wrapper-header-detail">2/2 | 05:44</p>
-                </div>
-                <div className="playlist-wrapper-item learnt-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">4. Bán kem đánh răng hiệu quả</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item learning-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">5. Nhạc Rasputin cực căng</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">6. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">7. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">8. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">9. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="playlist-wrapper">
-                <div className="playplist-wrapper-header">
-                    <h2 className="wrapper-header-title">Phần 3: Câu hỏi cần được trả lời</h2>
-                    <p className="wrapper-header-detail">2/2 | 05:44</p>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">10. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">11. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">12. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">13. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">14. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="playlist-wrapper-item block-item">
-                    <div className="wrapper-icon-status">
-                        <i className="fas fa-check"></i>
-                        <i className="fas fa-lock"></i>
-                    </div>
-                    <div className="wrapper-item-info">
-                        <p className="wrapper-item-title">15. Bao nhiêu lâu nữa thì bán được 1 tỷ gói mè?</p>
-                        <div className="wrapper-item-detail">
-                            <i className="far fa-play-circle"></i>
-                            <span>03:15</span>
-                        </div>
+                <div className="comment-content align-items-end">
+                    <div ref={commentRef} className="comment-input" autoFocus contentEditable="true"
+                        placeholder="Viết gì gì đó đi..." tabIndex="0" dir="ltr" spellCheck="false"
+                        autoComplete="off" autoCorrect="off" autoCapitalize="off" onPaste={handleonPaste}
+                        onInput={handleonInput}></div>
+                    <div>
+                        <button className="btn btn-comment">
+                            Bình luận
+                        </button>
+                        {props.repl && <button onClick={() => props.handleCancel(props.index, props.parent_index)}
+                            className="btn btn-comment btn-comment-remove">
+                            Hủy
+                        </button>}
                     </div>
                 </div>
             </div>
         </div>
-    </>);
+    );
+}
+function Comment(props) {
+    const ClassName = props.repl ? "comment-block comment-block-repl" : "comment-block"
+    return (
+        <div className={ClassName}>
+            <div className="comment-avt">
+                <img className="CommentBox_myAvatar__3Mi09" src={props.User.avt} alt={props.User.name} />
+            </div>
+            <div className="comment-content">
+                <div className="comment-user-name">
+                    <a href="">{props.User.name}</a>
+                </div>
+                <div className="comment-body">{props.Content}</div>
+                <div className="comment-footer">
+                    <span className="comment-vote">
+                        <span className="upvote">
+                            <a href="">
+                                <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
+                            </a>
+                            <span>{props.Upvote}</span>
+                        </span>
+                        <span className="downvote">
+                            <a href="">
+                                <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
+                            </a>
+                            <span>{props.Downvote}</span>
+                        </span>
+                    </span>
+                    <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl) }} className="comment-repl" href="">Trả lời</span>
+                    <span className="comment-datetime">{props.Time}</span>
+                </div>
+            </div>
+        </div>
+    );
+}
+function Chaper({ title }) {
+    return (
+        <div className="playplist-wrapper-header">
+            <h2 className="wrapper-header-title">{title}</h2>
+            <p className="wrapper-header-detail">2/2 | 05:44</p>
+        </div>
+    );
+}
+function Lession({ title, duration }) {
+    return (
+        <div className="playlist-wrapper-item learnt-item">
+            <div className="wrapper-icon-status">
+                <i className="fas fa-check"></i>
+                <i className="fas fa-lock"></i>
+
+            </div>
+            <div className="wrapper-item-info">
+                <p className="wrapper-item-title">{title}</p>
+                <div className="wrapper-item-detail">
+                    <i className="far fa-play-circle"></i>
+                    <span>{duration}</span>
+                </div>
+            </div>
+        </div>
+    );
 }

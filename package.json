@@ -25,8 +25,11 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "moment": "^2.29.1",
+        "react-beautiful-dnd": "^13.1.0",
         "react-router-dom": "^6.0.0",
         "react-spring": "^9.3.0",
+        "react-youtube": "^7.13.1",
         "sweetalert2": "^11.1.9"
     }
 }

@@ -85,7 +85,7 @@
 
 .comment-content {
     padding: 12px;
-    background-color: #ebebeb;
+    background-color: #f3f3f3;
     min-height: 120px;
     height: auto;
     display: flex;
@@ -223,7 +223,7 @@ li {
     height: 100%;
     position: absolute;
     width: var(--process);
-    background-color: rgba(255, 179, 68, 0.4);
+    background-color: #ffffe2;
 }
 
 #right-learning .playlist-title {
@@ -252,8 +252,7 @@ li {
     background-color: #f3f4f5;
     padding: 8px 12px 8px 12px;
     border-bottom: 1px solid #ababab;
-
-
+    cursor: pointer;
 }
 
 #right-learning .wrapper-header-title {
@@ -284,7 +283,9 @@ li {
 }
 
 #right-learning .learning-item {
-    background-color: rgba(0, 161, 157, .4);
+    background-color: #fffff2;
+    color: var(--main-red);
+    font-weight: 700;
 }
 
 .wrapper-icon-status {

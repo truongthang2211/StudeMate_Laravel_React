@@ -25,7 +25,6 @@ export default memo(function SignUpForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         signupref.current.disabled = true;
-        console.log(e);
         axios.post('/api/sign-up', state)
             .then(async (response) => {
                 if (response.data.status == 200) {
@@ -46,7 +45,11 @@ export default memo(function SignUpForm() {
 
             })
             .catch(function (error) {
-                console.log(error);
+                Swal.fire({
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Hay'
+                })
                 signupref.current.disabled = false;
 
             })
@@ -66,7 +69,7 @@ export default memo(function SignUpForm() {
                         <h2 className="title">Sign up</h2>
                         <div className="input-field">
                             <i className="fas fa-user"></i>
-                            <input type="text" required onChange={handleInput} value={state.username} name="username" placeholder="Username" />
+                            <input autoFocus type="text" required onChange={handleInput} value={state.username} name="username" placeholder="Username" />
                         </div>
                         <div className="input-field">
                             <i className="fas fa-envelope"></i>

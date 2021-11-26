@@ -53,7 +53,7 @@ function LoginForm({ handleShowForm, setUser }) {
                             <h2 className="title">Sign In</h2>
                             <div className="input-field">
                                 <i className="fas fa-user"></i>
-                                <input type="text" id="username_login" name="username" placeholder="Username" onChange={handleInput} value={state.username} />
+                                <input autoFocus type="text" id="username_login" name="username" placeholder="Username" onChange={handleInput} value={state.username} />
                             </div>
                             <div className="input-field">
                                 <i className="fas fa-lock"></i>

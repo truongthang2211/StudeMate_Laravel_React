@@ -1,18 +1,24 @@
-import React, { useEffect, memo, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import moment from 'moment';
 import './CreateCourse.css'
+import Swal from 'sweetalert2';
+const API_KEY = 'AIzaSyAzSvXwjoICRPziR_FXQmuus_eSvMTin7I';
 
 const CreateData = {
     CourseTitle: '',
     Price: 0,
+    TotalDuration: 0,
     Description: '',
     Category: -1,
     SubCategory: -1,
-    Image: 'https://imic.com.vn/public/site/images/no-image.jpg',
+    Image: '',
     ListIn: [],
     ListOut: [],
-    AutoTitle: false,
+    AutoTitle: true,
     AutoCreateList: false,
-    ListCourse: []
+    ListCourse: [],
+
 }
 
 const ListCategory = [{
@@ -47,8 +53,25 @@ const ListCategory = [{
         'Bán hàng livestream', 'Chăm sóc khách hàng', 'Chiến lược bán hàng', 'Khác']
 }, {
     title: 'Công nghệ thông tin',
-    subCatogory: ['Bán hàng online', 'Telesales',
-        'Bán hàng livestream', 'Chăm sóc khách hàng', 'Chiến lược bán hàng', 'Khác']
+    subCatogory: ['Lập trình', 'Ngôn ngữ lập trình', 'Lập trình Web',
+        'Lập trình Android', 'Khác']
+}, {
+    title: 'Sức khỏe - Giới tính',
+    subCatogory: ['Giảm cân', 'Thiền',
+        'Phòn thủ', 'Giảm stress', 'Fitness - Gym', 'Tình yêu', 'Yoga', 'Massage', 'Khác']
+}, {
+    title: 'Phong cách sống',
+    subCatogory: ['Pha chế', 'Làm bánh', 'Làm đẹp', 'Handmade', 'Tử vi',
+        'Ảo thuật', 'Nhạc cụ', 'Ẩm thực - Nấu ăn', 'Nhảy', 'Phong thủy', 'Khác']
+}, {
+    title: 'Nuôi dạy con',
+    subCatogory: ['Mang thai', 'Dạy con thông minh', 'Chăm sóc bé yêu', 'Khác']
+}, {
+    title: 'Hôn nhân gia đình',
+    subCatogory: ['Hạnh phúc gia đình', 'Đời sống vợ chồng', 'Khác']
+}, {
+    title: 'Nhiếp ảnh, dựng phim',
+    subCatogory: ['Dựng phim', 'Chụp ảnh', 'Kỹ xảo', 'Khác']
 }]
 
 export default function CreateCourse() {
@@ -60,9 +83,9 @@ export default function CreateCourse() {
             newData[element[0]] = element[1];
         });
         setData(newData);
-        console.log(newData);
+        console.log(newData)
     }
-    const [Page, setPage] = useState(1);
+    const [Page, setPage] = useState(4);
     const handleNextPage = () => {
         if (Page === 4)
             return;
@@ -80,11 +103,75 @@ export default function CreateCourse() {
                     && Data.Category != -1 && Data.SubCategory != -1)
             case 2:
                 return (Data.Image != 'https://imic.com.vn/public/site/images/no-image.jpg')
+            case 4:
+                for (var i = 0; i < Data.ListCourse.length; ++i) {
+                    if (Data.ListCourse[i].type == 'lession' && Data.ListCourse[i].error) {
+                        return false;
+                    }
+                }
+                return true;
             default:
                 return true;
         }
     }
     const buttonClassName = "btn my-custom-button-default";
+    function youtube_id(url) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        var match = url.match(regExp);
+        return (match && match[7].length == 11) ? match[7] : false;
+    }
+    const msecToTime = ms => {
+        const seconds = Math.floor((ms / 1000) % 60)
+        const minutes = Math.floor((ms / (60 * 1000)) % 60)
+        const hours = Math.floor((ms / (3600 * 1000)) % 3600)
+        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds
+            }`
+    }
+    const handleSubmit = async () => {
+        if (Data.ListCourse[0].type != 'chapter') {
+            Swal.fire({
+                text: 'Phải có chương ở vị trí đầu tiên',
+                icon: 'error',
+                confirmButtonText: 'Hay'
+            })
+            return;
+        }
+        const newListCourse = [];
+        let lession_id = 0;
+        for (var i = 0; i < Data.ListCourse.length; ++i) {
+            if (Data.ListCourse[i].type == 'chapter') {
+                newListCourse.push({ title: Data.ListCourse[i].title, lession: [] })
+            } else {
+                ++lession_id;
+                let duration = '';
+                let youtb_id = youtube_id(Data.ListCourse[i].URL);
+                await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
+                    .then(data => data.json()).then(data => {
+                        console.log(data)
+                        duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
+
+                    })
+                newListCourse.at(-1).lession = [
+                    ...newListCourse.at(-1).lession,
+                    {
+                        id: lession_id,
+                        title: Data.ListCourse[i].title,
+                        url: Data.ListCourse[i].URL,
+                        duration: duration
+                    }]
+            }
+        }
+        // Data.ListCourse.forEach(async (item) => {
+
+
+        // })
+        console.log(newListCourse);
+        handleOnchange([['ListCourse', newListCourse]])
+
+
+
+
+    }
     return (
         <div className="container">
             <form action="" className="create-course-form">
@@ -95,7 +182,7 @@ export default function CreateCourse() {
                 {Page === 4 && <PageFour Data={Data} handleOnchange={handleOnchange} />}
                 <div>
                     <a onClick={handlePrevious} className={Page === 1 ? buttonClassName + " disabled" : buttonClassName}>Lùi lại</a>
-                    <a onClick={handleNextPage} className={CheckInput() ? buttonClassName : buttonClassName + " disabled"}>Tiếp theo</a>
+                    <a onClick={Page === 4 ? handleSubmit : handleNextPage} className={CheckInput() ? buttonClassName : buttonClassName + " disabled"}>Tiếp theo</a>
                     <a onClick={handleNextPage} className="btn my-custom-button-default my-custom-button-simple">Lưu tạm</a>
                 </div>
             </form>
@@ -140,7 +227,7 @@ function PageOne(props) {
             <div className="page-one-input">
                 <div className="create-course-input-item">
                     <div className="input-field">
-                        <input type="text" name="CourseTitle" value={props.Data.CourseTitle} onChange={(e) => props.handleOnchange([[e.target.name, e.target.value]])} className="create-course-form-input" placeholder=" " />
+                        <input autoFocus type="text" name="CourseTitle" value={props.Data.CourseTitle} onChange={(e) => props.handleOnchange([[e.target.name, e.target.value]])} className="create-course-form-input" placeholder=" " />
                         <label htmlFor="title" className="create-course-form-label">Tên khóa học</label>
                     </div>
                 </div>
@@ -190,15 +277,17 @@ function PageOne(props) {
     );
 }
 function PageTwo(props) {
+    const [Image,setImage] = useState('https://imic.com.vn/public/site/images/no-image.jpg');
     const handleOnChange = (e) => {
         const file = e.target.files[0];
-        props.handleOnchange([['Image', URL.createObjectURL(file)]])
+        props.handleOnchange([['Image', file]])
+        setImage(URL.createObjectURL(file))
     }
     return (
         <div className="page-two-form">
             <label className="create-course-input-text" htmlFor="">Hãy chọn hình ảnh đại diện cho khóa học của bạn</label>
             <div className="input-field create-course-img">
-                <img src={props.Data.Image} alt="Ảnh đại diện khóa học" />
+                <img src={Image} alt="Ảnh đại diện khóa học" />
                 <input onChange={handleOnChange} type="file" name="" id="create-coure-file" />
             </div>
         </div>
@@ -249,7 +338,7 @@ function PageThree(props) {
                 <div className="create-course-todo-input">
                     <div className="create-course-input-item">
                         <div className="input-field">
-                            <input ref={InInput} value={In} onChange={e => setIn(e.target.value)} placeholdertype="text" name="title" className="create-course-form-input" placeholder=" " />
+                            <input autoFocus ref={InInput} value={In} onChange={e => setIn(e.target.value)} placeholdertype="text" name="title" className="create-course-form-input" placeholder=" " />
                             <label htmlFor="title" className="create-course-form-label">Yêu cầu</label>
                         </div>
                         <button onClick={AddIn} className="todo-button" type="button">Thêm</button>
@@ -296,75 +385,221 @@ function PageThree(props) {
 
 }
 function PageFour(props) {
+    const chapterRef = useRef();
+    const autocreateList = useRef();
+
+    const handleKeydown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (document.activeElement === chapterRef.current) {
+                AddChapter();
+            } else if (document.activeElement === autocreateList.current) {
+                CreateAutoList();
+            }
+        }
+    }
+    function youtube_validate(url) {
+        var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        if (url.match(p)) {
+            return url.match(p)[1];
+        }
+        return false;
+    }
+    function playlist_id(url) {
+        var regPlaylist = /[?&]list=([^#\&\?]+)/;
+        var match = url.match(regPlaylist);
+        return match[1];
+    }
     const [chapter, setChapter] = useState({ title: '', type: 'chapter' })
     const AddChapter = () => {
+        if (props.Data.ListCourse[0] && props.Data.ListCourse[0].type != 'chapter') {
+            props.handleOnchange([['ListCourse', [chapter, ...props.Data.ListCourse]]])
+            return;
+        }
         props.handleOnchange([['ListCourse', [...props.Data.ListCourse, chapter]]])
     }
     const AddLession = (index) => {
         const newArray = [...props.Data.ListCourse];
         while (newArray[index + 1] && newArray[index + 1]['type'] !== 'chapter') index++;
-        newArray.splice(index + 1, 0, { title: '', URL: '', type: 'lession' })
+        newArray.splice(index + 1, 0, { title: '', URL: '', type: 'lession', error: true })
         props.handleOnchange([['ListCourse', newArray]])
+
     }
     const DeleteHandle = (index) => {
         const newArray = [...props.Data.ListCourse];
         newArray.splice(index, 1);
         props.handleOnchange([['ListCourse', newArray]])
     }
-    const OnChangeHandle = (e, index) => {
+
+    const OnChangeHandle = async (e, index) => {
+        let Title = null;
+        let Error = false;
         const newObject = { ...props.Data.ListCourse[index], [e.target.name]: e.target.value };
+        if (e.target.name == 'URL') {
+            if (youtube_validate(e.target.value)) {
+                try {
+                    await fetch(`http://www.youtube.com/oembed?url=${e.target.value}&format=json`)
+                        .then(res => res.json()).then(data => {
+                            Title = data.title;
+                        })
+                    if (e.target.classList.contains("input-error")) {
+                        e.target.classList.remove("input-error");
+                    }
+                } catch (error) {
+                    Error = true;
+                    if (!e.target.classList.contains("input-error")) {
+                        e.target.classList.add("input-error");
+                    }
+                }
+            } else {
+                Error = true;
+                if (!e.target.classList.contains("input-error")) {
+                    e.target.classList.add("input-error");
+                }
+            }
+        }
+
+        if (Title && props.Data.AutoTitle) {
+            newObject['title'] = Title;
+        }
+        newObject['error'] = Error;
         const newArray = [...props.Data.ListCourse];
         newArray[index] = newObject;
         props.handleOnchange([['ListCourse', newArray]])
+
+    }
+    const [autolist, setAutolist] = useState('')
+    const CreateAutoList = async () => {
+        if (youtube_validate(autolist)) {
+            var playlistid = playlist_id(autolist);
+            let ArrayCourse = [];
+            try {
+                let nextPage = null;
+                await fetch(`https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistid}&key=${API_KEY}`)
+                    .then(res => res.json()).then(data => {
+                        nextPage = data.nextPageToken;
+                        data.items.forEach(item => {
+                            ArrayCourse.push({
+                                title: item.snippet.title,
+                                URL: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+                                type: 'lession',
+                                error: false,
+                            })
+                        })
+
+                    })
+                if (nextPage) {
+                    await fetch(`https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&pageToken=${nextPage}&playlistId=${playlistid}&key=${API_KEY}`)
+                        .then(res => res.json()).then(data => {
+                            nextPage = 'nextPageToken' in data;
+                            data.items.forEach(item => {
+                                ArrayCourse.push({
+                                    title: item.snippet.title,
+                                    URL: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+                                    type: 'lession',
+                                    error: false,
+                                })
+                            })
+
+                        })
+                }
+                props.handleOnchange([['ListCourse', ArrayCourse]])
+            } catch (error) {
+                Swal.fire({
+                    text: 'URL không hợp lệ hoặc có lỗi đã xảy ra',
+                    icon: 'error',
+                    confirmButtonText: 'Hay'
+                })
+            }
+        } else {
+            Swal.fire({
+                text: 'URL không hợp lệ',
+                icon: 'error',
+                confirmButtonText: 'Hay'
+            })
+        }
+    }
+    function handleOnDragEnd(result) {
+        if (!result.destination) {
+            DeleteHandle(result.source.index);
+            return;
+        }
+
+
+        const items = Array.from(props.Data.ListCourse);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+
+        props.handleOnchange([['ListCourse', items]])
     }
     return (
-        <div className="page-four-form">
+        <div className="page-four-form" onKeyDown={handleKeydown}>
             <div className="checkbox-item">
                 <input type="checkbox" id="autoTitle" onChange={() => props.handleOnchange([['AutoTitle', !props.Data.AutoTitle]])} checked={props.Data.AutoTitle} />
                 <label htmlFor="autoTitle"> Tự động tạo tiêu đề</label><br></br>
             </div>
             <div className="checkbox-item">
-                <input type="checkbox" id="autocreatelist" onChange={() => props.handleOnchange([['AutoCreateList', !props.Data.AutoCreateList]])} checked={props.Data.AutoCreateList} />
+                <input ref={autocreateList} type="checkbox" id="autocreatelist" onChange={() => props.handleOnchange([['AutoCreateList', !props.Data.AutoCreateList]])} checked={props.Data.AutoCreateList} />
                 <label htmlFor="autocreatelist"> Tự động tạo danh sách dựa vào URL danh sách của Youtube</label><br></br>
                 {props.Data.AutoCreateList &&
                     <div className="auto-create-input">
                         <div className="create-course-input-item">
                             <div className="input-field">
-                                <input type="text" name="title" className="create-course-form-input" placeholder=" " />
+                                <input value={autolist} onChange={e => setAutolist(e.target.value)} type="text" name="title" className="create-course-form-input" placeholder=" " />
                                 <label htmlFor="title" className="create-course-form-label">URL danh sách khóa học</label>
                             </div>
-                            <button className="todo-button" type="button">Kiểm tra</button>
+                            <button onClick={CreateAutoList} className="todo-button" type="button">Kiểm tra</button>
                         </div>
                     </div>}
             </div>
             <div className="chapter-input">
                 <i onClick={AddChapter} className="fas fa-plus-circle"></i>
-                <input value={chapter.title} onChange={(e) => setChapter({ ...chapter, title: e.target.value })} className="text-input-simple" placeholder="Tên chương của khóa học" type="text" name="" id="" />
+                <input autoFocus ref={chapterRef} value={chapter.title} onChange={(e) => setChapter({ ...chapter, title: e.target.value })} className="text-input-simple" placeholder="Tên chương của khóa học" type="text" />
             </div>
-            <div className="list-course-create">{
-                props.Data.ListCourse.map((data, index) => {
-                    if (data.type === 'chapter') {
-                        return (
-                            <div className="list-title" key={index}>
-                                <i onClick={() => AddLession(index)} className="fas fa-plus-circle"></i>
-                                <span className="main-title">{data.title}</span>
-                                <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
-                            </div>);
-                    } else if (data.type === 'lession') {
-                        return (
-                            <div className="list-item-create-course" key={index}>
-                                <input className="text-input-simple mw-100 border-0" placeholder="Tiêu đề của bài học" type="text" name="title" value={data.title} onChange={(e) => OnChangeHandle(e, index)} />
-                                <br />
-                                <input className="text-input-simple mw-100 border-0" placeholder="URL của bài học" type="text" name="URL" value={data.URL} onChange={(e) => OnChangeHandle(e, index)} />
-                                <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
-                            </div>
-                        )
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="courselist">
+                    {(provided) => (
+                        <div className="list-course-create" {...provided.droppableProps} ref={provided.innerRef}>{
+                            props.Data.ListCourse.map((data, index) => {
+                                if (data.type === 'chapter') {
+                                    return (
+                                        <Draggable key={index} draggableId={index.toString()} index={index}>
+                                            {(provided) => (
+                                                <div className="list-title" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    <i onClick={() => AddLession(index)} className="fas fa-plus-circle"></i>
+                                                    <span className="main-title">{data.title}</span>
+                                                    <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
+                                                </div>
+                                            )}
+
+                                        </Draggable>
+                                    );
+                                } else if (data.type === 'lession') {
+                                    return (
+                                        <Draggable key={index} draggableId={index.toString()} index={index}>
+                                            {(provided) => (
+                                                <div className="list-item-create-course" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    <input className="text-input-simple mw-100 border-0 h6" placeholder="Tiêu đề của bài học" type="text" name="title" value={data.title} onChange={(e) => OnChangeHandle(e, index)} />
+                                                    <br />
+                                                    <input className="text-input-simple mw-100 border-0" placeholder="URL của bài học" type="text" name="URL" value={data.URL} onChange={(e) => OnChangeHandle(e, index)} />
+                                                    <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
+                                                </div>
+                                            )}
+
+                                        </Draggable>
+
+                                    )
+                                }
+                            })}
+                            {provided.placeholder}
+                        </div>
+                    )
+
                     }
-                })}
+                </Droppable>
 
+            </DragDropContext>
 
-
-            </div>
         </div>
     );
 }

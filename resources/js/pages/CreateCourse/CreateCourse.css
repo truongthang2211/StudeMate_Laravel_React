@@ -223,11 +223,21 @@
     color: #555;
 
 }
-.fa-trash{
+.create-course-title{
+    font-size: 24px;
+}
+.page-four-form{
+    padding-top: 18px;
+}
+
+.fa-trash,
+.page-four-form .fa-plus-circle
+{
     float: right;
     color: #555;
 }
-.fa-trash:hover{
+.create-course-form .fa-trash:hover,
+.create-course-form .fa-plus-circle:hover{
     color: var(--main-yellow);
     cursor: pointer;
 }
@@ -286,4 +296,7 @@
     position: absolute;
     top: 8px;
     right: 1.5em;
+}
+.input-error{
+    background-color:#ffafaf;
 }

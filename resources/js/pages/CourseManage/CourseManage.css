@@ -1,0 +1,18 @@
+#course-manage{
+    background-color: #fefefe;
+    background-image: none;
+}
+.course-list-manage{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.course-manage-content .course-item{
+    flex-basis: 49.5%;
+}
+.manage-registerd{
+    border: 1px solid rgb(209, 208, 208)
+}
+.manage-registerd + .manage-registerd{
+    margin-top: 24px;
+}

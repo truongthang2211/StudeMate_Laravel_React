@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Course.css'
-export default function Course({ User }) {
+export default function Course({ User,handleShowForm}) {
+    const handleRegister = (e)=>{
+        if (User.loading){
+            e.preventDefault();
+            handleShowForm();
+        }
+    }
     return (
         <>
             <div id="main">
@@ -100,7 +106,7 @@ export default function Course({ User }) {
                                     <p>Xem giới thiệu khóa học</p>
                                 </div>
                                 <h5 className="course-fee">Miễn phí</h5>
-                                <Link to="/learn" className="course-btn">ĐĂNG KÝ HỌC</Link>
+                                <Link to="/learn" onClick={handleRegister} className="course-btn">ĐĂNG KÝ HỌC</Link>
                                 <ul>
                                     <li>
                                         <i className="fas fa-seedling"></i>

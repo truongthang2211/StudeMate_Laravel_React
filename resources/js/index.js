@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
@@ -12,30 +12,41 @@ import MyInfo from './pages/MyInfo/MyInfo';
 import Course from './pages/Course/Course';
 import Learn from './pages/Learn/Learn';
 import CreateCourse from './pages/CreateCourse/CreateCourse';
+import CourseManage from './pages/CourseManage/CourseManage';
+import MyCourse from './pages/MyCourse/MyCourse';
 function Index() {
     const [ShowForm, setShowForm] = useState(false)
-    const [User, setUser] = useState(async () => {
-        const res = await axios.get('/get-user')
-
-        setUser(res.data.user);
-        return res.data.user;
+    const [User, setUser] = useState(() => {
+        const cookieObj = new URLSearchParams(document.cookie.replaceAll("; ", "&"))
+        return cookieObj.get("email")? { loading: false }:{ loading: true }
     })
     const handleShowForm = () => {
         setShowForm(pre => !pre)
     }
-    console.log(User)
+    useEffect(() => {
+        LoadUser();
+
+    }, [])
+    const LoadUser = async () => {
+        const res = await axios.get('/get-user')
+        if (res.data.user) {
+            setUser({ ...res.data.user, loading: false });
+        }
+    }
     return (
         <>
             <BrowserRouter>
                 <Navbar User={User} ShowForm={ShowForm} handleShowForm={handleShowForm} />
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route exact path="/course" element={<Course />} />
-                    <Route exact path="/learn" element={!User ? <Home /> : <Learn User={User} />} />
-                    <Route exact path="/profile" element={!User ? <Home /> : <Profile User={User} />} />
-                    <Route exact path="/myinfo" element={!User ? <Home /> : <MyInfo User={User} />} />
-                    <Route exact path="/create-course" element={!User ? <Home /> : <CreateCourse />} />
-                    <Route exact path="/login" element={User ? <Home /> : <Login />} />
+                    <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
+                    <Route exact path="/learn/" element={User.loading ? <Home /> : <Learn User={User} />} />
+                    <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
+                    <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
+                    <Route exact path="/course-manage" element={User.loading ? <Home /> : <CourseManage User={User} />} />
+                    <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} />
+                    <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse />} />
+                    <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
 
 
                     <Route path='*' exact={true} element={<My404 />} />

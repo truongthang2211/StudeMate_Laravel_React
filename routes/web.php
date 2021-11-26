@@ -19,13 +19,17 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/{provider}/redirect', [SocialAuthController::class,'redirectToProvider']);
-Route::get('/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
-Route::get('/get-user', [LoginController::class,'GetCurrentUser']);
+Route::get('/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider']);
+Route::get('/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
+Route::get('/get-user', [LoginController::class, 'GetCurrentUser']);
 
 
 
 
 Route::get('/{route?}', function () {
     return view('welcome');
-});
+})->where('route', '.*');
+
+// Route::get('{any}', function () {
+//     return view('welcome'); // or wherever your React app is bootstrapped.
+// })->where('any', '.*');
