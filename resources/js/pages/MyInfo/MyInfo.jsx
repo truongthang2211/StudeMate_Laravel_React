@@ -1,6 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import './MyInfo.css';
-export default function MyInfo({ User }) {
+
+function MyInfo({ User }) {
+
+    //const history = useHistory();
+    const [userInfo, setUserInfo] = useState({});
+    const [password, setPassword] = useState();
+    // if (!userInfo.name) {
+
+    //     setUserInfo({
+    //         username: User.username,
+    //         name: User.name,
+    //         email: '',
+    //         password: '',
+    //     })
+    // }
+    useEffect(() => {
+        setUserInfo({ ...User })
+
+        // axios.get('/api/myinfo').then(res => {
+
+        //     if (res.data.status === 200) {
+        //         console.log(set.data.message);
+        //         this.setUserInfo({
+        //             name: res.data.user.name,
+        //             email: res.data.user.email,
+        //         });
+        //     }
+        //     else if (res.data.status === 404) {
+        //         swal("Error", res.data.message, "error");
+        //     }
+        // });
+
+    }, [User]);
+
+    const handleInput = (e) => {
+        setUserInfo({
+            ...userInfo,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleUpdateMyInfo = (e) => {
+        e.preventDefault();
+
+
+
+        axios.put('/api/update-myinfo', userInfo).then(res => {
+            console.log(res);
+            if (res.data.status === 200) {
+                Swal.fire({
+                    text: 'Thanh cong',
+                    icon: 'success',
+                    confirmButtonText: 'Hay'
+                })
+                //setError([]);
+                //history.push('/myinfo');
+            }
+            else if (res.data.status === 422) {
+                Swal("All fields are mandetory", "", "error");
+                //setError(res.data.validationErrors);
+            }
+            else if (res.data.status === 404) {
+                Swal("Error", res.data.message, "error");
+                //history.push('/myinfo');
+            }
+        });
+    }
+
+
     return (<>
         <div className="zone zone-content">
             <div className="container">
@@ -19,7 +89,7 @@ export default function MyInfo({ User }) {
                             <div className="user--profile-right editing">
                                 <div className="user--profile-group">
                                     <h2 className="user--profile-title-group">Thông tin</h2>
-                                    <form id="frm-info" >
+                                    <form id="frm-info" onSubmit={handleUpdateMyInfo}>
                                         <div className="row">
 
                                             <div className="col-md-6 col-xs-12">
@@ -55,13 +125,13 @@ export default function MyInfo({ User }) {
                                                 <div className="row">
                                                     <div className="col-lg-3 col-sm-4 col-xs-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="FamilyName" className="required" aria-required="true">Họ và Tên</label>
+                                                            <label htmlFor="name" className="required" aria-required="true">Họ và Tên</label>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-name" className="span-display" style={{ display: "none" }}></span>
-                                                            <input name="FamilyName" type="text" className="form-control is-required" id="FamilyName" autoComplete="family-name" aria-required="true" style={{ display: 'block' }} />
+                                                            <input name="name" type="text" onChange={handleInput} value={userInfo.name || ''} className="form-control is-required" id="name" autoComplete="family-name" aria-required="true" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -96,13 +166,13 @@ export default function MyInfo({ User }) {
                                                 <div className="row">
                                                     <div className="col-lg-3 col-sm-4 col-xs-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="EmailAddress" className="required" aria-required="true">Email</label>
+                                                            <label htmlFor="email" className="required" aria-required="true">Email</label>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <span id="span-email" className="span-display" style={{ display: "none" }}>huynhminhthu12@gmail.com</span>
-                                                            <input name="EmailAddress" type="email" disabled="" className="form-control" id="EmailAddress" placeholder="Email" autoComplete="email" style={{ display: 'block' }} />
+                                                            <span id="span-email" className="span-display" style={{ display: "none" }}></span>
+                                                            <input name="email" type="email" onChange={handleInput} value={User.email || ''} disabled className="form-control" id="email" placeholder="Email" autoComplete="email" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,7 +198,7 @@ export default function MyInfo({ User }) {
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <select className="form-select" id="StateSelect" name="StateSelect">
+                                                            <select className="form-select" id="StateSelect" name="StateSelect" >
                                                                 <option value="-1" defaultValue="selected">Chọn thành phố</option>
                                                                 <option value="4360">An Giang</option>
                                                                 <option value="4361">Kon Tum</option>
@@ -266,7 +336,7 @@ export default function MyInfo({ User }) {
                                                 </div>
                                                 <div className="row">
                                                     <div className="form-group pull-right">
-                                                        <button className="btn btn-sm pull-right btn-save save-info-button my--cus-button" type="button" id="btnSaveInfo" >Lưu</button>
+                                                        <button className="btn btn-sm pull-right btn-save save-info-button my--cus-button" type="submit" id="btnSaveInfo" >Lưu</button>
                                                         <button className="btn btn-sm pull-right btn-cancel my--cus-button" type="button" id="btnCancelInfo">Hủy</button>
                                                     </div>
                                                 </div>
@@ -321,3 +391,5 @@ export default function MyInfo({ User }) {
         </div >
     </>);
 }
+
+export default MyInfo;

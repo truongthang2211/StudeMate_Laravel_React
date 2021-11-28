@@ -50,7 +50,7 @@ function Login({ ShowForm, handleShowForm }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // res = await axios.post('http://127.0.0.1:8000/sign-up', state)
-        axios.post('/api/sign-up',state)
+        axios.post('/api/sign-up', state)
             .then(function (response) {
                 console.log(response);
                 window.location.reload()

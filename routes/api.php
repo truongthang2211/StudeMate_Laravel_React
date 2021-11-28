@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MyInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,5 @@ Route::post('/sign-up', [LoginController::class,'SignUp']);
 Route::post('/sign-in', [LoginController::class,'SignIn']);
 Route::get('/sign-out', [LoginController::class,'SignOut']);
 
+Route::get('/myinfo', [MyInfoController::class,'EditMyInfo']);
+Route::put('/update-myinfo', [MyInfoController::class, 'UpdateMyInfo']);
