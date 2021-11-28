@@ -6,7 +6,7 @@ import './MyInfo.css';
 function MyInfo({ User }) {
 
     //const history = useHistory();
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({ date_of_birth: "2021-01-01" });
     const [password, setPassword] = useState();
     // if (!userInfo.name) {
 
@@ -43,28 +43,50 @@ function MyInfo({ User }) {
         });
     }
 
+    const handleDateChange = (e) => {
+        setUserInfo({
+            ...userInfo,
+            date_of_birth: e.target.value
+        });
+    }
+
+    const handleCityChange = (e) => {
+        setUserInfo({
+            ...userInfo,
+            city_id: e.target.value
+        });
+    }
+
     const handleUpdateMyInfo = (e) => {
         e.preventDefault();
-
-
 
         axios.put('/api/update-myinfo', userInfo).then(res => {
             console.log(res);
             if (res.data.status === 200) {
                 Swal.fire({
-                    text: 'Thanh cong',
+                    text: 'Thành công',
                     icon: 'success',
-                    confirmButtonText: 'Hay'
+                    confirmButtonText: 'OK'
                 })
                 //setError([]);
                 //history.push('/myinfo');
             }
             else if (res.data.status === 422) {
-                Swal("All fields are mandetory", "", "error");
+                Swal.fire({
+                    text: 'Thất bại',
+                    icon: 'warning',
+                    confirmButtonText: 'Cancel'
+                })
+                //Swal("All fields are mandetory", "", "error");
                 //setError(res.data.validationErrors);
             }
             else if (res.data.status === 404) {
-                Swal("Error", res.data.message, "error");
+                Swal.fire({
+                    text: 'Thất bại',
+                    icon: 'error',
+                    confirmButtonText: 'Cancel'
+                })
+                //Swal("Error", res.data.message, "error");
                 //history.push('/myinfo');
             }
         });
@@ -143,10 +165,9 @@ function MyInfo({ User }) {
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <span id="span-birthday" className="span-display" style={{ display: "none" }}>20-10-2021</span>
+                                                            <span id="span-birthday" className="span-display" style={{ display: "none" }}></span>
 
-                                                            <input name="BirthYear" type="date" id="BirthYear" className="form-control hasDatepicker" placeholder="mm/dd/yyyy" style={{ display: 'block' }} />
-
+                                                            <input name="BirthYear" type="date" onChange={handleDateChange} value={userInfo.date_of_birth} id="BirthYear" className="form-control" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,7 +219,7 @@ function MyInfo({ User }) {
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <select className="form-select" id="StateSelect" name="StateSelect" >
+                                                            <select className="form-select" id="StateSelect" name="StateSelect" onChange={handleCityChange} value={User.city_id}>
                                                                 <option value="-1" defaultValue="selected">Chọn thành phố</option>
                                                                 <option value="4360">An Giang</option>
                                                                 <option value="4361">Kon Tum</option>

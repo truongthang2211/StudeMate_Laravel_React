@@ -9437,7 +9437,9 @@ function MyInfo(_ref) {
   var User = _ref.User;
 
   //const history = useHistory();
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    date_of_birth: "2021-01-01"
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       userInfo = _useState2[0],
       setUserInfo = _useState2[1];
@@ -9474,6 +9476,18 @@ function MyInfo(_ref) {
     setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, _defineProperty({}, e.target.name, e.target.value)));
   };
 
+  var handleDateChange = function handleDateChange(e) {
+    setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
+      date_of_birth: e.target.value
+    }));
+  };
+
+  var handleCityChange = function handleCityChange(e) {
+    setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
+      city_id: e.target.value
+    }));
+  };
+
   var handleUpdateMyInfo = function handleUpdateMyInfo(e) {
     e.preventDefault();
     axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/update-myinfo', userInfo).then(function (res) {
@@ -9481,15 +9495,25 @@ function MyInfo(_ref) {
 
       if (res.data.status === 200) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
-          text: 'Thanh cong',
+          text: 'Thành công',
           icon: 'success',
-          confirmButtonText: 'Hay'
+          confirmButtonText: 'OK'
         }); //setError([]);
         //history.push('/myinfo');
       } else if (res.data.status === 422) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default()("All fields are mandetory", "", "error"); //setError(res.data.validationErrors);
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+          text: 'Thất bại',
+          icon: 'warning',
+          confirmButtonText: 'Cancel'
+        }); //Swal("All fields are mandetory", "", "error");
+        //setError(res.data.validationErrors);
       } else if (res.data.status === 404) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default()("Error", res.data.message, "error"); //history.push('/myinfo');
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+          text: 'Thất bại',
+          icon: 'error',
+          confirmButtonText: 'Cancel'
+        }); //Swal("Error", res.data.message, "error");
+        //history.push('/myinfo');
       }
     });
   };
@@ -9677,14 +9701,14 @@ function MyInfo(_ref) {
                                 className: "span-display",
                                 style: {
                                   display: "none"
-                                },
-                                children: "20-10-2021"
+                                }
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "BirthYear",
                                 type: "date",
+                                onChange: handleDateChange,
+                                value: userInfo.date_of_birth,
                                 id: "BirthYear",
-                                className: "form-control hasDatepicker",
-                                placeholder: "mm/dd/yyyy",
+                                className: "form-control",
                                 style: {
                                   display: 'block'
                                 }
@@ -9822,6 +9846,8 @@ function MyInfo(_ref) {
                                 className: "form-select",
                                 id: "StateSelect",
                                 name: "StateSelect",
+                                onChange: handleCityChange,
+                                value: User.city_id,
                                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                                   value: "-1",
                                   defaultValue: "selected",

@@ -20,29 +20,31 @@ class MyInfoController extends Controller{
 
     public function UpdateMyInfo(Request $request) {
         try {
-            // $validator = Validator::make($request->all(),[
-            //     'name'=>'required|max:191',
-            //     'email'=>'required|email|max:191',
+
+        // $validator = Validator::make($request->all(),[
+        //     'name'=>'required|max:191',
+        //     'email'=>'required|email|max:191',
+        // ]);
+
+        
+            // echo "<script>console.log('Debug Objects: " . 'loi ig gig ' . "' );</script>";
+            // return response()->json([
+            //     'status'=> 422,
+            //     'validationErrors'=> $validator->messages(),
             // ]);
-    
-            
-                // echo "<script>console.log('Debug Objects: " . 'loi ig gig ' . "' );</script>";
-                // return response()->json([
-                //     'status'=> 422,
-                //     'validationErrors'=> $validator->messages(),
-                // ]);
             
             
-                $user = User::where("email",$request->email)->first();
-                
-                
-                $user->name = $request->name;
-                $user->update();
-                return response()->json([
-                    'status'=> 200,
-                    'message'=>'User Updated Successfully',
-                    'User'=>$user,
-                ]);
+            $user = User::where("email",$request->email)->first();
+            
+            $user->name = $request->name;
+            $user->date_of_birth = $request->date_of_birth;
+            $user->city_id = $request->city_id;
+            $user->update();
+            return response()->json([
+                'status'=> 200,
+                'message'=>'User Updated Successfully',
+                'User'=>$user,
+            ]);
                 
                       
         } catch (\Throwable $th) {
