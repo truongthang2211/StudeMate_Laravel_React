@@ -9444,10 +9444,20 @@ function MyInfo(_ref) {
       userInfo = _useState2[0],
       setUserInfo = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    email: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: ""
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       password = _useState4[0],
-      setPassword = _useState4[1]; // if (!userInfo.name) {
+      setPassword = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      errorInput = _useState6[0],
+      setError = _useState6[1]; // if (!userInfo.name) {
   //     setUserInfo({
   //         username: User.username,
   //         name: User.name,
@@ -9476,7 +9486,7 @@ function MyInfo(_ref) {
     setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, _defineProperty({}, e.target.name, e.target.value)));
   };
 
-  var handleDateChange = function handleDateChange(e) {
+  var handleDateOfBirthChange = function handleDateOfBirthChange(e) {
     setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
       date_of_birth: e.target.value
     }));
@@ -9488,8 +9498,30 @@ function MyInfo(_ref) {
     }));
   };
 
+  var handleSchoolIdChange = function handleSchoolIdChange(e) {
+    setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
+      school_id: e.target.value
+    }));
+  };
+
+  var handleAvatarChange = function handleAvatarChange(e) {
+    var img = e.target.files[0];
+    setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
+      //avatar: e.target.files[0]
+      avatar: URL.createObjectURL(img)
+    }));
+  };
+
+  var handleBackgroundImgChange = function handleBackgroundImgChange(e) {
+    var img = e.target.files[0];
+    setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
+      background_img: URL.createObjectURL(img)
+    }));
+  };
+
   var handleUpdateMyInfo = function handleUpdateMyInfo(e) {
-    e.preventDefault();
+    e.preventDefault(); //alert(userInfo.avatar)
+
     axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/update-myinfo', userInfo).then(function (res) {
       console.log(res);
 
@@ -9498,15 +9530,16 @@ function MyInfo(_ref) {
           text: 'Thành công',
           icon: 'success',
           confirmButtonText: 'OK'
-        }); //setError([]);
-        //history.push('/myinfo');
+        });
+        setError([]); //history.push('/myinfo');
       } else if (res.data.status === 422) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
           text: 'Thất bại',
           icon: 'warning',
           confirmButtonText: 'Cancel'
         }); //Swal("All fields are mandetory", "", "error");
-        //setError(res.data.validationErrors);
+
+        setError(res.data.validationErrors);
       } else if (res.data.status === 404) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
           text: 'Thất bại',
@@ -9516,6 +9549,55 @@ function MyInfo(_ref) {
         //history.push('/myinfo');
       }
     });
+  };
+
+  var handleCancle = function handleCancle(e) {
+    setUserInfo(_objectSpread({}, User));
+  };
+
+  var handlePasswordChange = function handlePasswordChange(e) {
+    setPassword(_objectSpread(_objectSpread({}, password), {}, _defineProperty({
+      email: User.email
+    }, e.target.name, e.target.value)));
+  };
+
+  var handleUpdatePassword = function handleUpdatePassword(e) {
+    e.preventDefault(); //alert(password.newPassword + password.confirmPassword + password.currentPassword + password.email + User.password)
+
+    if (password.newPassword !== password.confirmPassword) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+        text: 'Mật khẩu không hợp lệ',
+        icon: 'warning',
+        confirmButtonText: 'Cancel'
+      });
+    } else {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/update-password', password).then(function (res) {
+        console.log(res);
+
+        if (res.data.status === 200) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+            text: 'Thành công',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          setError([]);
+        } else if (res.data.status === 422) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Mật khẩu không hợp lệ!',
+            confirmButtonText: 'Cancel'
+          });
+          setError(res.data.validationErrors);
+        } else if (res.data.status === 404) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+            text: 'Thất bại',
+            icon: 'error',
+            confirmButtonText: 'Cancel'
+          });
+        }
+      });
+    }
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
@@ -9572,7 +9654,7 @@ function MyInfo(_ref) {
                           className: "row myinfo-avt",
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                             id: "AvtPreview",
-                            src: "https://vnn-imgs-f.vgcloud.vn/2019/04/02/16/kha-banh-kiem-duoc-bao-nhieu-tien-tu-mang-xa-hoi.jpg",
+                            src: userInfo.avatar || "https://i.pinimg.com/564x/c8/44/4d/c8444dd338a5921ae93b2199e0604a91.jpg",
                             className: "no-img"
                           })
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -9598,6 +9680,7 @@ function MyInfo(_ref) {
                               id: "Avatar",
                               className: "file",
                               type: "file",
+                              onChange: handleAvatarChange,
                               accept: "image/png,image/x-png,image/gif,image/jpeg,image/jpg"
                             })]
                           })
@@ -9608,7 +9691,7 @@ function MyInfo(_ref) {
                           className: "row myinfo-background",
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                             id: "BackGroundPreview",
-                            src: "https://i.pinimg.com/originals/d7/de/ef/d7deef7ef29adf8187d9a9f39e6a034e.png",
+                            src: userInfo.background_img || "https://i.pinimg.com/564x/c8/44/4d/c8444dd338a5921ae93b2199e0604a91.jpg",
                             className: "no-img"
                           })
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -9634,6 +9717,7 @@ function MyInfo(_ref) {
                               id: "Background",
                               className: "file",
                               type: "file",
+                              onChange: handleBackgroundImgChange,
                               accept: "image/png,image/x-png,image/gif,image/jpeg,image/jpg"
                             })]
                           })
@@ -9678,6 +9762,11 @@ function MyInfo(_ref) {
                                 style: {
                                   display: 'block'
                                 }
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                                id: "name-error",
+                                "class": "error",
+                                "for": "name",
+                                children: errorInput.name
                               })]
                             })
                           })]
@@ -9705,7 +9794,7 @@ function MyInfo(_ref) {
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "BirthYear",
                                 type: "date",
-                                onChange: handleDateChange,
+                                onChange: handleDateOfBirthChange,
                                 value: userInfo.date_of_birth,
                                 id: "BirthYear",
                                 className: "form-control",
@@ -9739,8 +9828,10 @@ function MyInfo(_ref) {
                                   display: "none"
                                 }
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                                name: "PhoneNumber",
+                                name: "phone",
                                 type: "text",
+                                onChange: handleInput,
+                                value: userInfo.phone || '',
                                 className: "form-control is-required",
                                 id: "PhoneNumber",
                                 placeholder: "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i",
@@ -9748,6 +9839,11 @@ function MyInfo(_ref) {
                                 style: {
                                   display: 'block'
                                 }
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                                id: "phone-error",
+                                "class": "error",
+                                "for": "phone",
+                                children: errorInput.phone
                               })]
                             })
                           })]
@@ -9777,8 +9873,7 @@ function MyInfo(_ref) {
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "email",
                                 type: "email",
-                                onChange: handleInput,
-                                value: User.email || '',
+                                value: userInfo.email || '',
                                 disabled: true,
                                 className: "form-control",
                                 id: "email",
@@ -9815,6 +9910,8 @@ function MyInfo(_ref) {
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "GraduatedSchool",
                                 type: "text",
+                                onChange: handleSchoolIdChange,
+                                value: userInfo.school_id || '',
                                 className: "form-control",
                                 id: "GraduatedSchool",
                                 autoComplete: "graduated-school",
@@ -9840,14 +9937,14 @@ function MyInfo(_ref) {
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                             className: "col-lg-9 col-sm-8 col-xs-12",
-                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                               className: "form-group",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
                                 className: "form-select",
                                 id: "StateSelect",
                                 name: "StateSelect",
                                 onChange: handleCityChange,
-                                value: User.city_id,
+                                value: userInfo.city_id,
                                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                                   value: "-1",
                                   defaultValue: "selected",
@@ -10042,39 +10139,11 @@ function MyInfo(_ref) {
                                   value: "4422",
                                   children: "B\u1EAFc K\u1EA1n"
                                 })]
-                              })
-                            })
-                          })]
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                          className: "row",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                            className: "col-lg-3 col-sm-4 col-xs-12",
-                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                              className: "form-group",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
-                                htmlFor: "CityName",
-                                children: "\u0110\u1ECBa ch\u1EC9"
-                              })
-                            })
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                            className: "col-lg-9 col-sm-8 col-xs-12",
-                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                              className: "form-group",
-                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                                id: "span-cityName",
-                                className: "span-display",
-                                style: {
-                                  display: "none"
-                                }
-                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("textarea", {
-                                name: "CityName",
-                                type: "text",
-                                className: "form-control",
-                                id: "CityName",
-                                placeholder: "T\u1EC9nh/Th\xE0nh ph\u1ED1 b\u1EA1n \u0111ang s\u1ED1ng",
-                                style: {
-                                  display: 'block'
-                                }
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                                id: "StateSelect-error",
+                                "class": "error",
+                                "for": "StateSelect",
+                                children: errorInput.city_id
                               })]
                             })
                           })]
@@ -10101,7 +10170,9 @@ function MyInfo(_ref) {
                                 title: ""
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 type: "text",
-                                name: "Facebook",
+                                name: "facebook",
+                                onChange: handleInput,
+                                value: userInfo.facebook || '',
                                 className: "form-control",
                                 id: "facebook",
                                 placeholder: "Your profile link",
@@ -10219,6 +10290,7 @@ function MyInfo(_ref) {
                               className: "btn btn-sm pull-right btn-cancel my--cus-button",
                               type: "button",
                               id: "btnCancelInfo",
+                              onClick: handleCancle,
                               children: "H\u1EE7y"
                             })]
                           })
@@ -10239,6 +10311,7 @@ function MyInfo(_ref) {
                           className: "tab-pane active",
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
                             id: "frmChangePassword",
+                            onSubmit: handleUpdatePassword,
                             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                               className: "form-group",
                               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
@@ -10247,6 +10320,7 @@ function MyInfo(_ref) {
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "currentPassword",
                                 type: "password",
+                                onChange: handlePasswordChange,
                                 className: "form-control",
                                 placeholder: "M\u1EADt kh\u1EA9u",
                                 autoComplete: "current-password"
@@ -10265,8 +10339,14 @@ function MyInfo(_ref) {
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "newPassword",
                                 type: "password",
+                                onChange: handlePasswordChange,
                                 className: "form-control",
                                 placeholder: "M\u1EADt kh\u1EA9u m\u1EDBi"
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                                id: "newPassword-error",
+                                "class": "error",
+                                "for": "newPassword",
+                                children: errorInput.newPassword
                               })]
                             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                               className: "form-group",
@@ -10276,14 +10356,20 @@ function MyInfo(_ref) {
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                                 name: "confirmPassword",
                                 type: "password",
+                                onChange: handlePasswordChange,
                                 className: "form-control",
                                 placeholder: "M\u1EADt kh\u1EA9u x\xE1c nh\u1EADn"
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                                id: "confirmPassword-error",
+                                "class": "error",
+                                "for": "confirmPassword",
+                                children: errorInput.confirmPassword
                               })]
                             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                               className: "form-group",
                               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                                 className: "btn btn-sm pull-right btn-save save-info-button my--cus-button",
-                                type: "button",
+                                type: "submit",
                                 id: "btnSavePass",
                                 children: "Thay \u0111\u1ED5i"
                               })

@@ -7,7 +7,15 @@ function MyInfo({ User }) {
 
     //const history = useHistory();
     const [userInfo, setUserInfo] = useState({ date_of_birth: "2021-01-01" });
-    const [password, setPassword] = useState();
+
+    const [password, setPassword] = useState({
+        email: "",
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+    });
+
+    const [errorInput, setError] = useState([]);
     // if (!userInfo.name) {
 
     //     setUserInfo({
@@ -43,7 +51,7 @@ function MyInfo({ User }) {
         });
     }
 
-    const handleDateChange = (e) => {
+    const handleDateOfBirthChange = (e) => {
         setUserInfo({
             ...userInfo,
             date_of_birth: e.target.value
@@ -57,8 +65,34 @@ function MyInfo({ User }) {
         });
     }
 
+    const handleSchoolIdChange = (e) => {
+        setUserInfo({
+            ...userInfo,
+            school_id: e.target.value
+        });
+    }
+
+    const handleAvatarChange = (e) => {
+        let img = e.target.files[0];
+        setUserInfo({
+            ...userInfo,
+            //avatar: e.target.files[0]
+            avatar: URL.createObjectURL(img)
+        });
+    }
+    const handleBackgroundImgChange = (e) => {
+        let img = e.target.files[0];
+        setUserInfo({
+            ...userInfo,
+            background_img: URL.createObjectURL(img)
+        });
+    }
+
+
+
     const handleUpdateMyInfo = (e) => {
         e.preventDefault();
+        //alert(userInfo.avatar)
 
         axios.put('/api/update-myinfo', userInfo).then(res => {
             console.log(res);
@@ -68,7 +102,7 @@ function MyInfo({ User }) {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
-                //setError([]);
+                setError([]);
                 //history.push('/myinfo');
             }
             else if (res.data.status === 422) {
@@ -78,7 +112,7 @@ function MyInfo({ User }) {
                     confirmButtonText: 'Cancel'
                 })
                 //Swal("All fields are mandetory", "", "error");
-                //setError(res.data.validationErrors);
+                setError(res.data.validationErrors);
             }
             else if (res.data.status === 404) {
                 Swal.fire({
@@ -90,6 +124,61 @@ function MyInfo({ User }) {
                 //history.push('/myinfo');
             }
         });
+    }
+
+    const handleCancle = (e) => {
+        setUserInfo({ ...User });
+    }
+
+    const handlePasswordChange = (e) => {
+        setPassword({
+            ...password,
+            email: User.email,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleUpdatePassword = (e) => {
+        e.preventDefault();
+        //alert(password.newPassword + password.confirmPassword + password.currentPassword + password.email + User.password)
+
+        if (password.newPassword !== password.confirmPassword) {
+            Swal.fire({
+                text: 'Mật khẩu không hợp lệ',
+                icon: 'warning',
+                confirmButtonText: 'Cancel'
+            })
+        }
+
+        else {
+            axios.put('/api/update-password', password).then(res => {
+                console.log(res);
+                if (res.data.status === 200) {
+                    Swal.fire({
+                        text: 'Thành công',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    })
+                    setError([]);
+                }
+                else if (res.data.status === 422) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Mật khẩu không hợp lệ!',
+                        confirmButtonText: 'Cancel'
+                    })
+                    setError(res.data.validationErrors);
+                }
+                else if (res.data.status === 404) {
+                    Swal.fire({
+                        text: 'Thất bại',
+                        icon: 'error',
+                        confirmButtonText: 'Cancel'
+                    })
+                }
+            });
+        }
     }
 
 
@@ -116,26 +205,26 @@ function MyInfo({ User }) {
 
                                             <div className="col-md-6 col-xs-12">
                                                 <div className="row myinfo-avt">
-                                                    <img id="AvtPreview" src="https://vnn-imgs-f.vgcloud.vn/2019/04/02/16/kha-banh-kiem-duoc-bao-nhieu-tien-tu-mang-xa-hoi.jpg" className="no-img" />
+                                                    <img id="AvtPreview" src={userInfo.avatar || "https://i.pinimg.com/564x/c8/44/4d/c8444dd338a5921ae93b2199e0604a91.jpg"} className="no-img" />
                                                 </div>
                                                 <div className="row avatar-selector">
                                                     <div className="form-group UploadAvatar">
                                                         <label style={{ display: 'block' }}>Ảnh đại diện của bạn</label>
                                                         <label htmlFor="Avatar" className="browse btn btn-primary input-sm" type="button" id="Upload-Ava" style={{ display: 'block' }}>Chọn ảnh</label>
-                                                        <input name="ImgFile" id="Avatar" className="file" type="file" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
+                                                        <input name="ImgFile" id="Avatar" className="file" type="file" onChange={handleAvatarChange} accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="col-md-6 col-xs-12">
                                                 <div className="row myinfo-background">
-                                                    <img id="BackGroundPreview" src="https://i.pinimg.com/originals/d7/de/ef/d7deef7ef29adf8187d9a9f39e6a034e.png" className="no-img" />
+                                                    <img id="BackGroundPreview" src={userInfo.background_img || "https://i.pinimg.com/564x/c8/44/4d/c8444dd338a5921ae93b2199e0604a91.jpg"} className="no-img" />
 
                                                 </div>
                                                 <div className="row avatar-selector">
                                                     <div className="form-group UploadBackground">
                                                         <label style={{ display: 'block' }}>Ảnh nền trang user của bạn</label>
                                                         <label htmlFor="Background" className="browse btn btn-primary input-sm" type="button" id="Upload-Ava" style={{ display: 'block' }}>Chọn ảnh</label>
-                                                        <input name="ImgFile" id="Background" className="file" type="file" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
+                                                        <input name="ImgFile" id="Background" className="file" type="file" onChange={handleBackgroundImgChange} accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,6 +243,7 @@ function MyInfo({ User }) {
                                                         <div className="form-group">
                                                             <span id="span-name" className="span-display" style={{ display: "none" }}></span>
                                                             <input name="name" type="text" onChange={handleInput} value={userInfo.name || ''} className="form-control is-required" id="name" autoComplete="family-name" aria-required="true" style={{ display: 'block' }} />
+                                                            <label id="name-error" class="error" for="name">{errorInput.name}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -167,7 +257,7 @@ function MyInfo({ User }) {
                                                         <div className="form-group">
                                                             <span id="span-birthday" className="span-display" style={{ display: "none" }}></span>
 
-                                                            <input name="BirthYear" type="date" onChange={handleDateChange} value={userInfo.date_of_birth} id="BirthYear" className="form-control" style={{ display: 'block' }} />
+                                                            <input name="BirthYear" type="date" onChange={handleDateOfBirthChange} value={userInfo.date_of_birth} id="BirthYear" className="form-control" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,7 +270,8 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-phone" className="span-display" style={{ display: "none" }}></span>
-                                                            <input name="PhoneNumber" type="text" className="form-control is-required" id="PhoneNumber" placeholder="Số điện thoại" autoComplete="tel-national" style={{ display: 'block' }} />
+                                                            <input name="phone" type="text" onChange={handleInput} value={userInfo.phone || ''} className="form-control is-required" id="PhoneNumber" placeholder="Số điện thoại" autoComplete="tel-national" style={{ display: 'block' }} />
+                                                            <label id="phone-error" class="error" for="phone">{errorInput.phone}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -193,7 +284,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-email" className="span-display" style={{ display: "none" }}></span>
-                                                            <input name="email" type="email" onChange={handleInput} value={User.email || ''} disabled className="form-control" id="email" placeholder="Email" autoComplete="email" style={{ display: 'block' }} />
+                                                            <input name="email" type="email" value={userInfo.email || ''} disabled className="form-control" id="email" placeholder="Email" autoComplete="email" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,7 +297,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-school" className="span-display" style={{ display: "none" }}></span>
-                                                            <input name="GraduatedSchool" type="text" className="form-control" id="GraduatedSchool" autoComplete="graduated-school" aria-required="true" style={{ display: 'block' }} />
+                                                            <input name="GraduatedSchool" type="text" onChange={handleSchoolIdChange} value={userInfo.school_id || ''} className="form-control" id="GraduatedSchool" autoComplete="graduated-school" aria-required="true" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,7 +310,7 @@ function MyInfo({ User }) {
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <select className="form-select" id="StateSelect" name="StateSelect" onChange={handleCityChange} value={User.city_id}>
+                                                            <select className="form-select" id="StateSelect" name="StateSelect" onChange={handleCityChange} value={userInfo.city_id}>
                                                                 <option value="-1" defaultValue="selected">Chọn thành phố</option>
                                                                 <option value="4360">An Giang</option>
                                                                 <option value="4361">Kon Tum</option>
@@ -285,11 +376,12 @@ function MyInfo({ User }) {
                                                                 <option value="4421">Bắc Giang</option>
                                                                 <option value="4422">Bắc Kạn</option>
                                                             </select>
+                                                            <label id="StateSelect-error" class="error" for="StateSelect">{errorInput.city_id}</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div className="row">
+                                                {/* <div className="row">
                                                     <div className="col-lg-3 col-sm-4 col-xs-12">
                                                         <div className="form-group">
                                                             <label htmlFor="CityName">Địa chỉ</label>
@@ -301,7 +393,8 @@ function MyInfo({ User }) {
                                                             <textarea name="CityName" type="text" className="form-control" id="CityName" placeholder="Tỉnh/Thành phố bạn đang sống" style={{ display: 'block' }}></textarea>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
+
                                                 <div className="row">
                                                     <div className="col-lg-3 col-sm-4 col-xs-12">
                                                         <div className="form-group">
@@ -311,7 +404,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-facebook" className="span-display" style={{ display: "none" }} title=""></span>
-                                                            <input type="text" name="Facebook" className="form-control" id="facebook" placeholder="Your profile link" style={{ display: 'block' }} />
+                                                            <input type="text" name="facebook" onChange={handleInput} value={userInfo.facebook || ''} className="form-control" id="facebook" placeholder="Your profile link" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -358,7 +451,7 @@ function MyInfo({ User }) {
                                                 <div className="row">
                                                     <div className="form-group pull-right">
                                                         <button className="btn btn-sm pull-right btn-save save-info-button my--cus-button" type="submit" id="btnSaveInfo" >Lưu</button>
-                                                        <button className="btn btn-sm pull-right btn-cancel my--cus-button" type="button" id="btnCancelInfo">Hủy</button>
+                                                        <button className="btn btn-sm pull-right btn-cancel my--cus-button" type="button" id="btnCancelInfo" onClick={handleCancle}>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,10 +467,10 @@ function MyInfo({ User }) {
                                         <div className="col-md-12">
                                             <div className="form-group">
                                                 <div id="change-password" className="tab-pane active">
-                                                    <form id="frmChangePassword">
+                                                    <form id="frmChangePassword" onSubmit={handleUpdatePassword}>
                                                         <div className="form-group">
                                                             <label htmlFor="currentPassword">Mật khẩu</label>
-                                                            <input name="currentPassword" type="password" className="form-control" placeholder="Mật khẩu" autoComplete="current-password" />
+                                                            <input name="currentPassword" type="password" onChange={handlePasswordChange} className="form-control" placeholder="Mật khẩu" autoComplete="current-password" />
                                                         </div>
                                                         <p>
                                                             {/* <!--link cho form quên mật khẩu điền sau--> */}
@@ -385,14 +478,16 @@ function MyInfo({ User }) {
                                                         </p>
                                                         <div className="form-group">
                                                             <label htmlFor="newPassword">Mật khẩu mới</label>
-                                                            <input name="newPassword" type="password" className="form-control" placeholder="Mật khẩu mới" />
+                                                            <input name="newPassword" type="password" onChange={handlePasswordChange} className="form-control" placeholder="Mật khẩu mới" />
+                                                            <label id="newPassword-error" class="error" for="newPassword">{errorInput.newPassword}</label>
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="confirmPassword">Mật khẩu xác nhận</label>
-                                                            <input name="confirmPassword" type="password" className="form-control" placeholder="Mật khẩu xác nhận" />
+                                                            <input name="confirmPassword" type="password" onChange={handlePasswordChange} className="form-control" placeholder="Mật khẩu xác nhận" />
+                                                            <label id="confirmPassword-error" class="error" for="confirmPassword">{errorInput.confirmPassword}</label>
                                                         </div>
                                                         <div className="form-group">
-                                                            <button className="btn btn-sm pull-right btn-save save-info-button my--cus-button" type="button" id="btnSavePass" >Thay đổi</button>
+                                                            <button className="btn btn-sm pull-right btn-save save-info-button my--cus-button" type="submit" id="btnSavePass" >Thay đổi</button>
                                                         </div>
                                                     </form>
                                                 </div>

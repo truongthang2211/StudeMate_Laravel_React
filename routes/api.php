@@ -25,3 +25,4 @@ Route::get('/sign-out', [LoginController::class,'SignOut']);
 
 Route::get('/myinfo', [MyInfoController::class,'EditMyInfo']);
 Route::put('/update-myinfo', [MyInfoController::class, 'UpdateMyInfo']);
+Route::put('/update-password', [MyInfoController::class, 'UpdatePassword']);

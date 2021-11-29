@@ -24,6 +24,10 @@ class User extends Authenticatable
         'provider',
         'provider_id',
         'avatar',
+        'school_id',
+        'phone',
+        'facebook',
+        'background_img',
 
     ];
 
