@@ -148,9 +148,9 @@ export function ProfileHeader({ User }) {
         </div>
     );
 }
-export function ProfileCourseItem({ Option }) {
+export function ProfileCourseItem({ Option,className }) {
     return (
-        <div className="course-item">
+        <div className={ className? "course-item " + className:"course-item"}>
             <div className="course-avt">
                 <img src="https://codelearn.io/CodeCamp/CodeCamp/Upload/Course/1e746fe3cbe448bda850d8b953a78954.jpg" alt="" />
             </div>

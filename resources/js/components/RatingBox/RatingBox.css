@@ -1,0 +1,16 @@
+.rating-box i{
+    font-size: 22px;
+    padding: 0 8px;
+}
+.rating-box .rating-up{
+    border-right: 1px solid #333;
+}
+.rating-box span{
+    font-weight: 600;
+}
+.rating-box .rating-up i{
+    color: #55dd34;
+}
+.rating-box .rating-down i{
+    color: #dd344b;
+}

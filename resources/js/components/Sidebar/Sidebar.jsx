@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from '../Avatar';
 import './Sidebar.css'
+
 function Sidebar(props) {
+    console.log('render sidebar')
     return (
         <>
             <div id="sidebar">
@@ -10,30 +13,23 @@ function Sidebar(props) {
                     <h5>{props.User.name}</h5>
                 </div>
                 <div className="sidebar__listfeature">
-                        <a className="sidebar__feature-item">
+                        <Link to="/course-manage/overview" className="sidebar__feature-item">
                             <i className="fas fa-home"></i>
                             <span>Tổng quan</span>
-                        </a>
-                        <a className="sidebar__feature-item">
+                        </Link >
+                        <Link to="/course-manage/registeredcourse" className="sidebar__feature-item">
                             <i className="fas fa-list-alt"></i>
                             <span>Khóa học đã đăng ký</span>
-                        </a>
-                        <a className="sidebar__feature-item">
+                        </Link>
+                        <Link to="/course-manage/mycourse" className="sidebar__feature-item">
                             <i className="fas fa-th-list"></i>
                             <span>Khóa học của bạn</span>
-                        </a>
-                        <a className="sidebar__feature-item">
-                            <i className="fas fa-comments"></i>
-                            <span>Bình luận</span>
-                        </a>
-                        <a className="sidebar__feature-item">
-                            <i className="fas fa-star"></i>
-                            <span>Đánh giá</span>
-                        </a>
+                        </Link>
+                      
                 </div>
             </div>
         </>
     );
 }
 
-export default Sidebar;
+export default (Sidebar);

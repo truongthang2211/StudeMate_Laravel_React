@@ -94,6 +94,7 @@
 }
 
 .notifi-form{
+    right: 0;
     background: #fff;
     width: 370px;
     overflow: hidden;

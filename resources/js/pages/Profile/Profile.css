@@ -13,8 +13,8 @@ video {
     font-size: 18px;
 }
 .all-profile {
-    min-height: 100vh;
-    background-image: linear-gradient(180deg, #ebebeb 75%,#aaa);
+    min-height: calc(100vh - 64px);
+    /* background-image: linear-gradient(180deg, #ebebeb 75%,#aaa); */
     position: relative;
 }
 

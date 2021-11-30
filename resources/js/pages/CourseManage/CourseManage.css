@@ -1,18 +1,45 @@
 #course-manage{
     background-color: #fefefe;
     background-image: none;
+    display: flex;
 }
 .course-list-manage{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.course-manage-content .course-item{
-    flex-basis: 49.5%;
-}
 .manage-registerd{
     border: 1px solid rgb(209, 208, 208)
 }
 .manage-registerd + .manage-registerd{
     margin-top: 24px;
+}
+.course-manage-content{
+    flex-grow: 1;
+    margin-left: 300px;
+    padding: 36px 48px;
+    /* position: fixed; */
+    min-width: calc(100% - 300px);
+}
+.course-manage-overview{
+    max-width: 80%;
+}
+.anal-infos{
+    margin-top: 24px;
+    display: flex;
+    border: 1px solid #ddd;
+    flex-wrap: wrap;
+}
+#course-manage .anal-item-custom:not(:last-child){
+    border-right: 1px solid #ddd;
+}
+.anal-item-custom{
+    flex-grow: 1;
+}
+#course-manage .fa-edit{    
+    font-size:18px;
+}
+#course-manage .fa-edit:hover{
+    cursor: pointer;
+    color: var(--main-yellow);
 }

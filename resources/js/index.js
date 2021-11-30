@@ -18,7 +18,7 @@ function Index() {
     const [ShowForm, setShowForm] = useState(false)
     const [User, setUser] = useState(() => {
         const cookieObj = new URLSearchParams(document.cookie.replaceAll("; ", "&"))
-        return cookieObj.get("email")? { loading: false }:{ loading: true }
+        return cookieObj.get("email") ? { loading: false } : { loading: true }
     })
     const handleShowForm = () => {
         setShowForm(pre => !pre)
@@ -38,13 +38,14 @@ function Index() {
             <BrowserRouter>
                 <Navbar User={User} ShowForm={ShowForm} handleShowForm={handleShowForm} />
                 <Routes>
-                    <Route exact path="/" element={<Home />} />
+                    <Route path="/" element={<Home />} />
                     <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
                     <Route exact path="/learn/" element={User.loading ? <Home /> : <Learn User={User} />} />
                     <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
                     <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
                     <Route exact path="/course-manage" element={User.loading ? <Home /> : <CourseManage User={User} />} />
-                    <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} />
+                    <Route exact path="/course-manage/:feature" element={User.loading ? <Home /> : <CourseManage User={User} />} />
+                    {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
                     <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse />} />
                     <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
 

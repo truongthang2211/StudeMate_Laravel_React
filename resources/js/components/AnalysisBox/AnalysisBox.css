@@ -1,0 +1,16 @@
+.anal-info-item{
+    min-width: 296px;
+    min-height: 112px;
+    text-align: center;
+    padding: 16px 0;
+}
+.anal-info-content{
+    font-weight: 600;
+    font-size: 20px;
+}
+.anal-info-time{
+    color: #666;
+}
+.anal-combobox{
+    float: right;
+}
