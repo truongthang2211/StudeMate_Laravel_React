@@ -14,7 +14,7 @@ import { ListCourse } from '../../Data.js'
 const CommentData = [
     {
         user: {
-            name: "Lisa",
+            FULLNAME: "Lisa",
             avt: 'http://media.doisongphapluat.com/695/2021/2/10/Lisa.jpg',
         },
         content: 'Thắng đẹp trai',
@@ -23,7 +23,7 @@ const CommentData = [
         repl_comment: [
             {
                 user: {
-                    name: "Nancy",
+                    FULLNAME: "Nancy",
                     avt: 'http://media.doisongphapluat.com/695/2021/2/10/Nancy.jpg',
                 },
                 content: '+1 Confirm',
@@ -32,7 +32,7 @@ const CommentData = [
             },
             {
                 user: {
-                    name: "Tzuyu",
+                    FULLNAME: "Tzuyu",
                     avt: 'https://top10az.com/wp-content/uploads/2021/05/lisa.jpg',
                 },
                 content: '+1 Confirm',
@@ -43,7 +43,7 @@ const CommentData = [
     },
     {
         user: {
-            name: "Khá Bảnh",
+            FULLNAME: "Khá Bảnh",
             avt: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Kh%C3%A1_B%E1%BA%A3nh_khai_tr%C6%B0%C6%A1ng_shop_b%C3%A1n_qu%E1%BA%A7n_%C3%A1o_%E1%BB%9F_Qu%E1%BB%91c_Oai_2019-03-16.png/250px-Kh%C3%A1_B%E1%BA%A3nh_khai_tr%C6%B0%C6%A1ng_shop_b%C3%A1n_qu%E1%BA%A7n_%C3%A1o_%E1%BB%9F_Qu%E1%BB%91c_Oai_2019-03-16.png',
         },
         content: 'Bài học rat hay!',
@@ -214,11 +214,11 @@ function Comment(props) {
     return (
         <div className={ClassName}>
             <div className="comment-avt">
-                <img className="CommentBox_myAvatar__3Mi09" src={props.User.avt} alt={props.User.name} />
+                <img className="CommentBox_myAvatar__3Mi09" src={props.User.avt} alt={props.User.FULLNAME} />
             </div>
             <div className="comment-content">
                 <div className="comment-user-name">
-                    <a href="">{props.User.name}</a>
+                    <a href="">{props.User.FULLNAME}</a>
                 </div>
                 <div className="comment-body">{props.Content}</div>
                 <div className="comment-footer">

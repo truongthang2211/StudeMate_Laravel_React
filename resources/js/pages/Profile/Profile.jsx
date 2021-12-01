@@ -105,7 +105,7 @@ export function ProfileHeader({ User }) {
             <Avatar User={User} Width="200px" Height="200px"/>
             <div className="profile-personalinfo">
                 <div className="profile-name">
-                    <span>{User.name}</span>
+                    <span>{User.FULLNAME}</span>
                 </div>
                 <div className="profile-info">
                     <ul className="profile-info-section">

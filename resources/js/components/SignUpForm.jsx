@@ -35,6 +35,7 @@ export default memo(function SignUpForm() {
                     })
                     window.location.reload()
                 } else {
+                    console.log(response)
                     Swal.fire({
                         text: response.data.message,
                         icon: 'error',
