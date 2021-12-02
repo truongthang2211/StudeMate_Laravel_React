@@ -22,7 +22,7 @@ class LoginController extends Controller
                 $user->save();
                 $account = new Account();
                 $account->username = $request->username;
-                $account->pwd = bcrypt($request->email);
+                $account->pwd = bcrypt($request->password);
                 $account->user_id = $user->id;
                 $account->account_role = 'User';
                 $account->save();
@@ -50,15 +50,17 @@ class LoginController extends Controller
         $message = "Đăng nhập thành công";
         try {
             $User = User::where('email', $request->username)->first();
-            if ($User) {
-                if (!password_verify($request->password, $User->password)) {
-                
+            $Account = Account::where('username', $request->username)->first();
+            $ID=$User?$User->id:($Account?$Account->USER_ID:null);
+            if ($User || $Account) {
+                if (!password_verify($request->password, $Account->PWD)) {
                     $status_code = 400;
                     $message = "Sai mật khẩu";
                 } else {
-                    setcookie("email", $User->email, time() + 60 * 60 * 24, "/");
+                    setcookie("StudyMate", $ID, time() + 60 * 60 * 24, "/");
                 }
             } else {
+
                 $status_code = 400;
                 $message = 'Email hoặc username không tồn tại';
             }
@@ -86,9 +88,9 @@ class LoginController extends Controller
     public function GetCurrentUser()
     {
         try {
-            if (isset($_COOKIE['email'])) {
-                $email = $_COOKIE['email'];
-                $user = User::where('email', $email)->first();
+            if (isset($_COOKIE['StudyMate'])) {
+                $id = $_COOKIE['StudyMate'];
+                $user = User::where('USER_ID', $id)->first();
                 return response()->json([
                     'status' => 200,
                     'message' => 'Lay User thanh cong',
