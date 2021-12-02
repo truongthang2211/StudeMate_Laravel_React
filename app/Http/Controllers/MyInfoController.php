@@ -37,16 +37,16 @@ class MyInfoController extends Controller{
             }
             
             else{
-                $user = User::where("email",$request->EMAIL)->first();
+                $user = User::where("EMAIL",$request->EMAIL)->first();
                 
                 $user->FULLNAME = $request->FULLNAME;
                 $user->DATE_OF_BIRTH = $request->DATE_OF_BIRTH;
                 $user->CITY_ID = $request->CITY_ID;
                 $user->PHONE = $request->PHONE;
-                $user->SCHOOL_ID = $request->SCHOOL_ID;
-                $user->FACEBOOK = $request->FACEBOOK;
+                //$user->SCHOOL_ID = $request->SCHOOL_ID;
+                //$user->FACEBOOK = $request->FACEBOOK;
 
-                $user->AVATAR_IMG = $request->AVATAR_IMG;
+                //$user->AVATAR_IMG = $request->AVATAR_IMG;
                 //$user->BACKGROUND_IMG = $request->BACKGROUND_IMG;
 
                 $user->update();
@@ -80,7 +80,7 @@ class MyInfoController extends Controller{
             }
             
             else{
-                $acc = Account::where("email",$request->email)->first();
+                $acc = Account::where("USERNAME",$request->USERNAME)->first();
 
                 if ($acc && password_verify($request->currentPassword, $acc->PWD)) {
 

@@ -9,7 +9,7 @@ function MyInfo({ User }) {
     const [userInfo, setUserInfo] = useState({ DATE_OF_BIRTH: "2021-01-01" });
 
     const [password, setPassword] = useState({
-        EMAIL: "",
+        USERNAME: "",
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
@@ -45,7 +45,6 @@ function MyInfo({ User }) {
     }, [User]);
 
     const handleInput = (e) => {
-        alert(e.target.name)
         setUserInfo({
             ...userInfo,
             [e.target.name]: e.target.value
@@ -133,7 +132,7 @@ function MyInfo({ User }) {
     const handlePasswordChange = (e) => {
         setPassword({
             ...password,
-            EMAIL: User.EMAIL,
+            USERNAME: User.USERNAME,
             [e.target.name]: e.target.value
         });
     }
@@ -417,7 +416,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-linkedIn" className="span-display" style={{ display: "none" }} title=""></span>
-                                                            <input type="text" name="LINKEDIN" onChange={handleInput} value={userInfo.LINKEDIN || ''} className="form-control" id="linkedIn" placeholder="Your profile link" style={{ display: 'block' }} />
+                                                            <input type="text" name="LINKEDIN" className="form-control" id="linkedIn" placeholder="Your profile link" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -431,7 +430,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <p id="span-Slogan" style={{ display: "none" }}></p>
-                                                            <textarea rows="5" name="SLOGAN" onChange={handleInput} value={userInfo.SLOGAN || ''} type="text" className="form-control" id="slogan" style={{ display: 'block' }}></textarea>
+                                                            <textarea rows="5" name="SLOGAN" type="text" className="form-control" id="slogan" style={{ display: 'block' }}></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -455,13 +454,10 @@ function MyInfo({ User }) {
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
 
 
                                     </form>
-
                                     <h2 className="user--profile-title-group">Đổi mật khẩu</h2>
                                     <div className="row">
                                         <div className="col-md-12">
