@@ -18,7 +18,7 @@ function Index() {
     const [ShowForm, setShowForm] = useState(false)
     const [User, setUser] = useState(() => {
         const cookieObj = new URLSearchParams(document.cookie.replaceAll("; ", "&"))
-        return cookieObj.get("email") ? { loading: false } : { loading: true }
+        return cookieObj.get("StudyMate") ? { loading: false } : { loading: true }
     })
     const handleShowForm = () => {
         setShowForm(pre => !pre)
@@ -46,7 +46,7 @@ function Index() {
                     <Route exact path="/course-manage" element={User.loading ? <Home /> : <CourseManage User={User} />} />
                     <Route exact path="/course-manage/:feature" element={User.loading ? <Home /> : <CourseManage User={User} />} />
                     {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
-                    <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse />} />
+                    <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User}/>} />
                     <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
 
 

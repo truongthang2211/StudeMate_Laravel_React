@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import moment from 'moment';
 import './CreateCourse.css'
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import { ListCategory } from '../../Data.js'
 const API_KEY = 'AIzaSyAzSvXwjoICRPziR_FXQmuus_eSvMTin7I';
 
 const CreateData = {
@@ -12,71 +14,22 @@ const CreateData = {
     Description: '',
     Category: -1,
     SubCategory: -1,
-    Image: '',
+    Image: 'https://imic.com.vn/public/site/images/no-image.jpg',
     ListIn: [],
     ListOut: [],
     AutoTitle: true,
     AutoCreateList: false,
     ListCourse: [],
-
+    Author: -1,
 }
 
-const ListCategory = [{
-    title: 'Ngoại ngữ',
-    subCatogory: ['Tiếng Anh', 'Tiếng Trung', 'Tiếng Hàn', 'Tiếng Nhật', 'Khác']
-}, {
-    title: 'Marketing',
-    subCatogory: ['Marketing Online', 'Google Ads', 'Seo'
-        , 'Branding', 'Content Marketing', 'Video Marketing', 'Khác']
-}, {
-    title: 'Tin học văn phòng',
-    subCatogory: ['Exel', 'Word', 'Word', 'Khác']
-}, {
-    title: 'Thiết kế',
-    subCatogory: ['Thiết kế quảng cáo', 'Phần mềm thiết kế'
-        , 'Thiêt kế website', 'Kiến trúc, nội thất', 'Khác']
-}, {
-    title: 'Kinh doanh',
-    subCatogory: ['Bất động sản', 'Crypto',
-        'Kinh doanh Online', 'Startup', 'Kinh doanh Cafe', 'Kiếm tiền Online',
-        'Quản trị doanh nghiệp', 'Chứng khoán', 'Dropshipping', 'Kế toán'
-        , 'Đầu tư forex', 'Khác']
-}, {
-    title: 'Phát triển cá nhân',
-    subCatogory: ['Thương hiệu cá nhân', 'Tài chính cá nhân',
-        'Đàm phán', 'Ký năng lãnh đạo', 'Quản trị nhân sự', 'MC',
-        'Rèn luyện trí nhớ', 'Kỹ năng mềm', 'Giao tiếp', 'Kỹ năng quản lý'
-        , 'Thuyết trình', 'Khác']
-}, {
-    title: 'Sales, bán hàng',
-    subCatogory: ['Bán hàng online', 'Telesales',
-        'Bán hàng livestream', 'Chăm sóc khách hàng', 'Chiến lược bán hàng', 'Khác']
-}, {
-    title: 'Công nghệ thông tin',
-    subCatogory: ['Lập trình', 'Ngôn ngữ lập trình', 'Lập trình Web',
-        'Lập trình Android', 'Khác']
-}, {
-    title: 'Sức khỏe - Giới tính',
-    subCatogory: ['Giảm cân', 'Thiền',
-        'Phòn thủ', 'Giảm stress', 'Fitness - Gym', 'Tình yêu', 'Yoga', 'Massage', 'Khác']
-}, {
-    title: 'Phong cách sống',
-    subCatogory: ['Pha chế', 'Làm bánh', 'Làm đẹp', 'Handmade', 'Tử vi',
-        'Ảo thuật', 'Nhạc cụ', 'Ẩm thực - Nấu ăn', 'Nhảy', 'Phong thủy', 'Khác']
-}, {
-    title: 'Nuôi dạy con',
-    subCatogory: ['Mang thai', 'Dạy con thông minh', 'Chăm sóc bé yêu', 'Khác']
-}, {
-    title: 'Hôn nhân gia đình',
-    subCatogory: ['Hạnh phúc gia đình', 'Đời sống vợ chồng', 'Khác']
-}, {
-    title: 'Nhiếp ảnh, dựng phim',
-    subCatogory: ['Dựng phim', 'Chụp ảnh', 'Kỹ xảo', 'Khác']
-}]
 
-export default function CreateCourse() {
 
+export default function CreateCourse({ User }) {
     const [Data, setData] = useState(CreateData);
+    useEffect(() => {
+        setData({ ...CreateData, Author: User.USER_ID })
+    }, [User])
     const handleOnchange = (list) => {
         const newData = { ...Data };
         list.forEach(element => {
@@ -85,7 +38,7 @@ export default function CreateCourse() {
         setData(newData);
         console.log(newData)
     }
-    const [Page, setPage] = useState(4);
+    const [Page, setPage] = useState(1);
     const handleNextPage = () => {
         if (Page === 4)
             return;
@@ -128,53 +81,61 @@ export default function CreateCourse() {
             }`
     }
     const handleSubmit = async () => {
-        if (Data.ListCourse[0].type != 'chapter') {
+        // if (Data.ListCourse[0].type != 'chapter') {
+        //     Swal.fire({
+        //         text: 'Phải có chương ở vị trí đầu tiên',
+        //         icon: 'error',
+        //         confirmButtonText: 'Hay'
+        //     })
+        //     return;
+        // }
+        // const newListCourse = [];
+        // let lession_id = 0;
+        // for (var i = 0; i < Data.ListCourse.length; ++i) {
+        //     if (Data.ListCourse[i].type == 'chapter') {
+        //         newListCourse.push({ title: Data.ListCourse[i].title, lession: [] })
+        //     } else {
+        //         ++lession_id;
+        //         let duration = '';
+        //         let youtb_id = youtube_id(Data.ListCourse[i].URL);
+        //         await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
+        //             .then(data => data.json()).then(data => {
+        //                 console.log(data)
+        //                 duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
+
+        //             })
+        //         newListCourse.at(-1).lession = [
+        //             ...newListCourse.at(-1).lession,
+        //             {
+        //                 id: lession_id,
+        //                 title: Data.ListCourse[i].title,
+        //                 url: Data.ListCourse[i].URL,
+        //                 duration: duration
+        //             }]
+        //     }
+        // }
+        // console.log(newListCourse);
+        // handleOnchange([['ListCourse', newListCourse]])
+
+
+        var fd = new FormData(document.querySelector('#create-course-form'));
+        fd.append('data', JSON.stringify(Data))
+        console.log(fd)
+        const res = await axios.post('/api/create-course', fd, { "enctype": "multipart/form-data" })
+        if (res.data.status == 200) {
+            console.log(res)
             Swal.fire({
-                text: 'Phải có chương ở vị trí đầu tiên',
-                icon: 'error',
+                text: res.data.message,
+                icon: 'success',
                 confirmButtonText: 'Hay'
             })
-            return;
         }
-        const newListCourse = [];
-        let lession_id = 0;
-        for (var i = 0; i < Data.ListCourse.length; ++i) {
-            if (Data.ListCourse[i].type == 'chapter') {
-                newListCourse.push({ title: Data.ListCourse[i].title, lession: [] })
-            } else {
-                ++lession_id;
-                let duration = '';
-                let youtb_id = youtube_id(Data.ListCourse[i].URL);
-                await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
-                    .then(data => data.json()).then(data => {
-                        console.log(data)
-                        duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
-
-                    })
-                newListCourse.at(-1).lession = [
-                    ...newListCourse.at(-1).lession,
-                    {
-                        id: lession_id,
-                        title: Data.ListCourse[i].title,
-                        url: Data.ListCourse[i].URL,
-                        duration: duration
-                    }]
-            }
-        }
-        // Data.ListCourse.forEach(async (item) => {
-
-
-        // })
-        console.log(newListCourse);
-        handleOnchange([['ListCourse', newListCourse]])
-
-
 
 
     }
     return (
         <div className="container">
-            <form action="" className="create-course-form">
+            <form id="create-course-form" className="create-course-form">
                 <h2 className="create-course-title">Tạo khóa học</h2>
                 {Page === 1 && <PageOne Data={Data} handleOnchange={handleOnchange} />}
                 {Page === 2 && <PageTwo Data={Data} handleOnchange={handleOnchange} />}
@@ -201,11 +162,11 @@ function PageOne(props) {
 
     const handleClickCategory = (index) => {
         setSubList(ListCategory[index].subCatogory)
-        props.handleOnchange([['Category', index], ['SubCategory', -1]])
+        props.handleOnchange([['Category', index+1111], ['SubCategory', -1]])
 
     }
-    const handleClickSubCategory = (index) => {
-        props.handleOnchange([['SubCategory', index]])
+    const handleClickSubCategory = (id) => {
+        props.handleOnchange([['SubCategory', id]])
     }
     function formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+\b)/g, ",")
@@ -252,7 +213,7 @@ function PageOne(props) {
                     <ul className="scroll-item">
                         {ListCategory.map((item, index) => {
                             return (
-                                <li onClick={() => handleClickCategory(index)} key={index} className={props.Data.Category == index ? "category-item selected" : "category-item"}>
+                                <li onClick={() => handleClickCategory(index)} key={index} className={props.Data.Category == index+1111 ? "category-item selected" : "category-item"}>
                                     <p>{item.title}</p>
                                     <i className="fas fa-greater-than"></i>
                                 </li>
@@ -263,8 +224,8 @@ function PageOne(props) {
 
                         {subCategoryList.map((item, index) => {
                             return (
-                                <li onClick={(e) => handleClickSubCategory(index)} key={index} className={props.Data.SubCategory === index ? "category-item selected" : "category-item"}>
-                                    <p>{item}</p>
+                                <li onClick={(e) => handleClickSubCategory(item.ID)} key={index} className={props.Data.SubCategory === item.ID ? "category-item selected" : "category-item"}>
+                                    <p>{item.NAME}</p>
                                     <i className="fas fa-greater-than"></i>
                                 </li>
                             );
@@ -277,18 +238,17 @@ function PageOne(props) {
     );
 }
 function PageTwo(props) {
-    const [Image,setImage] = useState('https://imic.com.vn/public/site/images/no-image.jpg');
     const handleOnChange = (e) => {
-        const file = e.target.files[0];
-        props.handleOnchange([['Image', file]])
-        setImage(URL.createObjectURL(file))
+        const file = e.target;
+        const ImgSr = URL.createObjectURL(file.files[0])
+        props.handleOnchange([['Image', ImgSr]])
     }
     return (
         <div className="page-two-form">
             <label className="create-course-input-text" htmlFor="">Hãy chọn hình ảnh đại diện cho khóa học của bạn</label>
             <div className="input-field create-course-img">
-                <img src={Image} alt="Ảnh đại diện khóa học" />
-                <input onChange={handleOnChange} type="file" name="" id="create-coure-file" />
+                <img src={props.Data.Image} alt="Ảnh đại diện khóa học" />
+                <input onChange={handleOnChange} type="file" name="course-img" id="create-coure-file" />
             </div>
         </div>
     );
