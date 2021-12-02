@@ -52,6 +52,7 @@ class LoginController extends Controller
             $User = User::where('email', $request->username)->first();
             if ($User) {
                 if (!password_verify($request->password, $User->password)) {
+                
                     $status_code = 400;
                     $message = "Sai mật khẩu";
                 } else {
