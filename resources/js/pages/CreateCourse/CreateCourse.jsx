@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import './CreateCourse.css'
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { ListCategory,ListCourse } from '../../Data.js'
+import { ListCategory, ListCourse } from '../../Data.js'
 const API_KEY = 'AIzaSyAzSvXwjoICRPziR_FXQmuus_eSvMTin7I';
 
 const CreateData = {
@@ -27,6 +28,7 @@ const CreateData = {
 
 let fd;
 export default function CreateCourse({ User }) {
+    const nav = useNavigate();
     const [Data, setData] = useState(CreateData);
     useEffect(() => {
         setData({ ...CreateData, Author: User.USER_ID })
@@ -39,7 +41,7 @@ export default function CreateCourse({ User }) {
         setData(newData);
         console.log(newData)
     }
-    const [Page, setPage] = useState(4);
+    const [Page, setPage] = useState(1);
     const handleNextPage = () => {
         if (Page === 2) {
             fd = new FormData(document.querySelector('#create-course-form'));
@@ -87,53 +89,49 @@ export default function CreateCourse({ User }) {
             }`
     }
     const handleSubmit = async () => {
-        // if (Data.ListCourse[0].type != 'chapter') {
-        //     Swal.fire({
-        //         text: 'Phải có chương ở vị trí đầu tiên',
-        //         icon: 'error',
-        //         confirmButtonText: 'Hay'
-        //     })
-        //     return;
-        // }
-        // const newListCourse = [];
-        // let lesson_id = 0;
-        // for (var i = 0; i < Data.ListCourse.length; ++i) {
-        //     if (Data.ListCourse[i].type == 'chapter') {
-        //         newListCourse.push({ title: Data.ListCourse[i].title, lesson: [] })
-        //     } else {
-        //         ++lesson_id;
-        //         let duration = '';
-        //         let youtb_id = youtube_id(Data.ListCourse[i].URL);
-        //         await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
-        //             .then(data => data.json()).then(data => {
-        //                 console.log(data)
-        //                 duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
+        if (Data.ListCourse.length <1 ||Data.ListCourse[0].type != 'chapter') {
+            Swal.fire({
+                text: 'Phải có chương ở vị trí đầu tiên',
+                icon: 'error',
+                confirmButtonText: 'Hay'
+            })
+            return;
+        }
+        const newListCourse = [];
+        let lesson_id = 0;
+        for (var i = 0; i < Data.ListCourse.length; ++i) {
+            if (Data.ListCourse[i].type == 'chapter') {
+                newListCourse.push({ title: Data.ListCourse[i].title, lesson: [] })
+            } else {
+                ++lesson_id;
+                let duration = '';
+                let youtb_id = youtube_id(Data.ListCourse[i].URL);
+                await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
+                    .then(data => data.json()).then(data => {
+                        console.log(data)
+                        duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
 
-        //             })
-        //         newListCourse.at(-1).lesson = [
-        //             ...newListCourse.at(-1).lesson,
-        //             {
-        //                 id: lesson_id,
-        //                 title: Data.ListCourse[i].title,
-        //                 url: Data.ListCourse[i].URL,
-        //                 duration: duration
-        //             }]
-        //     }
-        // }
-        // console.log(newListCourse);
-        // handleOnchange([['ListCourse', newListCourse]])
-
-        // fd = new FormData(document.querySelector('#create-course-form'));
-
-        fd.append('data', JSON.stringify(ListCourse))
+                    })
+                newListCourse.at(-1).lesson = [
+                    ...newListCourse.at(-1).lesson,
+                    {
+                        id: lesson_id,
+                        title: Data.ListCourse[i].title,
+                        url: Data.ListCourse[i].URL,
+                        duration: duration
+                    }]
+            }
+        }
+        const newData = { ...Data, ListCourse: newListCourse }
+        fd.append('data', JSON.stringify(newData))
         const res = await axios.post('/api/create-course', fd, { "enctype": "multipart/form-data" })
         if (res.data.status == 200) {
-            console.log(res)
-            Swal.fire({
+            await Swal.fire({
                 text: res.data.message,
                 icon: 'success',
                 confirmButtonText: 'Hay'
             })
+            nav("/");
         }
 
 
@@ -159,8 +157,8 @@ export default function CreateCourse({ User }) {
 
 function PageOne(props) {
     const [subCategoryList, setSubList] = useState(() => {
-        if (ListCategory[props.Data.Category-1111]) {
-            return ListCategory[props.Data.Category-1111].subCatogory
+        if (ListCategory[props.Data.Category - 1111]) {
+            return ListCategory[props.Data.Category - 1111].subCatogory
         }
         return []
     });
