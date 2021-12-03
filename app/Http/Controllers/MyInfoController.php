@@ -43,8 +43,8 @@ class MyInfoController extends Controller{
                 $user->DATE_OF_BIRTH = $request->DATE_OF_BIRTH;
                 $user->CITY_ID = $request->CITY_ID;
                 $user->PHONE = $request->PHONE;
-                //$user->SCHOOL_ID = $request->SCHOOL_ID;
-                //$user->FACEBOOK = $request->FACEBOOK;
+                $user->SCHOOL_ID = $request->SCHOOL_ID;
+                $user->FACEBOOK = $request->FACEBOOK;
 
                 //$user->AVATAR_IMG = $request->AVATAR_IMG;
                 //$user->BACKGROUND_IMG = $request->BACKGROUND_IMG;

@@ -6,7 +6,14 @@ import './MyInfo.css';
 function MyInfo({ User }) {
 
     //const history = useHistory();
-    const [userInfo, setUserInfo] = useState({ DATE_OF_BIRTH: "2021-01-01" });
+    const [userInfo, setUserInfo] = useState({
+        FULLNAME: "",
+        DATE_OF_BIRTH: "2021-01-01",
+        CITY_ID: "",
+        PHONE: "",
+        SCHOOL_ID: "",
+        FACEBOOK: "",
+    });
 
     const [password, setPassword] = useState({
         USERNAME: "",
@@ -27,7 +34,7 @@ function MyInfo({ User }) {
     // }
     useEffect(() => {
         setUserInfo({ ...User })
-
+        alert(User.FULLNAME + User.USERNAME + userInfo.data)
         // axios.get('/api/myinfo').then(res => {
 
         //     if (res.data.status === 200) {
