@@ -8,7 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     use HasFactory;
-    const CREATED_AT = 'CREATE_TIME';
     const UPDATED_AT = null;
-
 }

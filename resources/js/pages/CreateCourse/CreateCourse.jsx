@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import './CreateCourse.css'
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { ListCategory } from '../../Data.js'
+import { ListCategory, ListCourse } from '../../Data.js'
 const API_KEY = 'AIzaSyAzSvXwjoICRPziR_FXQmuus_eSvMTin7I';
 
 const CreateData = {
@@ -25,7 +26,9 @@ const CreateData = {
 
 
 
+let fd;
 export default function CreateCourse({ User }) {
+    const nav = useNavigate();
     const [Data, setData] = useState(CreateData);
     useEffect(() => {
         setData({ ...CreateData, Author: User.USER_ID })
@@ -40,8 +43,13 @@ export default function CreateCourse({ User }) {
     }
     const [Page, setPage] = useState(1);
     const handleNextPage = () => {
-        if (Page === 4)
+        if (Page === 2) {
+            fd = new FormData(document.querySelector('#create-course-form'));
+            console.log(fd)
+        }
+        else if (Page === 4)
             return;
+
         setPage(pre => pre + 1);
     }
     const handlePrevious = () => {
@@ -58,7 +66,7 @@ export default function CreateCourse({ User }) {
                 return (Data.Image != 'https://imic.com.vn/public/site/images/no-image.jpg')
             case 4:
                 for (var i = 0; i < Data.ListCourse.length; ++i) {
-                    if (Data.ListCourse[i].type == 'lession' && Data.ListCourse[i].error) {
+                    if (Data.ListCourse[i].type == 'lesson' && Data.ListCourse[i].error) {
                         return false;
                     }
                 }
@@ -81,54 +89,49 @@ export default function CreateCourse({ User }) {
             }`
     }
     const handleSubmit = async () => {
-        // if (Data.ListCourse[0].type != 'chapter') {
-        //     Swal.fire({
-        //         text: 'Phải có chương ở vị trí đầu tiên',
-        //         icon: 'error',
-        //         confirmButtonText: 'Hay'
-        //     })
-        //     return;
-        // }
-        // const newListCourse = [];
-        // let lession_id = 0;
-        // for (var i = 0; i < Data.ListCourse.length; ++i) {
-        //     if (Data.ListCourse[i].type == 'chapter') {
-        //         newListCourse.push({ title: Data.ListCourse[i].title, lession: [] })
-        //     } else {
-        //         ++lession_id;
-        //         let duration = '';
-        //         let youtb_id = youtube_id(Data.ListCourse[i].URL);
-        //         await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
-        //             .then(data => data.json()).then(data => {
-        //                 console.log(data)
-        //                 duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
+        if (Data.ListCourse.length <1 ||Data.ListCourse[0].type != 'chapter') {
+            Swal.fire({
+                text: 'Phải có chương ở vị trí đầu tiên',
+                icon: 'error',
+                confirmButtonText: 'Hay'
+            })
+            return;
+        }
+        const newListCourse = [];
+        let lesson_id = 0;
+        for (var i = 0; i < Data.ListCourse.length; ++i) {
+            if (Data.ListCourse[i].type == 'chapter') {
+                newListCourse.push({ title: Data.ListCourse[i].title, lesson: [] })
+            } else {
+                ++lesson_id;
+                let duration = '';
+                let youtb_id = youtube_id(Data.ListCourse[i].URL);
+                await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
+                    .then(data => data.json()).then(data => {
+                        console.log(data)
+                        duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
 
-        //             })
-        //         newListCourse.at(-1).lession = [
-        //             ...newListCourse.at(-1).lession,
-        //             {
-        //                 id: lession_id,
-        //                 title: Data.ListCourse[i].title,
-        //                 url: Data.ListCourse[i].URL,
-        //                 duration: duration
-        //             }]
-        //     }
-        // }
-        // console.log(newListCourse);
-        // handleOnchange([['ListCourse', newListCourse]])
-
-
-        var fd = new FormData(document.querySelector('#create-course-form'));
-        fd.append('data', JSON.stringify(Data))
-        console.log(fd)
+                    })
+                newListCourse.at(-1).lesson = [
+                    ...newListCourse.at(-1).lesson,
+                    {
+                        id: lesson_id,
+                        title: Data.ListCourse[i].title,
+                        url: Data.ListCourse[i].URL,
+                        duration: duration
+                    }]
+            }
+        }
+        const newData = { ...Data, ListCourse: newListCourse }
+        fd.append('data', JSON.stringify(newData))
         const res = await axios.post('/api/create-course', fd, { "enctype": "multipart/form-data" })
         if (res.data.status == 200) {
-            console.log(res)
-            Swal.fire({
+            await Swal.fire({
                 text: res.data.message,
                 icon: 'success',
                 confirmButtonText: 'Hay'
             })
+            nav("/");
         }
 
 
@@ -154,15 +157,15 @@ export default function CreateCourse({ User }) {
 
 function PageOne(props) {
     const [subCategoryList, setSubList] = useState(() => {
-        if (ListCategory[props.Data.Category]) {
-            return ListCategory[props.Data.Category].subCatogory
+        if (ListCategory[props.Data.Category - 1111]) {
+            return ListCategory[props.Data.Category - 1111].subCatogory
         }
         return []
     });
 
     const handleClickCategory = (index) => {
         setSubList(ListCategory[index].subCatogory)
-        props.handleOnchange([['Category', index+1111], ['SubCategory', -1]])
+        props.handleOnchange([['Category', index + 1111], ['SubCategory', -1]])
 
     }
     const handleClickSubCategory = (id) => {
@@ -213,7 +216,7 @@ function PageOne(props) {
                     <ul className="scroll-item">
                         {ListCategory.map((item, index) => {
                             return (
-                                <li onClick={() => handleClickCategory(index)} key={index} className={props.Data.Category == index+1111 ? "category-item selected" : "category-item"}>
+                                <li onClick={() => handleClickCategory(index)} key={index} className={props.Data.Category == index + 1111 ? "category-item selected" : "category-item"}>
                                     <p>{item.title}</p>
                                     <i className="fas fa-greater-than"></i>
                                 </li>
@@ -378,10 +381,10 @@ function PageFour(props) {
         }
         props.handleOnchange([['ListCourse', [...props.Data.ListCourse, chapter]]])
     }
-    const AddLession = (index) => {
+    const Addlesson = (index) => {
         const newArray = [...props.Data.ListCourse];
         while (newArray[index + 1] && newArray[index + 1]['type'] !== 'chapter') index++;
-        newArray.splice(index + 1, 0, { title: '', URL: '', type: 'lession', error: true })
+        newArray.splice(index + 1, 0, { title: '', URL: '', type: 'lesson', error: true })
         props.handleOnchange([['ListCourse', newArray]])
 
     }
@@ -442,7 +445,7 @@ function PageFour(props) {
                             ArrayCourse.push({
                                 title: item.snippet.title,
                                 URL: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
-                                type: 'lession',
+                                type: 'lesson',
                                 error: false,
                             })
                         })
@@ -456,7 +459,7 @@ function PageFour(props) {
                                 ArrayCourse.push({
                                     title: item.snippet.title,
                                     URL: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
-                                    type: 'lession',
+                                    type: 'lesson',
                                     error: false,
                                 })
                             })
@@ -526,7 +529,7 @@ function PageFour(props) {
                                         <Draggable key={index} draggableId={index.toString()} index={index}>
                                             {(provided) => (
                                                 <div className="list-title" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                    <i onClick={() => AddLession(index)} className="fas fa-plus-circle"></i>
+                                                    <i onClick={() => Addlesson(index)} className="fas fa-plus-circle"></i>
                                                     <span className="main-title">{data.title}</span>
                                                     <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
                                                 </div>
@@ -534,7 +537,7 @@ function PageFour(props) {
 
                                         </Draggable>
                                     );
-                                } else if (data.type === 'lession') {
+                                } else if (data.type === 'lesson') {
                                     return (
                                         <Draggable key={index} draggableId={index.toString()} index={index}>
                                             {(provided) => (

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Course_Require extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    public $table = "Course_Requires";
 }
