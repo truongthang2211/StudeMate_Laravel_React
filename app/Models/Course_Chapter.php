@@ -9,4 +9,5 @@ class Course_Chapter extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $table = "Course_Chapters";
 }

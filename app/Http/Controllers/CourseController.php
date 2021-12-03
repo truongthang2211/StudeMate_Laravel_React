@@ -32,19 +32,20 @@ class CourseController extends Controller
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->AUTHOR_ID = $course_data->Author;
             $course->COURSE_TYPE_ID = $course_data->SubCategory;
+         
             $course->save();
             $file->move($path,$fileName);
 
             foreach($course_data->ListIn as $value){
                 $course_require = new Course_Require();
                 $course_require->CONTENT = $value;
-                $course_require->COURSE_ID = $course->id();
+                $course_require->COURSE_ID = $course->id;
                 $course_require->save();
             }
             foreach($course_data->ListOut as $value){
                 $course_gain = new Course_Gain();
                 $course_gain->CONTENT = $value;
-                $course_gain->COURSE_ID = $course->id();
+                $course_gain->COURSE_ID = $course->id;
                 $course_gain->save();
             }
             foreach($course_data->ListCourse as $value){
@@ -52,7 +53,8 @@ class CourseController extends Controller
                 $course_chapter->CHAPTER_NAME = $value->title;
                 $course_chapter->COURSE_ID = $course->id;
                 $course_chapter->save();
-                foreach($value->lession as $value2){
+                $Array2 = $value->lesson;
+                foreach($Array2 as $value2){
                     $lesson = new Lesson();
                     $lesson->LESSON_NAME = $value2->title;
                     $lesson->LESSON_URL = $value2->url;

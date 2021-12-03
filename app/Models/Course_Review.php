@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Course_Review extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    public $table = "Course_Reviews";
 }

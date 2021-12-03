@@ -26,7 +26,7 @@ class LoginController extends Controller
                 $account->user_id = $user->id;
                 $account->account_role = 'User';
                 $account->save();
-                setcookie("email", $user->email, time() + 60 * 60 * 24, "/");
+                setcookie("StudyMate", $user->id, time() + 60 * 60 * 24, "/");
                 return response()->json([
                     'status' => 200,
                     'message' => 'Đăng ký thành công'
@@ -51,7 +51,8 @@ class LoginController extends Controller
         try {
             $User = User::where('email', $request->username)->first();
             $Account = Account::where('username', $request->username)->first();
-            $ID=$User?$User->id:($Account?$Account->USER_ID:null);
+            $ID = $User ? $User->USER_ID : ($Account ? $Account->USER_ID : null);
+            $Account = $Account ? $Account : Account::where('user_id', $ID)->first();
             if ($User || $Account) {
                 if (!password_verify($request->password, $Account->PWD)) {
                     $status_code = 400;
@@ -71,14 +72,14 @@ class LoginController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 404,
-                'message' => $th->getMessage(),
+                'message' => $ID,
             ]);
         }
     }
     public function SignOut()
     {
-        if (isset($_COOKIE['email'])) {
-            setcookie("email", "", time(), "/");
+        if (isset($_COOKIE['StudyMate'])) {
+            setcookie("StudyMate", "", time(), "/");
         }
         return response()->json([
             'status' => 200,
