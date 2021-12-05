@@ -1,9 +1,15 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import HomeCourseItem from '../../components/HomeCourseItem';
+import axios from 'axios';
 import './Home.css'
 
 function Home() {
-
+    const [data,setData] = useState([]);
+    useEffect(async() => {
+        const res = await axios.get('/api/get-courses')
+        setData(res.data.message)
+        console.log(res);
+    },[])
 
     const fieldsData = [{
         linhvuc: 'CNTT'
@@ -421,10 +427,10 @@ function Home() {
                 </div>
             </div>
             <div id="content" className="container">
-                {fieldsData.map(c => <div key={c.linhvuc} className="content-section">
-                    <h2 className="section-heading">{c.linhvuc}</h2>
+                {data.map(c => <div key={c.COURSE_NAME} className="content-section">
+                    <h2 className="section-heading">{c.COURSE_NAME}</h2>
                     <div className="section-courses">
-                        <HomeCourseItem author="ThangDeptrai" />
+                        <HomeCourseItem title={c.COURSE_NAME} desc={c.COURSE_DESC} author={c.AUTHOR_ID} img={c.IMG} fee={c.FEE}/>
                         <HomeCourseItem author="ThangDeptrai" />
                         <HomeCourseItem author="ThangDeptrai" />
                         <HomeCourseItem author="ThangDeptrai" />

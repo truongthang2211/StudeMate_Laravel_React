@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
@@ -19,13 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/sign-up', [LoginController::class,'SignUp']);
-Route::post('/sign-in', [LoginController::class,'SignIn']);
-Route::post('/create-course', [CourseController::class,'CreateCourse']);
-Route::post('/add-learn', [CourseController::class,'AddLearn']);
-Route::get('/my-course', [CourseController::class,'GetUserCourse']);
+Route::post('/sign-up', [LoginController::class, 'SignUp']);
+Route::post('/sign-in', [LoginController::class, 'SignIn']);
+Route::post('/create-course', [CourseController::class, 'CreateCourse']);
+Route::post('/add-learn', [CourseController::class, 'AddLearn']);
+Route::get('/my-course', [CourseController::class, 'GetUserCourse']);
 Route::get('get-learn/{course_id}/{lesson_id}', [CourseController::class, 'GetLearning']);
+Route::get('/get-courses', [CourseController::class, 'GetCourses']);
 
 
-Route::get('/sign-out', [LoginController::class,'SignOut']);
-
+Route::get('/sign-out', [LoginController::class, 'SignOut']);
