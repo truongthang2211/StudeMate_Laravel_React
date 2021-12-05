@@ -7,16 +7,18 @@ function MyInfo({ User }) {
 
     //const history = useHistory();
     const [userInfo, setUserInfo] = useState({
-        FULLNAME: "",
+        FULLNAME: '',
         DATE_OF_BIRTH: "2021-01-01",
-        CITY_ID: "",
-        PHONE: "",
-        SCHOOL_ID: "",
-        FACEBOOK: "",
+        CITY_ID: '',
+        PHONE: '',
+        SCHOOL_ID: '',
+        FACEBOOK: '',
+        LINKEDLN: '',
+        BIO: '',
     });
 
     const [password, setPassword] = useState({
-        USERNAME: "",
+        USER_ID: "",
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
@@ -34,7 +36,7 @@ function MyInfo({ User }) {
     // }
     useEffect(() => {
         setUserInfo({ ...User })
-        alert(User.FULLNAME + User.USERNAME + userInfo.data)
+        console.log(User);
         // axios.get('/api/myinfo').then(res => {
 
         //     if (res.data.status === 200) {
@@ -97,11 +99,15 @@ function MyInfo({ User }) {
 
 
 
-    const handleUpdateMyInfo = (e) => {
-        e.preventDefault();
+    const handleUpdateMyInfo = async (e) => {
+        try {
+            e.preventDefault();
 
-        axios.put('/api/update-myinfo', userInfo).then(res => {
+            var fd = new FormData(document.querySelector("#frm-info"))
+            fd.append('data', JSON.stringify(userInfo))
+            const res = await axios.post('/api/update-myinfo', fd)
             console.log(res);
+
             if (res.data.status === 200) {
                 Swal.fire({
                     text: 'Thành công',
@@ -118,7 +124,7 @@ function MyInfo({ User }) {
                     confirmButtonText: 'Cancel'
                 })
                 //Swal("All fields are mandetory", "", "error");
-                setError(res.data.validationErrors);
+                // setError(res.data.validationErrors);
             }
             else if (res.data.status === 404) {
                 Swal.fire({
@@ -129,24 +135,27 @@ function MyInfo({ User }) {
                 //Swal("Error", res.data.message, "error");
                 //history.push('/myinfo');
             }
-        });
+        } catch (error) {
+            console.log(error.response.data);
+        }
+
     }
 
     const handleCancle = (e) => {
         setUserInfo({ ...User });
     }
 
+    //change password
     const handlePasswordChange = (e) => {
         setPassword({
             ...password,
-            USERNAME: User.USERNAME,
+            USER_ID: User.USER_ID,
             [e.target.name]: e.target.value
         });
     }
 
     const handleUpdatePassword = (e) => {
         e.preventDefault();
-        //alert(password.newPassword + password.confirmPassword + password.currentPassword + password.email + User.password)
 
         if (password.newPassword !== password.confirmPassword) {
             Swal.fire({
@@ -157,33 +166,38 @@ function MyInfo({ User }) {
         }
 
         else {
-            axios.put('/api/update-password', password).then(res => {
-                console.log(res);
-                if (res.data.status === 200) {
-                    Swal.fire({
-                        text: 'Thành công',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    })
-                    setError([]);
-                }
-                else if (res.data.status === 422) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Mật khẩu không hợp lệ!',
-                        confirmButtonText: 'Cancel'
-                    })
-                    setError(res.data.validationErrors);
-                }
-                else if (res.data.status === 404) {
-                    Swal.fire({
-                        text: 'Thất bại',
-                        icon: 'error',
-                        confirmButtonText: 'Cancel'
-                    })
-                }
-            });
+            try {
+                axios.put('/api/update-password', password).then(res => {
+                    console.log(res);
+                    if (res.data.status === 200) {
+                        Swal.fire({
+                            text: 'Thành công',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        })
+                        setError([]);
+                    }
+                    else if (res.data.status === 422) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Mật khẩu không hợp lệ!',
+                            confirmButtonText: 'Cancel'
+                        })
+                        setError(res.data.validationErrors);
+                    }
+                    else if (res.data.status === 404) {
+                        Swal.fire({
+                            text: 'Thất bại',
+                            icon: 'error',
+                            confirmButtonText: 'Cancel'
+                        })
+                    }
+                });
+            } catch (error) {
+                console.log(error);
+            }
+
         }
     }
 
@@ -217,7 +231,7 @@ function MyInfo({ User }) {
                                                     <div className="form-group UploadAvatar">
                                                         <label style={{ display: 'block' }}>Ảnh đại diện của bạn</label>
                                                         <label htmlFor="Avatar" className="browse btn btn-primary input-sm" type="button" id="Upload-Ava" style={{ display: 'block' }}>Chọn ảnh</label>
-                                                        <input name="ImgFile" id="Avatar" className="file" type="file" onChange={handleAvatarChange} accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
+                                                        <input name="avatar-img" id="Avatar" className="file" type="file" onChange={handleAvatarChange} accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -263,7 +277,7 @@ function MyInfo({ User }) {
                                                         <div className="form-group">
                                                             <span id="span-birthday" className="span-display" style={{ display: "none" }}></span>
 
-                                                            <input name="BirthYear" type="date" onChange={handleDateOfBirthChange} value={userInfo.DATE_OF_BIRTH} id="BirthYear" className="form-control" style={{ display: 'block' }} />
+                                                            <input name="BirthYear" type="date" onChange={handleDateOfBirthChange} value={userInfo.DATE_OF_BIRTH || ''} id="BirthYear" className="form-control" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,76 +325,76 @@ function MyInfo({ User }) {
                                                 <div className="row">
                                                     <div className="col-lg-3 col-sm-4 col-xs-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="StateId" className="required" aria-required="true">Thành phố</label>
+                                                            <label htmlFor="StateId" aria-required="true">Thành phố</label>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <select className="form-select" id="StateSelect" name="StateSelect" onChange={handleCityChange} value={userInfo.CITY_ID}>
+                                                            <select className="form-select" id="StateSelect" name="StateSelect" onChange={handleCityChange} value={userInfo.CITY_ID || "-1"}>
                                                                 <option value="-1" defaultValue="selected">Chọn thành phố</option>
-                                                                <option value="4360">An Giang</option>
-                                                                <option value="4361">Kon Tum</option>
-                                                                <option value="4362">Đắk Nông</option>
-                                                                <option value="4363">Sóc Trăng</option>
-                                                                <option value="4364">Bình Phước</option>
-                                                                <option value="4365">Hưng Yên</option>
-                                                                <option value="4366">Thanh Hóa</option>
-                                                                <option value="4367">Quảng Trị</option>
-                                                                <option value="4368">Tuyên Quang</option>
-                                                                <option value="4369">Quảng Ngãi</option>
-                                                                <option value="4370">Hà Nội</option>
-                                                                <option value="4371">Lào Cai</option>
-                                                                <option value="4372">Vĩnh Long</option>
-                                                                <option value="4373">Lâm Đồng</option>
-                                                                <option value="4374">Bình Định</option>
-                                                                <option value="4375">Nghệ An</option>
-                                                                <option value="4376">Kiên Giang</option>
-                                                                <option value="4377">Hà Giang</option>
-                                                                <option value="4378">Phú Yên</option>
-                                                                <option value="4379">Lạng Sơn</option>
-                                                                <option value="4380">Đà Nẵng</option>
-                                                                <option value="4381">Sơn La</option>
-                                                                <option value="4382">Tây Ninh</option>
-                                                                <option value="4383">Nam Định</option>
-                                                                <option value="4384">Lai Châu</option>
-                                                                <option value="4385">Bến Tre</option>
-                                                                <option value="4386">Khánh Hòa</option>
-                                                                <option value="4387">Bình Thuận</option>
-                                                                <option value="4388">Cao Bằng</option>
-                                                                <option value="4389">Hải Phòng</option>
-                                                                <option value="4390">Ninh Bình</option>
-                                                                <option value="4391">Yên Bái</option>
-                                                                <option value="4392">Gia Lai</option>
-                                                                <option value="4393">Hoà Bình</option>
-                                                                <option value="4394">Bà Rịa - Vũng Tàu</option>
-                                                                <option value="4395">Cà Mau</option>
-                                                                <option value="4396">Bình Dương</option>
-                                                                <option value="4397">Cần Thơ</option>
-                                                                <option value="4398">Thừa Thiên Huế</option>
-                                                                <option value="4399">Đồng Nai</option>
-                                                                <option value="4400">Tiền Giang</option>
-                                                                <option value="4401">Điện Biên</option>
-                                                                <option value="4402">Vĩnh Phúc</option>
-                                                                <option value="4403">Quảng Nam</option>
-                                                                <option value="4404">Đắk Lắk</option>
-                                                                <option value="4405">Thái Nguyên</option>
-                                                                <option value="4406">Hải Dương</option>
-                                                                <option value="4407">Bạc Liêu</option>
-                                                                <option value="4408">Trà Vinh</option>
-                                                                <option value="4409">Thái Bình</option>
-                                                                <option value="4410">Hà Tĩnh</option>
-                                                                <option value="4411">Ninh Thuận</option>
-                                                                <option value="4412">Đồng Tháp</option>
-                                                                <option value="4413">Long An</option>
-                                                                <option value="4414">Hậu Giang</option>
-                                                                <option value="4415">Quảng Ninh</option>
-                                                                <option value="4416">Phú Thọ</option>
-                                                                <option value="4417">Quảng Bình</option>
-                                                                <option value="4418">Hồ Chí Minh</option>
-                                                                <option value="4419">Hà Nam</option>
-                                                                <option value="4420">Bắc Ninh</option>
-                                                                <option value="4421">Bắc Giang</option>
-                                                                <option value="4422">Bắc Kạn</option>
+                                                                <option value="1">Hồ Chí Minh</option>
+                                                                <option value="2">Hà Nội</option>
+                                                                <option value="3">Đà Nẵng</option>
+                                                                <option value="4">Bình Dương</option>
+                                                                <option value="5">Đồng Nai</option>
+                                                                <option value="6">Khánh Hòa</option>
+                                                                <option value="7">Hải Phòng</option>
+                                                                <option value="8">Long An</option>
+                                                                <option value="9">Quảng Nam</option>
+                                                                <option value="10">Bà Rịa Vũng Tàu</option>
+                                                                <option value="11">Đắk Lắk</option>
+                                                                <option value="12">Cần Thơ</option>
+                                                                <option value="13">Bình Thuận  </option>
+                                                                <option value="14">Lâm Đồng</option>
+                                                                <option value="15">Thừa Thiên Huế</option>
+                                                                <option value="16">Kiên Giang</option>
+                                                                <option value="17">Bắc Ninh</option>
+                                                                <option value="18">Quảng Ninh</option>
+                                                                <option value="19">Thanh Hóa</option>
+                                                                <option value="20">Nghệ An</option>
+                                                                <option value="21">Hải Dương</option>
+                                                                <option value="22">Gia Lai</option>
+                                                                <option value="23">Bình Phước</option>
+                                                                <option value="24">Hưng Yên</option>
+                                                                <option value="25">Bình Định</option>
+                                                                <option value="26">Tiền Giang</option>
+                                                                <option value="27">Thái Bình</option>
+                                                                <option value="28">Bắc Giang</option>
+                                                                <option value="29">Hòa Bình</option>
+                                                                <option value="30">An Giang</option>
+                                                                <option value="31">Vĩnh Phúc</option>
+                                                                <option value="32">Tây Ninh</option>
+                                                                <option value="33">Thái Nguyên</option>
+                                                                <option value="34">Lào Cai</option>
+                                                                <option value="35">Nam Định</option>
+                                                                <option value="36">Quảng Ngãi</option>
+                                                                <option value="37">Bến Tre</option>
+                                                                <option value="38">Đắk Nông</option>
+                                                                <option value="39">Cà Mau</option>
+                                                                <option value="40">Vĩnh Long</option>
+                                                                <option value="41">Ninh Bình</option>
+                                                                <option value="42">Phú Thọ</option>
+                                                                <option value="43">Ninh Thuận</option>
+                                                                <option value="44">Phú Yên</option>
+                                                                <option value="45">Hà Nam</option>
+                                                                <option value="46">Hà Tĩnh</option>
+                                                                <option value="47">Đồng Tháp</option>
+                                                                <option value="48">Sóc Trăng</option>
+                                                                <option value="49">Kon Tum</option>
+                                                                <option value="50">Quảng Bình</option>
+                                                                <option value="51">Quảng Trị</option>
+                                                                <option value="52">Trà Vinh</option>
+                                                                <option value="53">Hậu Giang</option>
+                                                                <option value="54">Sơn La</option>
+                                                                <option value="55">Bạc Liêu</option>
+                                                                <option value="56">Yên Bái</option>
+                                                                <option value="57">Tuyên Quang</option>
+                                                                <option value="58">Điện Biên</option>
+                                                                <option value="59">Lai Châu</option>
+                                                                <option value="60">Lạng Sơn</option>
+                                                                <option value="61">Hà Giang</option>
+                                                                <option value="62">Bắc Kạn</option>
+                                                                <option value="63">Cao Bằng</option>
                                                             </select>
                                                             <label id="StateSelect-error" className="error" htmlFor="StateSelect">{errorInput.CITY_ID}</label>
                                                         </div>
@@ -423,7 +437,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-linkedIn" className="span-display" style={{ display: "none" }} title=""></span>
-                                                            <input type="text" name="LINKEDIN" className="form-control" id="linkedIn" placeholder="Your profile link" style={{ display: 'block' }} />
+                                                            <input type="text" name="LINKEDIN" onChange={handleInput} value={userInfo.LINKEDIN || ''} className="form-control" id="linkedIn" placeholder="Your profile link" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -431,13 +445,13 @@ function MyInfo({ User }) {
                                                 <div className="row">
                                                     <div className="col-lg-3 col-sm-4 col-xs-12">
                                                         <div className="form-group">
-                                                            <label>Slogan</label>
+                                                            <label>Bio</label>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
-                                                            <p id="span-Slogan" style={{ display: "none" }}></p>
-                                                            <textarea rows="5" name="SLOGAN" type="text" className="form-control" id="slogan" style={{ display: 'block' }}></textarea>
+                                                            <p id="span-Bio" style={{ display: "none" }}></p>
+                                                            <textarea rows="5" name="BIO" onChange={handleInput} value={userInfo.BIO || ''} type="text" className="form-control" id="bio" style={{ display: 'block' }}></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -474,6 +488,7 @@ function MyInfo({ User }) {
                                                         <div className="form-group">
                                                             <label htmlFor="currentPassword">Mật khẩu</label>
                                                             <input name="currentPassword" type="password" onChange={handlePasswordChange} className="form-control" placeholder="Mật khẩu" autoComplete="current-password" />
+                                                            <label id="currentPassword-error" className="error" htmlFor="currentPassword">{errorInput.currentPassword}</label>
                                                         </div>
                                                         <p>
                                                             {/* <!--link cho form quên mật khẩu điền sau--> */}

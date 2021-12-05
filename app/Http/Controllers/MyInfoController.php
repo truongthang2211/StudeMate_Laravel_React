@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class MyInfoController extends Controller{
+class MyInfoController extends Controller {
 
     public function EditMyInfo() {
         $user = User::all();
@@ -22,31 +23,39 @@ class MyInfoController extends Controller{
     public function UpdateMyInfo(Request $request) {
         try {
 
-            $validator = Validator::make($request->all(),[
-                'FULLNAME'=>'required|max:191',
-                'PHONE'=>'required|max:12',
-                'CITY_ID'=>'required|max:191',
-            ]);
+            // $validator = Validator::make($request->all(),[
+            //     'FULLNAME'=>'required|max:191',
+            //     'PHONE'=>'required|max:12',
+            //     //'CITY_ID'=>'required|max:191',
+            // ]);
 
-            if($validator->fails())
-            {
-                return response()->json([
-                    'status'=> 422,
-                    'validationErrors'=> $validator->messages(),
-                ]);
-            }
+            // if($validator->fails())
+            // {
+            //     return response()->json([
+            //         'status'=> 422,
+            //         'validationErrors'=> $validator->messages(),
+            //     ]);
+            // }
             
-            else{
-                $user = User::where("EMAIL",$request->EMAIL)->first();
-                
-                $user->FULLNAME = $request->FULLNAME;
-                $user->DATE_OF_BIRTH = $request->DATE_OF_BIRTH;
-                $user->CITY_ID = $request->CITY_ID;
-                $user->PHONE = $request->PHONE;
-                $user->SCHOOL_ID = $request->SCHOOL_ID;
-                $user->FACEBOOK = $request->FACEBOOK;
+            // else{
+                $path = 'img/user/avatar';
+                $file = $request->file('avatar-img');
+                $extension = $file->getClientOriginalExtension();
+                $fileName = time() . '.' . $extension;
+                $file->move($path, $fileName);
 
-                //$user->AVATAR_IMG = $request->AVATAR_IMG;
+
+                $userData = json_decode($request->data);
+                $user = User::where("EMAIL",$userData->EMAIL)->first();
+                
+                $user->FULLNAME = $userData->FULLNAME;
+                $user->DATE_OF_BIRTH = $userData->DATE_OF_BIRTH;
+                $user->CITY_ID = $userData->CITY_ID;
+                $user->PHONE = $userData->PHONE;
+                $user->SCHOOL_ID = $userData->SCHOOL_ID;
+                $user->FACEBOOK = $userData->FACEBOOK;
+
+                $user->AVATAR_IMG = $path . "/". $fileName;
                 //$user->BACKGROUND_IMG = $request->BACKGROUND_IMG;
 
                 $user->update();
@@ -55,32 +64,35 @@ class MyInfoController extends Controller{
                     'message'=>'User Updated Successfully',
                     'User'=>$user,
                 ]);
-            }
+            // }
                       
         } catch (\Throwable $th) {
-
+            return response()->json([
+                'status'=> 422,
+                'message'=>$th->getMessage(),
+            ]);
         }
     }
 
     public function UpdatePassword(Request $request) {
         try {
 
-            $validator = Validator::make($request->all(),[
-                'currentPassword'=>'required|max:191|min:5',
-                'newPassword'=>'required|max:191|min:5',
-                'confirmPassword'=>'required|max:191|min:5',
-            ]);
+            // $validator = Validator::make($request->all(),[
+            //     'currentPassword'=>'required',
+            //     'newPassword'=>'required|min:5',
+            //     'confirmPassword'=>'required|min:5',
+            // ]);
 
-            if($validator->fails())
-            {
-                return response()->json([
-                    'status'=> 422,
-                    'validationErrors'=> $validator->messages(),
-                ]);
-            }
+            // if($validator->fails())
+            // {
+            //     return response()->json([
+            //         'status'=> 422,
+            //         'validationErrors'=> $validator->messages(),
+            //     ]);
+            // }
             
-            else{
-                $acc = Account::where("USERNAME",$request->USERNAME)->first();
+            // else{
+                $acc = Account::where("USER_ID",$request->USER_ID)->first();
 
                 if ($acc && password_verify($request->currentPassword, $acc->PWD)) {
 
@@ -100,7 +112,7 @@ class MyInfoController extends Controller{
                         'message' => 'Fails',
                     ]);
                 }
-            }      
+            //}      
         } catch (\Throwable $th) {
 
         }
