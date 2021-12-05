@@ -29,6 +29,7 @@ function Index() {
     }, [])
     const LoadUser = async () => {
         const res = await axios.get('/get-user')
+        console.log(res);
         if (res.data.user) {
             setUser({ ...res.data.user, loading: false });
         }

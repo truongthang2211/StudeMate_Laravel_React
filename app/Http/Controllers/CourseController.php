@@ -14,7 +14,6 @@ class CourseController extends Controller
 {
     public function CreateCourse(Request $request)
     {
-
         try {
             DB::beginTransaction();
             $path = 'img/course';
@@ -77,5 +76,14 @@ class CourseController extends Controller
                 'message' => $th->getMessage(),
             ]);
         }
+
+    }
+    public function GetCourses(){
+        $courses= Course::all();
+        return response()->json([
+            'status' => 200,
+            'message' => $courses,
+        ]);
+
     }
 }
