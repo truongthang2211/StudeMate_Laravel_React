@@ -273,7 +273,8 @@ li {
     transition: all ease-in 0.1s;
 }
 
-.learnt-item:hover {
+.learnt-item:hover,
+.normal-item:hover {
     background-color: #ebebeb;
     cursor: pointer;
 }

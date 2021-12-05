@@ -112,7 +112,7 @@ function Navbar({ ShowForm, handleShowForm, User }) {
                 <ul className="dropdown-form dropdown-menu-user">
                   <li><Link to="/myinfo">Thông tin của tôi</Link></li>
                   <li><Link to="/profile">Hồ sơ của tôi</Link></li>
-                  <li><Link to="/course-manage">Quản lý khóa học</Link></li>
+                  <li><Link to="/course-manage/overview">Quản lý khóa học</Link></li>
                   <li><Link to="/create-course">Tạo khóa học</Link></li>
                   <li><a id="cick-logoff" onClick={handleLogout} href="#">Thoát</a></li>
                 </ul>

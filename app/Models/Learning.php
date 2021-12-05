@@ -9,5 +9,6 @@ class Learning extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    public $table = "Learning";
+    const UPDATED_AT=null;
+    const CREATED_AT='LEARN_TIME';
 }

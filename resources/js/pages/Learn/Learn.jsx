@@ -1,11 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
+import axios from 'axios';
 import {
     BrowserRouter as Router,
     generatePath,
     Switch,
     Route,
     useHistory,
-    useParams
+    useParams,
+    useNavigate
 } from "react-router-dom";
 import YouTube from 'react-youtube';
 import Collapsible from '../../components/Collapsible/Collapsible';
@@ -52,10 +54,12 @@ const CommentData = [
         repl_comment: []
     }]
 
-export default function Learn({ User }) {
-    // const { lesson } = useParams();
-    // console.log(id)
+export default memo(function Learn() {
+    const { course, lesson } = useParams();
+    const [dataLearning, setData] = useState({});
+
     const [comments, setComments] = useState(CommentData);
+    const [videoid, setVideoID] = useState('');
     const onClickRepl = (index, parentindex, repl) => {
         const newcomments = [...comments];
         if (repl) {
@@ -82,17 +86,68 @@ export default function Learn({ User }) {
             host: 'https://www.youtube.com',
         },
     };
+    function youtube_id(url) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        var match = url.match(regExp);
+        return (match && match[7].length == 11) ? match[7] : false;
+    }
+    const navigate = useNavigate();
+    useEffect(async () => {
+        try {
+            const res = await axios.get(`/api/get-learn/${course}/${lesson}`)
+            if (res.data.message.LastLessonLearnt == -1) {
+                navigate(`/learn/${course}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
+            } else {
+                navigate(`/learn/${course}/${res.data.message.LastLessonLearnt}`)
+            }
+            setData(res.data.message)
+            setVideoID(youtube_id(res.data.message.LearningURL))
 
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
+    const handleLesson = (lesson_url, lesson_id, status) => {
+        if (status != 'block-item') {
+
+            navigate(`/learn/${course}/${lesson_id}`)
+            setVideoID(youtube_id(lesson_url))
+        }
+    }
+    console.log(dataLearning)
+    let TimerId = 0;
+    const handleVideoPlaying = async (e) => {
+        console.log('vao handle')
+        if (e.data == 1) {
+            TimerId = setInterval(() => {
+                if (e.target.getCurrentTime() / e.target.getDuration() > 0.8) {
+                    if (dataLearning.LastLessonLearnt + 1 == lesson || dataLearning.LastLessonLearnt == -1) {
+                        // var url = dataLearning.ListLearn.map(e => {
+                        //     var t = e.Lesson.filter(r => (r.LESSON_ID == 1116))
+                        //     if (t.length > 0) return t
+                        // }).filter(c => c)[0][0].LESSON_URL
+                        setData({ ...dataLearning, LastLessonLearnt: parseInt(lesson) })
+                        axios.post('/api/add-learn', { lesson_id: parseInt(lesson) }).then((e) => { console.log(e) })
+                    }
+                    clearInterval(TimerId)
+                }
+                console.log(TimerId)
+            }, 1000)
+
+        } else {
+            clearInterval(TimerId)
+        }
+    }
     return (<>
         <div id="left-learning">
             <div className="breadcrumb">
                 <a className="breadcrumb-item" href="/"><i className="fas fa-home"></i></a>
                 <a className="breadcrumb-item" href="/learn">Khóa học</a>
                 <a className="breadcrumb-item" href="/learn/lap-trinh-7">Lập trình</a>
-                <span className="breadcrumb-item active">HTML, CSS từ con gà đến thần thánh</span>
+                <span className="breadcrumb-item active">{dataLearning.CourseTitle}</span>
             </div>
             <div className="video-learning">
-                <YouTube opts={opts} videoId="2g811Eo7K8U" onReady={_onReady} />
+                <YouTube opts={opts} videoId={videoid} onReady={_onReady} onStateChange={handleVideoPlaying} />
             </div>
             <div className="info-learning">
                 <div className="container">
@@ -139,7 +194,7 @@ export default function Learn({ User }) {
                 <div className="background-process">
                 </div>
                 <div className="playlist-header-content">
-                    <h1 className="playlist-title">HTML, CSS từ con gà đến thần thánh</h1>
+                    <h1 className="playlist-title">{dataLearning.CourseTitle}</h1>
                     <div className="playlist-info">
                         <p className="playlist-description">
                             Hoàn thành
@@ -149,14 +204,24 @@ export default function Learn({ User }) {
                     </div>
                 </div>
             </header>
-            {ListCourse[0].ListCourse.map((item, index) => {
+            {dataLearning.ListLearn && dataLearning.ListLearn.map((item, index) => {
                 return (
                     <Collapsible className="playlist-wrapper" key={index}>
-                        <Chaper title={item.title} />
+                        <Chaper title={item.ChapterTitle} />
                         <div className="playlist-wrapper-list">
-                            {item.lession.map((less, index2) => {
+                            {item.Lesson.map((less, index2) => {
+                                if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson)) {
+                                    status = 'normal-item'
+                                } else if (less.LESSON_ID < dataLearning.LastLessonLearnt + 1) {
+                                    status = 'learnt-item'
+                                } else if (less.LESSON_ID > dataLearning.LastLessonLearnt + 1) {
+                                    status = 'block-item'
+                                }
+                                if (less.LESSON_ID == lesson) {
+                                    status += ' learning-item'
+                                }
                                 return (
-                                    <Lession key={index2} title={less.title} duration={less.duration} />
+                                    <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={less.DURATION} />
                                 );
                             })}
                         </div>
@@ -165,7 +230,8 @@ export default function Learn({ User }) {
             })}
         </div>
     </>);
-}
+})
+
 function UserComment(props) {
     const ClassName = props.repl ? "comment-block comment-block-repl" : "comment-block"
     const commentRef = useRef()
@@ -251,9 +317,10 @@ function Chaper({ title }) {
         </div>
     );
 }
-function Lession({ title, duration }) {
+function Lession({ title, duration, handleLesson, videoURL, lesson_id, status }) {
     return (
-        <div className="playlist-wrapper-item learnt-item">
+
+        <div onClick={() => handleLesson(videoURL, lesson_id, status)} className={"playlist-wrapper-item " + status}>
             <div className="wrapper-icon-status">
                 <i className="fas fa-check"></i>
                 <i className="fas fa-lock"></i>

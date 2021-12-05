@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './CourseManage.css';
 import { useParams } from 'react-router-dom';
 import { ProfileHeader, ProfileCourseItem } from '../Profile/Profile.jsx'
@@ -109,49 +109,49 @@ const data = [
 ]
 const columns2 = [
     {
-        selector: row => <img src={row.image} width="184px" height="130px" style={{ margin: "16px 0", borderRadius: "5px" }} />,
+        selector: row => <img src={'/'+row.CourseIMG} width="184px" height="130px" style={{ margin: "16px 0", borderRadius: "5px" }} />,
         width: '216px',
-        compact:true
+        compact: true
     },
     {
         name: 'Tên khóa học',
-        selector: row => row.course_name,
+        selector: row => row.CourseTitle,
     },
     {
         name: 'Ngày đăng ký',
-        selector: row => row.create_date,
-        compact:true
+        selector: row => row.Created_at,
+        compact: true
     },
     {
         name: 'Giá',
-        selector: row => row.cost,
+        selector: row => row.Price,
     },
-    
+
     {
         name: 'Hoa hồng',
-        selector: row => row.commission,
+        selector: row => row.Commission,
     },
     {
         name: 'Tình trạng',
-        selector: row => row.status,
+        selector: row => row.Status,
     },
     {
         name: 'Đánh giá',
-        selector: row => <RatingBox up={row.rate.up} down={row.rate.down} />,
+        selector: row => <RatingBox up={row.Rate.up} down={row.Rate.down} />,
         width: '160px',
-        compact:true
+        compact: true
     },
     {
         name: 'Tiền kiếm được',
-        selector: row => row.earn,
+        selector: row => row.Earn + ' VND',
     },
     {
         name: 'Số người đăng ký',
-        selector: row => row.registered,
+        selector: row => row.Subcribe,
     },
     {
         name: 'Hành động',
-        selector: row =>  <i className="fas fa-edit"></i>,
+        selector: row => <i className="fas fa-edit"></i>,
     },
 ];
 
@@ -244,13 +244,25 @@ function RegisteredCourse(courseItem) {
     );
 }
 function MyCourse() {
+    const [mycoursedata, setData] = useState([]);
+    useEffect(async () => {
+        try {
+            const res = await axios.get('/api/my-course');
+            setData([...res.data.message]);
+            console.log([...res.data.message]);
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+
+    }, [])
     return (
         <DataTable
             columns={columns2}
-            data={data2}
+            data={mycoursedata}
             customStyles={customStyles}
             highlightOnHover
             responsive="false"
         />
+      
     );
 }
