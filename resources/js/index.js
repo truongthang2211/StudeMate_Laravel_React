@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
 
 import Navbar from './components/Navigation/Navbar';
 import Profile from './pages/Profile/Profile';
@@ -14,6 +14,7 @@ import Learn from './pages/Learn/Learn';
 import CreateCourse from './pages/CreateCourse/CreateCourse';
 import CourseManage from './pages/CourseManage/CourseManage';
 import MyCourse from './pages/MyCourse/MyCourse';
+import Admin from './pages/Admin/Admin';
 function Index() {
     const [ShowForm, setShowForm] = useState(false)
     const [User, setUser] = useState(() => {
@@ -37,27 +38,27 @@ function Index() {
     return (
         <>
             <BrowserRouter>
-                <Navbar User={User} ShowForm={ShowForm} handleShowForm={handleShowForm} />
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
-                    <Route exact path="/learn/:course/:lesson" element={User.loading ? <Home /> : <Learn  />} />
-                    <Route exact path="/learn/:course" element={User.loading ? <Home /> : <Learn  />} />
-                    <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
-                    <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
-                    <Route exact path="/course-manage/:feature" element={User.loading ? <Home /> : <CourseManage User={User} />} />
-                    {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
-                    <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User}/>} />
-                    <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
-
-
-                    <Route path='*' exact={true} element={<My404 />} />
-
+                    <Route path="/admin" element={<Admin User={User}/>} />
+                    <Route path="/admin/:feature" element={<Admin User={User}/>} />
+                    <Route path="/" element={<UserLayout User={User} handleShowForm={handleShowForm} ShowForm={ShowForm} />} >
+                        <Route path="/" element={<Home />} />
+                        <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
+                        <Route exact path="/learn/:course/:lesson" element={User.loading ? <Home /> : <Learn />} />
+                        <Route exact path="/learn/:course" element={User.loading ? <Home /> : <Learn />} />
+                        <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
+                        <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
+                        <Route exact path="/course-manage/:feature" element={User.loading ? <Home /> : <CourseManage User={User} />} />
+                        {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
+                        <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User} />} />
+                        <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
+                        <Route path='*' exact={true} element={<My404 />} />
+                    </Route>
                 </Routes>
             </BrowserRouter>
+            <BrowserRouter>
 
-
-
+            </BrowserRouter>
         </>
     );
 }
@@ -66,4 +67,12 @@ export default Index;
 
 if (document.getElementById('root')) {
     ReactDOM.render(<Index />, document.getElementById('root'));
+}
+function UserLayout({ User, ShowForm, handleShowForm }) {
+    return (
+        <>
+            <Navbar User={User} ShowForm={ShowForm} handleShowForm={handleShowForm} />
+            <Outlet/>
+        </>
+    );
 }

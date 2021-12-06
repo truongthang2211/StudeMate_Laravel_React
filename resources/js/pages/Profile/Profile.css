@@ -99,6 +99,8 @@ video {
 
 .profile-level {
     padding: 8px 0;
+    width: 276px;
+
 }
 
 .level {
@@ -157,8 +159,12 @@ video {
     flex-grow: 1;
 
 }
-
-
+.profile-social{
+    font-size: 40px;
+}
+.profile-social a+a{
+    margin-left: 18px;
+}
 
 .all-profile .course-item {
     position: relative;

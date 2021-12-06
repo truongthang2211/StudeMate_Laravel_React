@@ -9,11 +9,7 @@ function Profile({ User }) {
             <div className="all-profile">
                 <link rel="stylesheet" href="css/override-container.css" />
                 <div className="profile-background">
-                    <video playsInline={true} autoPlay={true} muted={true} loop={true} poster="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1406990/382344e97a4587c1773728480610d76dba4eb9f3.jpg" __idm_id__="355172354">
-                        <source src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1406990/a1c4a5d166c2086d43990c56bbc6a8d5bac7445e.webm" type="video/webm" />
-                        <source src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1406990/ad94df4fcc8a92d50bef360c6ca0516a31a51299.mp4" type="video/mp4" />
-
-                    </video>
+                    <img src="https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d" alt="" />
                 </div>
                 <div className="container main-profile">
                     <ProfileHeader User={User} />
@@ -83,9 +79,8 @@ function Profile({ User }) {
                                     <div className="section-info-content">
                                         <div className="info-number"> <span className="circle"></span>
                                             <span className="circle"></span>
-                                            <p className="time">01/01/2020 - 29/07/2020</p>
                                             <b className="title" title="">Đại học Công nghệ thông tin - Đại Học Quốc Gia HCM</b>
-                                            <p className="description">Hệ Thống Thông Tin</p>
+                                            <p className="description"></p>
                                         </div>
                                     </div>
 
@@ -102,7 +97,7 @@ export default Profile;
 export function ProfileHeader({ User }) {
     return (
         <div className="profile-header">
-            <Avatar User={User} Width="200px" Height="200px"/>
+            <Avatar User={User} Width="200px" Height="200px" />
             <div className="profile-personalinfo">
                 <div className="profile-name">
                     <span>{User.FULLNAME}</span>
@@ -132,25 +127,19 @@ export function ProfileHeader({ User }) {
             </div>
             <div className="profile-badgeinfo">
                 <div className="profile-level">
-                    <span className="h4">Level</span>
-                    <span className="level">5</span>
+                    <p className="time"><i>Rồi ai cũng khát</i> </p>
                 </div>
-                <div className="profile-exp">
-                    <div className="current-progress">
-                        <div className="standard-progress-bar" >
-                            <div className="background" style={{ 'width': '68.5333%' }}>
-                                <div className="background-render"></div>
-                            </div> <span className="text" >205.6/300</span>
-                        </div>
-                    </div>
+                <div className="profile-social">
+                    <a href=""><i className="fab fa-facebook-square"></i></a>
+                    <a href=""><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
         </div>
     );
 }
-export function ProfileCourseItem({ Option,className }) {
+export function ProfileCourseItem({ Option, className }) {
     return (
-        <div className={ className? "course-item " + className:"course-item"}>
+        <div className={className ? "course-item " + className : "course-item"}>
             <div className="course-avt">
                 <img src="https://codelearn.io/CodeCamp/CodeCamp/Upload/Course/1e746fe3cbe448bda850d8b953a78954.jpg" alt="" />
             </div>
@@ -166,7 +155,7 @@ export function ProfileCourseItem({ Option,className }) {
                     </a>
                 </div>
             </div>
-            {Option&&<div className="course-manage-options">
+            {Option && <div className="course-manage-options">
                 <Link to="/mycourse"><i className="fas fa-chart-bar"></i></Link>
                 <i className="fas fa-edit"></i>
 

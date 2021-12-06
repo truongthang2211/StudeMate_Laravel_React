@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './CourseManage.css';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { ProfileHeader, ProfileCourseItem } from '../Profile/Profile.jsx'
 import Sidebar from '../../components/Sidebar/Sidebar';
 import AnalysisBox, { AnalysisItemInfo } from '../../components/AnalysisBox/AnalysisBox';
 import DataTable from 'react-data-table-component';
@@ -109,7 +109,7 @@ const data = [
 ]
 const columns2 = [
     {
-        selector: row => <img src={'/'+row.CourseIMG} width="184px" height="130px" style={{ margin: "16px 0", borderRadius: "5px" }} />,
+        selector: row => <img src={'/' + row.CourseIMG} width="184px" height="130px" style={{ margin: "16px 0", borderRadius: "5px" }} />,
         width: '216px',
         compact: true
     },
@@ -207,7 +207,20 @@ function CourseManage(props) {
     return (
         <>
             <div id="course-manage">
-                <Sidebar User={props.User} />
+                <Sidebar User={props.User} >
+                    <Link to="/course-manage/overview" className="sidebar__feature-item">
+                        <i className="fas fa-home"></i>
+                        <span>Tổng quan</span>
+                    </Link >
+                    <Link to="/course-manage/registeredcourse" className="sidebar__feature-item">
+                        <i className="fas fa-list-alt"></i>
+                        <span>Khóa học đã đăng ký</span>
+                    </Link>
+                    <Link to="/course-manage/mycourse" className="sidebar__feature-item">
+                        <i className="fas fa-th-list"></i>
+                        <span>Khóa học của bạn</span>
+                    </Link>
+                </Sidebar>
                 <div className="course-manage-content">
                     {(feature == 'overview' || !feature) && <Overview />}
                     {feature == 'registeredcourse' && <RegisteredCourse />}
@@ -263,6 +276,6 @@ function MyCourse() {
             highlightOnHover
             responsive="false"
         />
-      
+
     );
 }

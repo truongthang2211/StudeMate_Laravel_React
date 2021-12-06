@@ -57,23 +57,23 @@ const CommentData = [
 export default memo(function Learn() {
     const { course, lesson } = useParams();
     const [dataLearning, setData] = useState({});
-
-    const [comments, setComments] = useState(CommentData);
+    const [comments, setComments] = useState([]);
     const [videoid, setVideoID] = useState('');
-    const onClickRepl = (index, parentindex, repl) => {
+    const onClickRepl = (index, parentindex, repl,parent) => {
+        console.log(parent)
         const newcomments = [...comments];
         if (repl) {
-            const sub_comment = newcomments[parentindex]['repl_comment'][index + 1];
+            const sub_comment = newcomments[parentindex]['SubComments'][index + 1];
             if (!sub_comment || !sub_comment['thisuser'])
-                newcomments[parentindex]['repl_comment'].splice(index + 1, 0, { thisuser: true })
-        } else if (!newcomments[index]['repl_comment'][0] || !newcomments[index]['repl_comment'][0]['thisuser']) {
-            newcomments[index]['repl_comment'].splice(0, 0, { thisuser: true })
+                newcomments[parentindex]['SubComments'].splice(index + 1, 0, { thisuser: true ,parent_comment:parent})
+        } else if (!newcomments[index]['SubComments'][0] || !newcomments[index]['SubComments'][0]['thisuser']) {
+            newcomments[index]['SubComments'].splice(0, 0, { thisuser: true,parent_comment:parent })
         }
         setComments(newcomments);
     }
     const onClickCancel = (index, parentindex) => {
         const newcomments = [...comments];
-        newcomments[parentindex]['repl_comment'].splice(index, 1)
+        newcomments[parentindex]['SubComments'].splice(index, 1)
         setComments(newcomments);
 
     }
@@ -107,6 +107,18 @@ export default memo(function Learn() {
             console.log(error)
         }
     }, [])
+    const showComment=async()=>{
+        try {
+            const res = await axios.post(`/api/get-comments`, { lesson_id: lesson });
+            console.log(res)
+            setComments(res.data.message)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        showComment();
+    },[])
     const handleLesson = (lesson_url, lesson_id, status) => {
         if (status != 'block-item') {
 
@@ -114,7 +126,6 @@ export default memo(function Learn() {
             setVideoID(youtube_id(lesson_url))
         }
     }
-    console.log(dataLearning)
     let TimerId = 0;
     const handleVideoPlaying = async (e) => {
         console.log('vao handle')
@@ -158,22 +169,23 @@ export default memo(function Learn() {
                             <div className="tab-item">File đính kèm</div>
                         </div>
                         <div className="info-learning-comment">
-                            <UserComment />
+                            <UserComment updateComment={showComment}/>
                             <div className="person-comment-block">
                                 <ul>
                                     {comments.map((item, index) => {
                                         return (
                                             <li key={index}>
-                                                <Comment key={index} User={item.user} index={index} Content={item.content} Upvote={item.upvote} Downvote={item.downvote} handleRepl={onClickRepl} />
-                                                {item.repl_comment.map((item2, index2) => {
+                                                <Comment key={index} User={item.User} index={index} Content={item.Content} 
+                                                Upvote={item.UpVote} Downvote={item.DownVote} handleRepl={onClickRepl} commentID={item.commentID} />
+                                                {item.SubComments.map((item2, index2) => {
                                                     if (item2.thisuser) {
-                                                        return (<UserComment key={index2} parent_index={index}
-                                                            index={index2} repl handleCancel={onClickCancel} />);
+                                                        return (<UserComment key={index2} parent_index={index} updateComment={showComment} 
+                                                            index={index2} repl parentComment={item2.parent_comment} handleCancel={onClickCancel}  />);
                                                     } else {
                                                         return (
-                                                            <Comment parent_index={index} index={index2} key={index2}
-                                                                repl User={item2.user} Content={item2.content} handleRepl={onClickRepl}
-                                                                Upvote={item2.upvote} Downvote={item2.downvote} />
+                                                            <Comment parent_index={index} index={index2} key={index2} 
+                                                                repl User={item2.User} Content={item2.Content} handleRepl={onClickRepl}
+                                                                Upvote={item2.UpVote} Downvote={item2.DownVote} commentID={item.commentID}/>
                                                         );
                                                     }
                                                 })}
@@ -233,7 +245,9 @@ export default memo(function Learn() {
 })
 
 function UserComment(props) {
+    const [commentData, setComment] = useState();
     const ClassName = props.repl ? "comment-block comment-block-repl" : "comment-block"
+    const { lesson } = useParams();
     const commentRef = useRef()
     useEffect(() => {
         if (props.repl) commentRef.current.focus();
@@ -250,6 +264,29 @@ function UserComment(props) {
             commentRef.current.parentNode.classList.remove('comment-box')
         }
     }
+    const handleKeyDown = (e) => {
+        e.target.style.height = 'inherit';
+        e.target.style.height = `${e.target.scrollHeight}px`;
+        // In case you have a limitation
+        // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`;
+    }
+    const handleOnChange = (e) => {
+        setComment(e.target.value);
+
+    }
+    const handleSubmit = async () => {
+        const data = {
+            lesson_id: lesson,
+            content: commentData,
+            parent_comment_id: props.parentComment?props.parentComment:null,
+        };
+        setComment('')
+        const res = await axios.post('/api/add-comment', data)
+        if (res.data.status==200){
+            props.updateComment();
+        }
+        
+    }
     return (
         <div id="user-comment-block">
             <div className={ClassName}>
@@ -257,12 +294,12 @@ function UserComment(props) {
                     <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=i1SBPX81GKUAX_deJFe&_nc_ht=scontent.fsgn5-11.fna&oh=d685f02a12ebb0131217f4705e5c5795&oe=61C416A0" alt="Thang Nguyen" />
                 </div>
                 <div className="comment-content align-items-end">
-                    <div ref={commentRef} className="comment-input" autoFocus contentEditable="true"
+                    <textarea ref={commentRef} className="comment-input" autoFocus
                         placeholder="Viết gì gì đó đi..." tabIndex="0" dir="ltr" spellCheck="false"
-                        autoComplete="off" autoCorrect="off" autoCapitalize="off" onPaste={handleonPaste}
-                        onInput={handleonInput}></div>
+                        autoComplete="off" autoCorrect="off" autoCapitalize="off" onPaste={handleonPaste} onKeyDown={handleKeyDown}
+                        onInput={handleonInput} onChange={(e) => console.log('thang dep trai')} value={commentData} onChange={handleOnChange}></textarea>
                     <div>
-                        <button className="btn btn-comment">
+                        <button onClick={handleSubmit} className="btn btn-comment">
                             Bình luận
                         </button>
                         {props.repl && <button onClick={() => props.handleCancel(props.index, props.parent_index)}
@@ -280,7 +317,7 @@ function Comment(props) {
     return (
         <div className={ClassName}>
             <div className="comment-avt">
-                <img className="CommentBox_myAvatar__3Mi09" src={props.User.avt} alt={props.User.FULLNAME} />
+                <img className="CommentBox_myAvatar__3Mi09" src={props.User.avt || 'https://genk.mediacdn.vn/thumb_w/600/2015/screen-shot-2015-07-30-at-2-31-57-pm-1438334096188.png'} alt={props.User.FULLNAME} />
             </div>
             <div className="comment-content">
                 <div className="comment-user-name">
@@ -302,7 +339,7 @@ function Comment(props) {
                             <span>{props.Downvote}</span>
                         </span>
                     </span>
-                    <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl) }} className="comment-repl" href="">Trả lời</span>
+                    <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl,props.commentID) }} className="comment-repl" href="">Trả lời</span>
                     <span className="comment-datetime">{props.Time}</span>
                 </div>
             </div>

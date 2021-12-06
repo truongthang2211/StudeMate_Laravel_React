@@ -9,4 +9,6 @@ class Course_SubType extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $table = "Course_SubTypes";
+
 }

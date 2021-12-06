@@ -106,9 +106,11 @@
     height: auto;
     background-color: transparent;
     display: block;
-    overflow: auto;
+    overflow: hidden;
     flex-grow: 1;
-    word-break: break-word;
+    border: none;
+    resize: none;
+    outline: none;
 }
 
 .comment-input::before {
