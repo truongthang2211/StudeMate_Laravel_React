@@ -13,6 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     // const UPDATED_AT = null;
     public $timestamps = false;
+    public $primaryKey  = 'USER_ID';
     /**
      * The attributes that are mass assignable.
      *

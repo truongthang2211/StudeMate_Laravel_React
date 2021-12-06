@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MyInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,6 @@ Route::get('/get-list-course', [AdminController::class, 'CourseList']);
 
 
 Route::get('/sign-out', [LoginController::class, 'SignOut']);
+Route::get('/myinfo', [MyInfoController::class,'EditMyInfo']);
+Route::post('/update-myinfo', [MyInfoController::class, 'UpdateMyInfo']);
+Route::put('/update-password', [MyInfoController::class, 'UpdatePassword']);
