@@ -9,4 +9,6 @@ class Account extends Model
 {
     use HasFactory;
     const UPDATED_AT = null;
+    public $primaryKey  = 'ACCOUNT_ID';
+
 }

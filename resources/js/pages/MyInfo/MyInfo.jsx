@@ -11,7 +11,7 @@ function MyInfo({ User }) {
         DATE_OF_BIRTH: "2021-01-01",
         CITY_ID: '',
         PHONE: '',
-        SCHOOL_ID: '',
+        SCHOOL: '',
         FACEBOOK: '',
         LINKEDLN: '',
         BIO: '',
@@ -77,7 +77,7 @@ function MyInfo({ User }) {
     const handleSchoolIdChange = (e) => {
         setUserInfo({
             ...userInfo,
-            SCHOOL_ID: e.target.value
+            SCHOOL: e.target.value
         });
     }
 
@@ -181,7 +181,7 @@ function MyInfo({ User }) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Mật khẩu không hợp lệ!',
+                            text: res.data.message,
                             confirmButtonText: 'Cancel'
                         })
                         setError(res.data.validationErrors);
@@ -195,7 +195,7 @@ function MyInfo({ User }) {
                     }
                 });
             } catch (error) {
-                console.log(error);
+                console.log(error.response.data);
             }
 
         }
@@ -244,7 +244,7 @@ function MyInfo({ User }) {
                                                     <div className="form-group UploadBackground">
                                                         <label style={{ display: 'block' }}>Ảnh nền trang user của bạn</label>
                                                         <label htmlFor="Background" className="browse btn btn-primary input-sm" type="button" id="Upload-Ava" style={{ display: 'block' }}>Chọn ảnh</label>
-                                                        <input name="ImgFile" id="Background" className="file" type="file" onChange={handleBackgroundImgChange} accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
+                                                        <input name="background-img" id="Background" className="file" type="file" onChange={handleBackgroundImgChange} accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -317,7 +317,7 @@ function MyInfo({ User }) {
                                                     <div className="col-lg-9 col-sm-8 col-xs-12">
                                                         <div className="form-group">
                                                             <span id="span-school" className="span-display" style={{ display: "none" }}></span>
-                                                            <input name="GraduatedSchool" type="text" onChange={handleSchoolIdChange} value={userInfo.SCHOOL_ID || ''} className="form-control" id="GraduatedSchool" autoComplete="graduated-school" aria-required="true" style={{ display: 'block' }} />
+                                                            <input name="GraduatedSchool" type="text" onChange={handleSchoolIdChange} value={userInfo.SCHOOL || ''} className="form-control" id="GraduatedSchool" autoComplete="graduated-school" aria-required="true" style={{ display: 'block' }} />
                                                         </div>
                                                     </div>
                                                 </div>

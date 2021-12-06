@@ -23,10 +23,10 @@ class LoginController extends Controller
                 $account = new Account();
                 $account->username = $request->username;
                 $account->pwd = bcrypt($request->password);
-                $account->user_id = $user->id;
+                $account->user_id = $user->USER_ID;
                 $account->account_role = 'User';
                 $account->save();
-                setcookie("StudyMate", $user->id, time() + 60 * 60 * 24, "/");
+                setcookie("StudyMate", $user->USER_ID, time() + 60 * 60 * 24, "/");
                 return response()->json([
                     'status' => 200,
                     'message' => 'Đăng ký thành công'

@@ -38,11 +38,8 @@ class MyInfoController extends Controller {
             // }
             
             // else{
-                $path = 'img/user/avatar';
-                $file = $request->file('avatar-img');
-                $extension = $file->getClientOriginalExtension();
-                $fileName = time() . '.' . $extension;
-                $file->move($path, $fileName);
+                
+               
 
 
                 $userData = json_decode($request->data);
@@ -52,10 +49,25 @@ class MyInfoController extends Controller {
                 $user->DATE_OF_BIRTH = $userData->DATE_OF_BIRTH;
                 $user->CITY_ID = $userData->CITY_ID;
                 $user->PHONE = $userData->PHONE;
-                $user->SCHOOL_ID = $userData->SCHOOL_ID;
+                $user->SCHOOL = $userData->SCHOOL;
                 $user->FACEBOOK = $userData->FACEBOOK;
-
-                $user->AVATAR_IMG = $path . "/". $fileName;
+                $user->BIO = $userData->BIO;
+                if ($request->file('avatar-img')){
+                    $file = $request->file('avatar-img');
+                    $path = 'img/user/avatar';
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = time() . '.' . $extension;
+                    $file->move($path, $fileName);
+                    $user->AVATAR_IMG = $path . "/". $fileName;
+                }
+                if ($request->file('background-img')){
+                    $file = $request->file('background-img');
+                    $path = 'img/user/background';
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = time() . '.' . $extension;
+                    $file->move($path, $fileName);
+                    $user->BACKGROUND_IMG = $path . "/". $fileName;
+                }
                 //$user->BACKGROUND_IMG = $request->BACKGROUND_IMG;
 
                 $user->update();
@@ -114,7 +126,10 @@ class MyInfoController extends Controller {
                 }
             //}      
         } catch (\Throwable $th) {
-
+            return response()->json([
+                'status'=> 422,
+                'message'=>$th->getMessage(),
+            ]);
         }
      
     }
