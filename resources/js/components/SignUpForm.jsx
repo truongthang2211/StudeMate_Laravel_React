@@ -6,7 +6,6 @@ export default memo(function SignUpForm() {
     const signupref = useRef();
     const FocusSignUp = () => {
         document.getElementsByName('username')[0].focus()
-
     }
     let SignUpButton ;
     useEffect(() => {
@@ -96,3 +95,4 @@ export default memo(function SignUpForm() {
             </div>
         </div>);
 })
+

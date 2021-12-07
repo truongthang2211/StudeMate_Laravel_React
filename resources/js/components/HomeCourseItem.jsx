@@ -46,9 +46,7 @@ function HomeCourseItem(props) {
                 <a href="#" title={props.author} className="course-author">
                     {props.author}
                 </a>
-                <p className="course-des">
-                    {props.desc}
-                </p>
+                <p className="course-des">{props.desc}</p>
                 <div className="course-footer">
                     <div className="course-footer-left">
                         <span className="free-text" data-selected="true" data-label-id="0" data-metatip="true">{modifyCourseFee(props.fee)}</span>

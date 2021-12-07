@@ -76,14 +76,45 @@ class CourseController extends Controller
                 'message' => $th->getMessage(),
             ]);
         }
-
     }
-    public function GetCourses(){
-        $courses= Course::all();
+
+    public function GetCourses()
+    {
+        $courses = DB::table('courses')
+            ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+            ->join('users', 'courses.author_id', '=', 'users.user_id')
+            ->take(8)
+            ->get();
         return response()->json([
             'status' => 200,
             'message' => $courses,
         ]);
+    }
 
+    public function GetCourseByType(Request $request)
+    {
+        $courses1 = DB::table('courses')
+            ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+            ->join('users', 'courses.author_id', '=', 'users.user_id')
+            ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
+            ->join('course_maintypes', 'course_subtypes.parent_type_id', '=', 'course_maintypes.course_maintype_id')
+            ->where('course_maintypes', $request->type[0])
+            ->take(8)
+            ->get();
+        $courses2 = DB::table('courses')
+            ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+            ->join('users', 'courses.author_id', '=', 'users.user_id')
+            ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
+            ->join('course_maintypes', 'course_subtypes.parent_type_id', '=', 'course_maintypes.course_maintype_id')
+            ->where('course_maintypes', $request->type[1])
+            ->take(8)
+            ->get();
+        $result = (object)['Tin học văn phòng' => $courses1,'Công nghệ thông tin' => $courses2];
+        // $array = array();
+        // array_push($array, 'gia tri');
+        return response()->json([
+            'status' => 200,
+            'message' => $result
+        ]);
     }
 }

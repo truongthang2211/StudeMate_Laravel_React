@@ -6,17 +6,20 @@ import './Home.css'
 function Home() {
     const [data,setData] = useState([]);
     useEffect(async() => {
-        const res = await axios.get('/api/get-courses')
-        setData(res.data.message)
-        console.log(res);
-    },[])
+        const resData = await axios.get('/api/get-courses');
+        setData(resData.data.message);
+        console.log(resData);
+    },[]);
 
-    const fieldsData = [{
-        linhvuc: 'CNTT'
-    },
-    {
-        linhvuc: 'Kinh Doanh'
-    }];
+    const [courses, setCourses] = useState({type:['Tin học văn phòng','Công nghệ thông tin']});
+    useEffect(async() => {
+        const resCourses = await axios.get('/api/get-courses-by-type',courses);
+        setCourses(resCourses.data.message);
+        console.log(resCourses);
+    })
+
+    const courseTypes = ['Các khóa nổi bật','Tin học văn phòng','Công nghệ thông tin'];
+
     return (
         <>
             <div id="header" style={{ backgroundImage: "url('img/courses/header-img.png')" }}>
@@ -427,15 +430,33 @@ function Home() {
                 </div>
             </div>
             <div id="content" className="container">
-                {data.map(c => <div key={c.COURSE_NAME} className="content-section">
-                    <h2 className="section-heading">{c.COURSE_NAME}</h2>
+                <div className="content-section">
+                    <h2 className="section-heading">{courseTypes[0]}</h2>
                     <div className="section-courses">
-                        <HomeCourseItem title={c.COURSE_NAME} desc={c.COURSE_DESC} author={c.AUTHOR_ID} img={c.IMG} fee={c.FEE}/>
-                        <HomeCourseItem author="ThangDeptrai" />
-                        <HomeCourseItem author="ThangDeptrai" />
-                        <HomeCourseItem author="ThangDeptrai" />
+                        {data.map((course, index) => 
+                            <HomeCourseItem 
+                                key={index} 
+                                desc={course.course_desc} 
+                                title={course.course_name} 
+                                author={course.fullname} 
+                                img={course.img} 
+                                fee={course.fee}
+                            />
+                        )}
                     </div>
-                </div>)}
+                </div>
+                <div className="content-section">
+                    <h2 className="section-heading">{courseTypes[1]}</h2>
+                    <div className="section-courses">
+                        
+                    </div>
+                </div>
+                <div className="content-section">
+                    <h2 className="section-heading">{courseTypes[2]}</h2>
+                    <div className="section-courses">
+                        
+                    </div>
+                </div>
             </div>
         </>
     );
