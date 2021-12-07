@@ -159,17 +159,19 @@
     padding-right: 8px;
     border-right: 1px solid #bbb;
 }
-
-.upvote a:hover {
-    color: var(--main-yellow)
+.upvote.active span:first-child,
+.upvote span:first-child:hover {
+    color: var(--main-yellow);
+    cursor:pointer;
 }
 
 .downvote {
     padding-left: 8px;
 }
-
-.downvote a:hover {
-    color: var(--main-red)
+.downvote.active span:first-child,
+.downvote span:first-child:hover {
+    color: var(--main-red);
+    cursor:pointer;
 }
 
 

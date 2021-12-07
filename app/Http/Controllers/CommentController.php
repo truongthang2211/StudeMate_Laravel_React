@@ -13,25 +13,23 @@ class CommentController extends Controller
     public function GetListCommentByLesson(Request $request)
     {
         try {
-            $commentlist = Comment::where('LESSON_ID', $request->lesson_id)->where('PARENT_COMMENT_ID',null)->get();
+            $commentlist = Comment::where('LESSON_ID', $request->lesson_id)->where('PARENT_COMMENT_ID', null)->get();
             $ans = array();
-
             foreach ($commentlist as $comment) {
                 $user = User::where('USER_ID', $comment->USER_ID)->first();
                 $subcomments = Comment::where('PARENT_COMMENT_ID', $comment->COMMENT_ID)->get();
-                $comment_vote = Comment_Vote::where('COMMENT_ID', $comment->COMMENT_ID);
+                $users_voted = Comment_Vote::where('COMMENT_ID', $comment->COMMENT_ID)->get('USER_ID');
                 $ans2 = array();
                 foreach ($subcomments as $subcomment) {
-                    $sub_comment_vote = Comment_Vote::where('COMMENT_ID', $subcomment->COMMENT_ID);
                     $sub_user = User::where('USER_ID', $subcomment->USER_ID)->first();
+                    $users_sub_voted = Comment_Vote::where('COMMENT_ID', $subcomment->COMMENT_ID)->get('USER_ID');
                     $object = (object)[
                         'commentID' => $subcomment->COMMENT_ID,
                         'User' => $sub_user,
                         'Content' => $subcomment->CONTENT,
                         'ParentComment' => $subcomment->PARENT_COMMENT_ID,
                         'CommentTime' => $subcomment->COMMENT_TIME,
-                        'UpVote' => $sub_comment_vote->where('COMMENT_VOTE_STATE', 1)->count(),
-                        'DownVote' => $sub_comment_vote->where('COMMENT_VOTE_STATE', 0)->count(),
+                        'UsersVoted'=>Comment_Vote::where('COMMENT_ID', $subcomment->COMMENT_ID)->get(),
                     ];
                     array_push($ans2, $object);
                 }
@@ -42,8 +40,7 @@ class CommentController extends Controller
                     'ParentComment' => $comment->PARENT_COMMENT_ID,
                     'CommentTime' => $comment->COMMENT_TIME,
                     'SubComments' => $ans2,
-                    'UpVote' => $comment_vote->where('COMMENT_VOTE_STATE', 1)->count(),
-                    'DownVote' => $comment_vote->where('COMMENT_VOTE_STATE', 0)->count(),
+                    'UsersVoted'=>Comment_Vote::where('COMMENT_ID', $comment->COMMENT_ID)->get(),
                 ];
                 array_push($ans, $object);
             }
@@ -83,7 +80,34 @@ class CommentController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 400,
-                'message' => $th,
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+    public function VoteComment(Request $request)
+    {
+        try {
+            if (isset($_COOKIE['StudyMate'])) {
+                $id = $_COOKIE['StudyMate'];
+                if ($request->comment_state == -1) {
+                    Comment_Vote::where('COMMENT_ID', $request->comment_id)->delete();
+                } else {
+                    Comment_Vote::updateOrInsert(['USER_ID' => $id, 'COMMENT_ID' => $request->comment_id], ['USER_ID' => $id, 'COMMENT_ID' => $request->comment_id, 'COMMENT_VOTE_STATE' => $request->comment_state]);
+                }
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Thành công',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Cookies het han',
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th->getMessage(),
             ]);
         }
     }

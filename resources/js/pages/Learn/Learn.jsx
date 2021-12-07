@@ -13,61 +13,22 @@ import YouTube from 'react-youtube';
 import Collapsible from '../../components/Collapsible/Collapsible';
 import './Learn.css'
 import { ListCourse } from '../../Data.js'
-const CommentData = [
-    {
-        user: {
-            FULLNAME: "Lisa",
-            avt: 'http://media.doisongphapluat.com/695/2021/2/10/Lisa.jpg',
-        },
-        content: 'Thắng đẹp trai',
-        upvote: 1025,
-        downvote: 0,
-        repl_comment: [
-            {
-                user: {
-                    FULLNAME: "Nancy",
-                    avt: 'http://media.doisongphapluat.com/695/2021/2/10/Nancy.jpg',
-                },
-                content: '+1 Confirm',
-                upvote: 125,
-                downvote: 0,
-            },
-            {
-                user: {
-                    FULLNAME: "Tzuyu",
-                    avt: 'https://top10az.com/wp-content/uploads/2021/05/lisa.jpg',
-                },
-                content: '+1 Confirm',
-                upvote: 125,
-                downvote: 0,
-            },
-        ]
-    },
-    {
-        user: {
-            FULLNAME: "Khá Bảnh",
-            avt: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Kh%C3%A1_B%E1%BA%A3nh_khai_tr%C6%B0%C6%A1ng_shop_b%C3%A1n_qu%E1%BA%A7n_%C3%A1o_%E1%BB%9F_Qu%E1%BB%91c_Oai_2019-03-16.png/250px-Kh%C3%A1_B%E1%BA%A3nh_khai_tr%C6%B0%C6%A1ng_shop_b%C3%A1n_qu%E1%BA%A7n_%C3%A1o_%E1%BB%9F_Qu%E1%BB%91c_Oai_2019-03-16.png',
-        },
-        content: 'Bài học rat hay!',
-        upvote: 1025,
-        downvote: 0,
-        repl_comment: []
-    }]
 
+const ThisUserID = new URLSearchParams(document.cookie.replaceAll("; ", "&")).get('StudyMate');
 export default memo(function Learn() {
     const { course, lesson } = useParams();
     const [dataLearning, setData] = useState({});
     const [comments, setComments] = useState([]);
     const [videoid, setVideoID] = useState('');
-    const onClickRepl = (index, parentindex, repl,parent) => {
+    const onClickRepl = (index, parentindex, repl, parent) => {
         console.log(parent)
         const newcomments = [...comments];
         if (repl) {
             const sub_comment = newcomments[parentindex]['SubComments'][index + 1];
             if (!sub_comment || !sub_comment['thisuser'])
-                newcomments[parentindex]['SubComments'].splice(index + 1, 0, { thisuser: true ,parent_comment:parent})
+                newcomments[parentindex]['SubComments'].splice(index + 1, 0, { thisuser: true, parent_comment: parent })
         } else if (!newcomments[index]['SubComments'][0] || !newcomments[index]['SubComments'][0]['thisuser']) {
-            newcomments[index]['SubComments'].splice(0, 0, { thisuser: true,parent_comment:parent })
+            newcomments[index]['SubComments'].splice(0, 0, { thisuser: true, parent_comment: parent })
         }
         setComments(newcomments);
     }
@@ -98,7 +59,7 @@ export default memo(function Learn() {
             if (res.data.message.LastLessonLearnt == -1) {
                 navigate(`/learn/${course}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
             } else {
-                navigate(`/learn/${course}/${res.data.message.LastLessonLearnt}`)
+                navigate(`/learn/${course}/${res.data.message.LastLessonLearnt+1}`)
             }
             setData(res.data.message)
             setVideoID(youtube_id(res.data.message.LearningURL))
@@ -107,7 +68,7 @@ export default memo(function Learn() {
             console.log(error)
         }
     }, [])
-    const showComment=async()=>{
+    const showComment = async () => {
         try {
             const res = await axios.post(`/api/get-comments`, { lesson_id: lesson });
             console.log(res)
@@ -118,7 +79,8 @@ export default memo(function Learn() {
     }
     useEffect(() => {
         showComment();
-    },[])
+        // console.log('testest')
+    }, [lesson])
     const handleLesson = (lesson_url, lesson_id, status) => {
         if (status != 'block-item') {
 
@@ -128,7 +90,6 @@ export default memo(function Learn() {
     }
     let TimerId = 0;
     const handleVideoPlaying = async (e) => {
-        console.log('vao handle')
         if (e.data == 1) {
             TimerId = setInterval(() => {
                 if (e.target.getCurrentTime() / e.target.getDuration() > 0.8) {
@@ -169,23 +130,26 @@ export default memo(function Learn() {
                             <div className="tab-item">File đính kèm</div>
                         </div>
                         <div className="info-learning-comment">
-                            <UserComment updateComment={showComment}/>
+                            <UserComment updateComment={showComment} />
                             <div className="person-comment-block">
                                 <ul>
                                     {comments.map((item, index) => {
                                         return (
                                             <li key={index}>
-                                                <Comment key={index} User={item.User} index={index} Content={item.Content} 
-                                                Upvote={item.UpVote} Downvote={item.DownVote} handleRepl={onClickRepl} commentID={item.commentID} />
+                                                <Comment key={index} User={item.User} index={index} Content={item.Content}
+                                                    parentComment={item.commentID} UsersVoted={item.UsersVoted}
+                                                    Upvote={item.UpVote} Downvote={item.DownVote} handleRepl={onClickRepl}
+                                                    commentID={item.commentID} updateComment={showComment} />
                                                 {item.SubComments.map((item2, index2) => {
                                                     if (item2.thisuser) {
-                                                        return (<UserComment key={index2} parent_index={index} updateComment={showComment} 
-                                                            index={index2} repl parentComment={item2.parent_comment} handleCancel={onClickCancel}  />);
+                                                        return (<UserComment key={index2} parent_index={index} updateComment={showComment}
+                                                            index={index2} repl parentComment={item2.parent_comment} handleCancel={onClickCancel} />);
                                                     } else {
                                                         return (
-                                                            <Comment parent_index={index} index={index2} key={index2} 
+                                                            <Comment parent_index={index} index={index2} key={index2} parentComment={item.commentID}
+                                                            UsersVoted={item2.UsersVoted} updateComment={showComment}
                                                                 repl User={item2.User} Content={item2.Content} handleRepl={onClickRepl}
-                                                                Upvote={item2.UpVote} Downvote={item2.DownVote} commentID={item.commentID}/>
+                                                             commentID={item2.commentID} />
                                                         );
                                                     }
                                                 })}
@@ -222,7 +186,7 @@ export default memo(function Learn() {
                         <Chaper title={item.ChapterTitle} />
                         <div className="playlist-wrapper-list">
                             {item.Lesson.map((less, index2) => {
-                                if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson)) {
+                                if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID) {
                                     status = 'normal-item'
                                 } else if (less.LESSON_ID < dataLearning.LastLessonLearnt + 1) {
                                     status = 'learnt-item'
@@ -278,14 +242,14 @@ function UserComment(props) {
         const data = {
             lesson_id: lesson,
             content: commentData,
-            parent_comment_id: props.parentComment?props.parentComment:null,
+            parent_comment_id: props.parentComment ? props.parentComment : null,
         };
         setComment('')
         const res = await axios.post('/api/add-comment', data)
         if (res.data.status==200){
             props.updateComment();
         }
-        
+
     }
     return (
         <div id="user-comment-block">
@@ -313,6 +277,62 @@ function UserComment(props) {
     );
 }
 function Comment(props) {
+    const [vote, setVote] = useState(()=>{
+        var filter = props.UsersVoted.filter(e=>e.USER_ID==ThisUserID)
+        if (filter.length){
+            return {up:filter[0].COMMENT_VOTE_STATE==1,down:filter[0].COMMENT_VOTE_STATE==0}
+        }
+        return{ up: false, down: false }
+    })
+    const handleUpVote = () => {
+        var data = {
+            comment_id: props.commentID,
+        }
+        if (vote.down && !vote.up) {
+            data.comment_state = 1;
+
+        } else {
+            data.comment_state = vote.up ? -1 : 1;
+        }
+        setVote(pre => {
+            if (pre.down && !pre.up) {
+                return { up: true, down: false }
+
+            } else {
+                return { ...pre, up: !pre.up }
+            }
+
+        })
+        console.log(data)
+        axios.post('/api/comment-vote', data).then((r) => {
+            console.log(r)
+            props.updateComment();
+        }).catch(error => console.log(error))
+    }
+    const handleDownVote = () => {
+        var data = {
+            comment_id: props.commentID,
+        }
+        if (!vote.down && vote.up) {
+            data.comment_state = 0;
+
+        } else {
+            data.comment_state = vote.down ? -1 : 0;
+        }
+        setVote(pre => {
+            if (!pre.down && pre.up) {
+                return { up: false, down: true }
+            } else {
+                return { ...pre, down: !pre.down }
+            }
+
+        })
+        console.log(data)
+        axios.post('/api/comment-vote', data).then((r) => {
+            console.log(r)
+            props.updateComment();
+        }).catch(error => console.log(error))
+    }
     const ClassName = props.repl ? "comment-block comment-block-repl" : "comment-block"
     return (
         <div className={ClassName}>
@@ -326,20 +346,20 @@ function Comment(props) {
                 <div className="comment-body">{props.Content}</div>
                 <div className="comment-footer">
                     <span className="comment-vote">
-                        <span className="upvote">
-                            <a href="">
+                        <span className={"upvote " + (vote.up ? "active" : "")}>
+                            <span onClick={handleUpVote}>
                                 <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
-                            </a>
-                            <span>{props.Upvote}</span>
+                            </span>
+                            <span>{props.UsersVoted.filter(e=>e.COMMENT_VOTE_STATE==1).length}</span>
                         </span>
-                        <span className="downvote">
-                            <a href="">
+                        <span className={"downvote " + (vote.down ? "active" : "")}>
+                            <span onClick={handleDownVote}>
                                 <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
-                            </a>
-                            <span>{props.Downvote}</span>
+                            </span>
+                            <span>{props.UsersVoted.filter(e=>e.COMMENT_VOTE_STATE==0).length}</span>
                         </span>
                     </span>
-                    <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl,props.commentID) }} className="comment-repl" href="">Trả lời</span>
+                    <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl, props.parentComment) }} className="comment-repl" href="">Trả lời</span>
                     <span className="comment-datetime">{props.Time}</span>
                 </div>
             </div>

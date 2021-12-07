@@ -168,7 +168,7 @@ class CourseController extends Controller
                     'ListLearn' => $ListLearn,
                     'LastLessonLearnt' => (int)($lesson),
                     'LearningURL'=>Lesson::where('LESSON_ID',$lesson_id)->first()->LESSON_URL,
-
+                     'Author'=>Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
 
                 ];
                 return response()->json([

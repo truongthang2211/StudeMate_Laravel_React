@@ -14,7 +14,7 @@ function Navbar({ ShowForm, handleShowForm, User }) {
 
   })
   const handleLogout = () =>{
-    axios.get('api/sign-out').then(()=>{
+    axios.get('/api/sign-out').then(()=>{
       window.location.reload();
     })
   }

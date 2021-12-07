@@ -29,6 +29,7 @@ Route::post('/create-course', [CourseController::class, 'CreateCourse']);
 Route::post('/add-learn', [CourseController::class, 'AddLearn']);
 Route::post('/get-comments', [CommentController::class, 'GetListCommentByLesson']);
 Route::post('/add-comment', [CommentController::class, 'AddComment']);
+Route::post('/comment-vote', [CommentController::class, 'VoteComment']);
 Route::get('/my-course', [CourseController::class, 'GetUserCourse']);
 Route::get('get-learn/{course_id}/{lesson_id}', [CourseController::class, 'GetLearning']);
 Route::get('/get-courses', [CourseController::class, 'GetCourses']);
