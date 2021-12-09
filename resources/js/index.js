@@ -14,6 +14,8 @@ import Learn from './pages/Learn/Learn';
 import CreateCourse from './pages/CreateCourse/CreateCourse';
 import CourseManage from './pages/CourseManage/CourseManage';
 import MyCourse from './pages/MyCourse/MyCourse';
+import ListCourse from './pages/ListCourse/ListCourse';
+
 function Index() {
     const [ShowForm, setShowForm] = useState(false)
     const [User, setUser] = useState(() => {
@@ -49,10 +51,9 @@ function Index() {
                     {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
                     <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User}/>} />
                     <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
-
+                    <Route exact path="/list-course/:maintypeId/:subtypeId" element={<ListCourse />} />
 
                     <Route path='*' exact={true} element={<My404 />} />
-
                 </Routes>
             </BrowserRouter>
 

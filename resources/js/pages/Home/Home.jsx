@@ -1,24 +1,25 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import HomeCourseItem from '../../components/HomeCourseItem';
 import axios from 'axios';
 import './Home.css'
+import { Link } from 'react-router-dom';
 
 function Home() {
-    const [data,setData] = useState([]);
-    useEffect(async() => {
+    const [data, setData] = useState([]);
+    useEffect(async () => {
         const resData = await axios.get('/api/get-courses');
         setData(resData.data.message);
         console.log(resData);
-    },[]);
+    }, []);
 
-    const [courses, setCourses] = useState({type:['Tin học văn phòng','Công nghệ thông tin']});
-    useEffect(async() => {
-        const resCourses = await axios.get('/api/get-courses-by-type',courses);
+    const [courses, setCourses] = useState({});
+    useEffect(async () => {
+        const resCourses = await axios.get('/api/get-courses-homepage');
         setCourses(resCourses.data.message);
         console.log(resCourses);
-    })
+    }, [])
 
-    const courseTypes = ['Các khóa nổi bật','Tin học văn phòng','Công nghệ thông tin'];
+    const courseTypes = ['Các khóa nổi bật', 'Tin học văn phòng', 'Công nghệ thông tin'];
 
     return (
         <>
@@ -42,381 +43,342 @@ function Home() {
                     <div className="col-lg-3 menu-left-new">
                         <ul className="menu">
                             <li>
-                                <a href="/course/ngoai-ngu?boxcode=slide-menu-home"><i className="fa fa-language"></i>Ngoại ngữ</a>
+                                <Link to="/list-course/1111/null"><i className="fa fa-language"></i>Ngoại ngữ</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/ngoai-ngu?boxcode=slide-menu-home" rel="nofollow">Tất cả Ngoại ngữ</a>
+                                                <Link to="/list-course/null/1111">Tiếng Anh</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/tieng-han?boxcode=slide-menu-home">Tiếng Hàn</a>
+                                                <Link to="/list-course/null/1113">Tiếng Hàn</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/tieng-anh?boxcode=slide-menu-home">Tiếng Anh</a>
+                                                <Link to="/list-course/null/1112">Tiếng Trung</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/tieng-trung?boxcode=slide-menu-home">Tiếng Trung</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/tieng-nhat?boxcode=slide-menu-home">Tiếng Nhật</a>
+                                                <Link to="/list-course/null/1114">Tiếng Nhật</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/marketing?boxcode=slide-menu-home"><i className="fa fa-line-chart"></i>Marketing</a>
+                                <Link to="/list-course/1112/null"><i className="fa fa-line-chart"></i>Marketing</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/marketing?boxcode=slide-menu-home" rel="nofollow">Tất cả Marketing</a>
+                                                <Link to="/list-course/null/1116">Marketing Online</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/marketing-online?boxcode=slide-menu-home">Marketing Online</a>
+                                                <Link to="/list-course/null/1117">Google Ads</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/google-ads?boxcode=slide-menu-home">Google Ads</a>
+                                                <Link to="/list-course/null/1118">SEO</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/seo?boxcode=slide-menu-home">Seo</a>
+                                                <Link to="/list-course/null/1119">Branding</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/branding?boxcode=slide-menu-home">Branding</a>
+                                                <Link to="/list-course/null/1120">Content Marketing</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/content-marketing?boxcode=slide-menu-home">Content Marketing</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/video-marketing?boxcode=slide-menu-home">Video marketing</a>
+                                                <Link to="/list-course/null/1121">Video marketing</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/tin-hoc-van-phong?boxcode=slide-menu-home"><i className="fa fa-desktop"></i>Tin học văn phòng</a>
+                                <Link to="/list-course/1113/null"><i className="fa fa-desktop"></i>Tin học văn phòng</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/tin-hoc-van-phong?boxcode=slide-menu-home" rel="nofollow">Tất cả Tin học văn phòng</a>
+                                                <Link to="/list-course/null/1123">Excel</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/excel?boxcode=slide-menu-home">Excel</a>
+                                                <Link to="/list-course/null/1124">Word</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/word?boxcode=slide-menu-home">Word</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/powerpoint?boxcode=slide-menu-home">PowerPoint</a>
+                                                <Link to="/list-course/null/1125">PowerPoint</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/thiet-ke?boxcode=slide-menu-home"><i className="fa fa-paint-brush"></i>Thiết kế</a>
+                                <Link to="/list-course/1114/null"><i className="fa fa-paint-brush"></i>Thiết kế</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/thiet-ke?boxcode=slide-menu-home" rel="nofollow">Tất cả Thiết kế</a>
+                                                <Link to="/list-course/null/1127">Thiết kế quảng cáo</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/thiet-ke-quang-cao?boxcode=slide-menu-home">Thiết kế quảng cáo</a>
+                                                <Link to="/list-course/null/1128">Phần mềm thiết kế</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/phan-mem-thiet-ke?boxcode=slide-menu-home">Phần mềm thiết kế</a>
+                                                <Link to="/list-course/null/1129">Thiết kế Web</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/thiet-ke-web?boxcode=slide-menu-home">Thiết kế Web</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/kien-truc-noi-that?boxcode=slide-menu-home">Kiến Trúc, Nội Thất</a>
+                                                <Link to="/list-course/null/1130">Kiến Trúc, Nội Thất</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/kinh-doanh-khoi-nghiep?boxcode=slide-menu-home"><i className="fa fa-rocket"></i>Kinh doanh - Khởi nghiệp</a>
+                                <Link to="/list-course/1115/null"><i className="fa fa-rocket"></i>Kinh doanh - Khởi nghiệp</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/kinh-doanh-khoi-nghiep?boxcode=slide-menu-home" rel="nofollow">Tất cả Kinh doanh - Khởi nghiệp</a>
+                                                <Link to="/list-course/null/1132">Bất động sản</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/bat-dong-san?boxcode=slide-menu-home">Bất động sản</a>
+                                                <Link to="/list-course/null/1133">Crypto</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/crypto?boxcode=slide-menu-home">Crypto</a>
+                                                <Link to="/list-course/null/1134">Kinh doanh Online</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/kinh-doanh-online?boxcode=slide-menu-home">Kinh doanh Online</a>
+                                                <Link to="/list-course/null/1135">Startup</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/startup?boxcode=slide-menu-home">Startup</a>
+                                                <Link to="/list-course/null/1136">Kinh doanh Cafe</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/kinh-doanh-cafe?boxcode=slide-menu-home">Kinh doanh Cafe</a>
+                                                <Link to="/list-course/null/1137">Kiếm tiền Online</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/kiem-tien-online?boxcode=slide-menu-home">Kiếm tiền Online</a>
+                                                <Link to="/list-course/null/1138">Quản trị doanh nghiệp</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/quan-tri-doanh-nghiep?boxcode=slide-menu-home">Quản trị doanh nghiệp</a>
+                                                <Link to="/list-course/null/1139">Chứng khoán</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/chung-khoan?boxcode=slide-menu-home">Chứng khoán</a>
+                                                <Link to="/list-course/null/1140">Dropshipping</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/dropshipping?boxcode=slide-menu-home">Dropshipping</a>
+                                                <Link to="/list-course/null/1141">Kế Toán</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ke-toan?boxcode=slide-menu-home">Kế Toán</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/dau-tu-forex?boxcode=slide-menu-home">Đầu tư forex</a>
+                                                <Link to="/list-course/null/1142">Đầu tư forex</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/phat-trien-ca-nhan?boxcode=slide-menu-home"><i className="far fa-lightbulb"></i>Phát triển cá nhân</a>
+                                <Link to="/list-course/1116/null"><i className="far fa-lightbulb"></i>Phát triển cá nhân</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/phat-trien-ca-nhan?boxcode=slide-menu-home" rel="nofollow">Tất cả Phát triển cá nhân</a>
+                                                <Link to="/list-course/null/1144">Thương hiệu cá nhân</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/thuong-hieu-ca-nhan?boxcode=slide-menu-home">Thương hiệu cá nhân</a>
+                                                <Link to="/list-course/null/1145">Tài chính cá nhân</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/tai-chinh-ca-nhan?boxcode=slide-menu-home">Tài chính cá nhân</a>
+                                                <Link to="/list-course/null/1146">Đàm phán</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/dam-phan?boxcode=slide-menu-home">Đàm phán</a>
+                                                <Link to="/list-course/null/1147">Kỹ năng lãnh đạo</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ky-nang-lanh-dao?boxcode=slide-menu-home">Kỹ năng lãnh đạo</a>
+                                                <Link to="/list-course/null/1148">Quản trị nhân sự</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/quan-tri-nhan-su?boxcode=slide-menu-home">Quản trị nhân sự</a>
+                                                <Link to="/list-course/null/1149">MC</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/mc?boxcode=slide-menu-home">MC</a>
+                                                <Link to="/list-course/null/1150">Rèn luyện trí nhớ</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ren-luyen-tri-nho?boxcode=slide-menu-home">Rèn luyện trí nhớ</a>
+                                                <Link to="/list-course/null/1151">Kỹ năng mềm</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ky-nang-mem?boxcode=slide-menu-home">Kỹ năng mềm</a>
+                                                <Link to="/list-course/null/1152">Giao tiếp</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/giao-tiep?boxcode=slide-menu-home">Giao tiếp</a>
+                                                <Link to="/list-course/null/1153">Kỹ năng quản lý</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ky-nang-quan-ly?boxcode=slide-menu-home">Kỹ năng quản lý</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/thuyet-trinh?boxcode=slide-menu-home">Thuyết trình</a>
+                                                <Link to="/list-course/null/1154">Thuyết trình</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/sales-ban-hang?boxcode=slide-menu-home"><i className="fa fa-shopping-cart"></i>Sales, bán hàng</a>
+                                <Link to="/list-course/1117/null"><i className="fa fa-shopping-cart"></i>Sales, bán hàng</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/sales-ban-hang?boxcode=slide-menu-home" rel="nofollow">Tất cả Sales, bán hàng</a>
+                                                <Link to="/list-course/null/1156">Bán hàng Online</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ban-hang-online?boxcode=slide-menu-home">Bán hàng Online</a>
+                                                <Link to="/list-course/null/1157">Telesales</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/telesales?boxcode=slide-menu-home">Telesales</a>
+                                                <Link to="/list-course/null/1158">Bán hàng livestream</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ban-hang-livestream?boxcode=slide-menu-home">Bán hàng livestream</a>
+                                                <Link to="/list-course/null/1159">Chăm sóc khách hàng</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/cham-soc-khach-hang?boxcode=slide-menu-home">Chăm sóc khách hàng</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/chien-luoc-ban-hang?boxcode=slide-menu-home">Chiến lược bán hàng</a>
+                                                <Link to="/list-course/null/1160">Chiến lược bán hàng</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/cong-nghe-thong-tin?boxcode=slide-menu-home"><i className="fa fa-code"></i>Công nghệ thông tin</a>
+                                <Link to="/list-course/1118/null"><i className="fa fa-code"></i>Công nghệ thông tin</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/cong-nghe-thong-tin?boxcode=slide-menu-home" rel="nofollow">Tất cả Công nghệ thông tin</a>
+                                                <Link to="/list-course/null/1162">Lập trình</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/lap-trinh?boxcode=slide-menu-home">Lập trình</a>
+                                                <Link to="/list-course/null/1163">Ngôn ngữ lập trình</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ngon-ngu-lap-trinh?boxcode=slide-menu-home">Ngôn ngữ lập trình</a>
+                                                <Link to="/list-course/null/1164">Lập Trình Web</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/lap-trinh-web?boxcode=slide-menu-home">Lập Trình Web</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/lap-trinh-android?boxcode=slide-menu-home">Lập trình Android</a>
+                                                <Link to="/list-course/null/1165">Lập trình Android</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/suc-khoe-gioi-tinh?boxcode=slide-menu-home"><i className="fa fa-heartbeat"></i>Sức khỏe - Giới tính</a>
+                                <Link to="/list-course/1119/null"><i className="fa fa-heartbeat"></i>Sức khỏe - Giới tính</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/suc-khoe-gioi-tinh?boxcode=slide-menu-home" rel="nofollow">Tất cả Sức khỏe - Giới tính</a>
+                                                <Link to="/list-course/null/1167">Giảm cân</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/giam-can?boxcode=slide-menu-home">Giảm cân</a>
+                                                <Link to="/list-course/null/1168">Thiền</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/thien?boxcode=slide-menu-home">Thiền</a>
+                                                <Link to="/list-course/null/1169">Phòng the</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/phong-the?boxcode=slide-menu-home">Phòng the</a>
+                                                <Link to="/list-course/null/1170">Giảm stress</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/giam-stress?boxcode=slide-menu-home">Giảm stress</a>
+                                                <Link to="/list-course/null/1171">Fitness - Gym</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/fitness-gym?boxcode=slide-menu-home">Fitness - Gym</a>
+                                                <Link to="/list-course/null/1172">Tình yêu</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/tinh-yeu?boxcode=slide-menu-home">Tình yêu</a>
+                                                <Link to="/list-course/null/1173">Yoga</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/yoga?boxcode=slide-menu-home">Yoga</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/massage?boxcode=slide-menu-home">Massage</a>
+                                                <Link to="/list-course/null/1174">Massage</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/phong-cach-song?boxcode=slide-menu-home"><i className="fa fa-cutlery"></i>Phong cách sống</a>
+                                <Link to="/list-course/1120/null"><i className="fa fa-cutlery"></i>Phong cách sống</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/phong-cach-song?boxcode=slide-menu-home" rel="nofollow">Tất cả Phong cách sống</a>
+                                                <Link to="/list-course/null/1176">Pha chế</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/pha-che?boxcode=slide-menu-home">Pha chế</a>
+                                                <Link to="/list-course/null/1177">Làm bánh</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/lam-banh?boxcode=slide-menu-home">Làm bánh</a>
+                                                <Link to="/list-course/null/1178">Làm đẹp</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/lam-dep?boxcode=slide-menu-home">Làm đẹp</a>
+                                                <Link to="/list-course/null/1179">Handmade</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/handmade?boxcode=slide-menu-home">Handmade</a>
+                                                <Link to="/list-course/null/1180">Tử vi</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/tu-vi?boxcode=slide-menu-home">Tử vi</a>
+                                                <Link to="/list-course/null/1181">Ảo thuật</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/ao-thuat?boxcode=slide-menu-home">Ảo thuật</a>
+                                                <Link to="/list-course/null/1182">Nhạc cụ</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/nhac-cu?boxcode=slide-menu-home">Nhạc cụ</a>
+                                                <Link to="/list-course/null/1183">Ẩm thực - Nấu ăn</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/am-thuc-nau-an?boxcode=slide-menu-home">Ẩm thực - Nấu ăn</a>
+                                                <Link to="/list-course/null/1184">Nhảy</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/nhay?boxcode=slide-menu-home">Nhảy</a>
+                                                <Link to="/list-course/null/1185">Phong thuỷ</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/phong-thuy?boxcode=slide-menu-home">Phong thuỷ</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/luyen-giong?boxcode=slide-menu-home">Luyện giọng</a>
+                                                <Link to="/list-course/null/1186">Luyện giọng</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/nuoi-day-con?boxcode=slide-menu-home"><i className="fa fa-child"></i>Nuôi dạy con</a>
+                                <Link to="/list-course/1121/null"><i className="fa fa-child"></i>Nuôi dạy con</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/nuoi-day-con?boxcode=slide-menu-home" rel="nofollow">Tất cả Nuôi dạy con </a>
+                                                <Link to="/list-course/null/1187">Mang Thai</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/mang-thai?boxcode=slide-menu-home">Mang Thai</a>
+                                                <Link to="/list-course/null/1188">Dạy con thông minh</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/day-con-thong-minh?boxcode=slide-menu-home">Dạy con thông minh</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/cham-soc-be-yeu?boxcode=slide-menu-home">Chăm sóc bé yêu</a>
+                                                <Link to="/list-course/null/1189">Chăm sóc bé yêu</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/hon-nhan-gia-dinh?boxcode=slide-menu-home"><i className="fa fa-group"></i>Hôn nhân &amp; Gia đình</a>
+                                <Link to="/list-course/1122/null"><i className="fa fa-group"></i>Hôn nhân &amp; Gia đình</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/hon-nhan-gia-dinh?boxcode=slide-menu-home" rel="nofollow">Tất cả Hôn nhân &amp; Gia đình</a>
+                                                <Link to="/list-course/null/1191">Hạnh phúc gia đình</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/hanh-phuc-gia-dinh?boxcode=slide-menu-home">Hạnh phúc gia đình</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/doi-song-vo-chong?boxcode=slide-menu-home">Đời sống vợ chồng</a>
+                                                <Link to="/list-course/null/1192">Đời sống vợ chồng</Link>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="/course/nhiep-anh-dung-phim?boxcode=slide-menu-home"><i className="fa fa-camera"></i>Nhiếp ảnh, dựng phim</a>
+                                <Link to="/list-course/1123/null"><i className="fa fa-camera"></i>Nhiếp ảnh, dựng phim</Link>
                                 <div className="megadrop">
                                     <div className="col">
                                         <ul>
                                             <li>
-                                                <a href="/course/nhiep-anh-dung-phim?boxcode=slide-menu-home" rel="nofollow">Tất cả Nhiếp ảnh, dựng phim</a>
+                                                <Link to="/list-course/null/1194">Dựng phim</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/dung-phim?boxcode=slide-menu-home">Dựng phim</a>
+                                                <Link to="/list-course/null/1195">Chụp ảnh</Link>
                                             </li>
                                             <li>
-                                                <a href="/tag/chup-anh?boxcode=slide-menu-home">Chụp ảnh</a>
-                                            </li>
-                                            <li>
-                                                <a href="/tag/ky-xao?boxcode=slide-menu-home">Kỹ xảo</a>
+                                                <Link to="/list-course/null/1196">Kỹ xảo</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -433,13 +395,13 @@ function Home() {
                 <div className="content-section">
                     <h2 className="section-heading">{courseTypes[0]}</h2>
                     <div className="section-courses">
-                        {data.map((course, index) => 
-                            <HomeCourseItem 
-                                key={index} 
-                                desc={course.course_desc} 
-                                title={course.course_name} 
-                                author={course.fullname} 
-                                img={course.img} 
+                        {data.map((course, index) =>
+                            <HomeCourseItem
+                                key={index}
+                                desc={course.course_desc}
+                                title={course.course_name}
+                                author={course.fullname}
+                                img={course.img}
                                 fee={course.fee}
                             />
                         )}
@@ -448,13 +410,31 @@ function Home() {
                 <div className="content-section">
                     <h2 className="section-heading">{courseTypes[1]}</h2>
                     <div className="section-courses">
-                        
+                        {courses.TinHocVanPhong && courses.TinHocVanPhong.map((course, index) =>
+                            <HomeCourseItem
+                                key={index}
+                                desc={course.course_desc}
+                                title={course.course_name}
+                                author={course.fullname}
+                                img={course.img}
+                                fee={course.fee}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="content-section">
                     <h2 className="section-heading">{courseTypes[2]}</h2>
                     <div className="section-courses">
-                        
+                        {courses.CNTT && courses.CNTT.map((course, index) =>
+                            <HomeCourseItem
+                                key={index}
+                                desc={course.course_desc}
+                                title={course.course_name}
+                                author={course.fullname}
+                                img={course.img}
+                                fee={course.fee}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

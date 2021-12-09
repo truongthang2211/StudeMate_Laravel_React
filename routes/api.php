@@ -22,8 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/sign-up', [LoginController::class,'SignUp']);
 Route::post('/sign-in', [LoginController::class,'SignIn']);
 Route::post('/create-course', [CourseController::class,'CreateCourse']);
-Route::post('/get-courses-by-type', [CourseController::class,'GetCourseByType']);
+Route::get('/get-courses-homepage', [CourseController::class,'GetCourseHomePage']);
 Route::get('/get-courses', [CourseController::class,'GetCourses']);
-
+Route::post('/get-courses-by-subtype', [CourseController::class,'GetCoursesBySubtype']);
+Route::post('/get-courses-by-maintype', [CourseController::class,'GetCoursesByMaintype']);
 
 Route::get('/sign-out', [LoginController::class,'SignOut']);

@@ -13,7 +13,7 @@ function HomeCourseItem(props) {
         <div className="course-item">
             <div className="course-thumb">
                 <Link to="/course" title={props.title}>
-                    <img src={props.img} alt={props.title} className="course-img" />
+                    <img src={"/"+props.img} alt={props.title} className="course-img" />
                 </Link>
             </div>
             <div className="course-content">

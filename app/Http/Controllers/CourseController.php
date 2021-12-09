@@ -9,6 +9,7 @@ use App\Models\Course_Gain;
 use App\Models\Course_Chapter;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\DB;
+use App\Models\Course_MainType;
 
 class CourseController extends Controller
 {
@@ -91,30 +92,80 @@ class CourseController extends Controller
         ]);
     }
 
-    public function GetCourseByType(Request $request)
+    public function GetCourseHomePage()
     {
-        $courses1 = DB::table('courses')
-            ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
-            ->join('users', 'courses.author_id', '=', 'users.user_id')
-            ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
-            ->join('course_maintypes', 'course_subtypes.parent_type_id', '=', 'course_maintypes.course_maintype_id')
-            ->where('course_maintypes', $request->type[0])
-            ->take(8)
-            ->get();
-        $courses2 = DB::table('courses')
-            ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
-            ->join('users', 'courses.author_id', '=', 'users.user_id')
-            ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
-            ->join('course_maintypes', 'course_subtypes.parent_type_id', '=', 'course_maintypes.course_maintype_id')
-            ->where('course_maintypes', $request->type[1])
-            ->take(8)
-            ->get();
-        $result = (object)['Tin học văn phòng' => $courses1,'Công nghệ thông tin' => $courses2];
-        // $array = array();
-        // array_push($array, 'gia tri');
-        return response()->json([
-            'status' => 200,
-            'message' => $result
-        ]);
+        try {
+            $courseMainType1 = DB::table('course_maintypes')->where('TYPE_NAME', 'Tin học văn phòng')->first();
+            $courseMainType2 = DB::table('course_maintypes')->where('TYPE_NAME', 'Công nghệ thông tin')->first();
+            $courses1 = DB::table('courses')
+                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->join('users', 'courses.author_id', '=', 'users.user_id')
+                ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
+                ->where('course_subtypes.parent_type_id', $courseMainType1->COURSE_MAINTYPE_ID)
+                ->take(8)
+                ->get();
+            $courses2 = DB::table('courses')
+                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->join('users', 'courses.author_id', '=', 'users.user_id')
+                ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
+                ->where('course_subtypes.parent_type_id', $courseMainType2->COURSE_MAINTYPE_ID)
+                ->take(8)
+                ->get();
+            $result = (object)['TinHocVanPhong' => $courses1, 'CNTT' => $courses2];
+            // $array = array();
+            // array_push($array, 'gia tri');
+            return response()->json([
+                'status' => 200,
+                'message' => $result
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function GetCoursesBySubtype(Request $request)
+    {
+        try {
+            $id = $request->subtypeId;
+            $courses = DB::table('courses')
+                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->join('users', 'courses.author_id', '=', 'users.user_id')
+                ->where('courses.course_type_id', $id)
+                ->get();
+            return response()->json([
+                'status' => 200,
+                'message' => $courses
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function GetCoursesByMaintype(Request $request)
+    {
+        try {
+            $id = $request->maintypeId;
+            $courses = DB::table('courses')
+                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->join('users', 'courses.author_id', '=', 'users.user_id')
+                ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
+                ->where('course_subtypes.parent_type_id', $id)
+                ->get();
+            return response()->json([
+                'status' => 200,
+                'message' => $courses
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 }
