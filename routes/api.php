@@ -37,6 +37,11 @@ Route::get('/get-list-course', [AdminController::class, 'CourseList']);
 
 
 Route::get('/sign-out', [LoginController::class, 'SignOut']);
+
 Route::get('/myinfo', [MyInfoController::class,'EditMyInfo']);
 Route::post('/update-myinfo', [MyInfoController::class, 'UpdateMyInfo']);
 Route::put('/update-password', [MyInfoController::class, 'UpdatePassword']);
+
+Route::get('/get-city', [ProfileController::class, 'GetCity']);
+Route::get('/get-course-item', [ProfileController::class, 'GetProfileCourseItem']);
+Route::get('/get-course-info', [ProfileController::class, 'GetCourseInfo']);

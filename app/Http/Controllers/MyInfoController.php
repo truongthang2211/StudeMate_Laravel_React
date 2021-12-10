@@ -23,25 +23,21 @@ class MyInfoController extends Controller {
     public function UpdateMyInfo(Request $request) {
         try {
 
-            // $validator = Validator::make($request->all(),[
-            //     'FULLNAME'=>'required|max:191',
-            //     'PHONE'=>'required|max:12',
-            //     //'CITY_ID'=>'required|max:191',
-            // ]);
+            $validator = Validator::make($request->all(),[
+                'FULLNAME'=>'required|max:191',
+                'PHONE'=>'required|max:12',
+            ]);
 
-            // if($validator->fails())
-            // {
-            //     return response()->json([
-            //         'status'=> 422,
-            //         'validationErrors'=> $validator->messages(),
-            //     ]);
-            // }
+            if($validator->fails())
+            {
+                return response()->json([
+                    'status'=> 422,
+                    'validationErrors'=> $validator->messages(),
+                ]);
+            }
             
-            // else{
+            else{
                 
-               
-
-
                 $userData = json_decode($request->data);
                 $user = User::where("EMAIL",$userData->EMAIL)->first();
                 
@@ -76,7 +72,7 @@ class MyInfoController extends Controller {
                     'message'=>'User Updated Successfully',
                     'User'=>$user,
                 ]);
-            // }
+            }
                       
         } catch (\Throwable $th) {
             return response()->json([
@@ -89,21 +85,21 @@ class MyInfoController extends Controller {
     public function UpdatePassword(Request $request) {
         try {
 
-            // $validator = Validator::make($request->all(),[
-            //     'currentPassword'=>'required',
-            //     'newPassword'=>'required|min:5',
-            //     'confirmPassword'=>'required|min:5',
-            // ]);
+            $validator = Validator::make($request->all(),[
+                'currentPassword'=>'required',
+                'newPassword'=>'required|min:5',
+                'confirmPassword'=>'required|min:5',
+            ]);
 
-            // if($validator->fails())
-            // {
-            //     return response()->json([
-            //         'status'=> 422,
-            //         'validationErrors'=> $validator->messages(),
-            //     ]);
-            // }
+            if($validator->fails())
+            {
+                return response()->json([
+                    'status'=> 422,
+                    'validationErrors'=> $validator->messages(),
+                ]);
+            }
             
-            // else{
+            else{
                 $acc = Account::where("USER_ID",$request->USER_ID)->first();
 
                 if ($acc && password_verify($request->currentPassword, $acc->PWD)) {
@@ -124,7 +120,7 @@ class MyInfoController extends Controller {
                         'message' => 'Fails',
                     ]);
                 }
-            //}      
+            }      
         } catch (\Throwable $th) {
             return response()->json([
                 'status'=> 422,
