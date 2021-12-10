@@ -1,29 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import HomeCourseItem from '../../components/HomeCourseItem';
+import { useParams } from 'react-router';
 import axios from 'axios';
-import './Home.css'
 import { Link } from 'react-router-dom';
+import './ListCourse.css'
 
-function Home() {
-    const [data, setData] = useState([]);
-    useEffect(async () => {
-        const resData = await axios.get('/api/get-courses');
-        setData(resData.data.message);
-        console.log(resData);
-    }, []);
+function ListCourse() {
+    const {maintypeId,subtypeId} = useParams();
+    console.log(maintypeId,subtypeId);
 
-    const [courses, setCourses] = useState({});
-    useEffect(async () => {
-        const resCourses = await axios.get('/api/get-courses-homepage');
-        setCourses(resCourses.data.message);
-        console.log(resCourses);
-    }, [])
-
-    const courseTypes = ['Các khóa nổi bật', 'Tin học văn phòng', 'Công nghệ thông tin'];
+    const [courses, setCourses] = useState([]);
+    
+    if(subtypeId === 'null'){
+        useEffect(async () => {
+            try {
+                const resCourses = await axios.post('/api/get-courses-by-maintype',{maintypeId});
+                setCourses(resCourses.data.message);
+                console.log(resCourses);
+            } catch (error) {
+                console.log(error);
+            }
+        },[maintypeId,subtypeId]);
+    }
+    else{
+        useEffect(async () => {
+            try {
+                const resCourses = await axios.post('/api/get-courses-by-subtype',{subtypeId});
+                setCourses(resCourses.data.message);
+                console.log(resCourses);
+            } catch (error) {
+                console.log(error);
+            }
+        },[maintypeId,subtypeId]);
+    }
 
     return (
         <>
-            <div id="header" style={{ backgroundImage: "url('img/courses/header-img.png')" }}>
+            <div id="header" style={{ backgroundImage: "url('/img/courses/header-img.png')" }}>
                 <div className="container" >
                     <h2>Learning online. Let's start your knowledge journey!</h2>
                     <div id="search">
@@ -393,39 +406,9 @@ function Home() {
             </div>
             <div id="content" className="container">
                 <div className="content-section">
-                    <h2 className="section-heading">{courseTypes[0]}</h2>
+                    <h2 className="section-heading">Các khóa học hiện có</h2>
                     <div className="section-courses">
-                        {data.map((course, index) =>
-                            <HomeCourseItem
-                                key={index}
-                                desc={course.course_desc}
-                                title={course.course_name}
-                                author={course.fullname}
-                                img={course.img}
-                                fee={course.fee}
-                            />
-                        )}
-                    </div>
-                </div>
-                <div className="content-section">
-                    <h2 className="section-heading">{courseTypes[1]}</h2>
-                    <div className="section-courses">
-                        {courses.TinHocVanPhong && courses.TinHocVanPhong.map((course, index) =>
-                            <HomeCourseItem
-                                key={index}
-                                desc={course.course_desc}
-                                title={course.course_name}
-                                author={course.fullname}
-                                img={course.img}
-                                fee={course.fee}
-                            />
-                        )}
-                    </div>
-                </div>
-                <div className="content-section">
-                    <h2 className="section-heading">{courseTypes[2]}</h2>
-                    <div className="section-courses">
-                        {courses.CNTT && courses.CNTT.map((course, index) =>
+                        {courses && courses.map((course, index) =>
                             <HomeCourseItem
                                 key={index}
                                 desc={course.course_desc}
@@ -442,4 +425,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default ListCourse;

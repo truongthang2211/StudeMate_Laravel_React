@@ -32,12 +32,16 @@ Route::post('/add-comment', [CommentController::class, 'AddComment']);
 Route::post('/comment-vote', [CommentController::class, 'VoteComment']);
 Route::get('/my-course', [CourseController::class, 'GetUserCourse']);
 Route::get('get-learn/{course_id}/{lesson_id}', [CourseController::class, 'GetLearning']);
-Route::get('/get-courses', [CourseController::class, 'GetCourses']);
 Route::get('/get-list-course', [AdminController::class, 'CourseList']);
 Route::get('/get-list-user', [AdminController::class, 'GetUsers']);
 
 
+Route::get('/get-courses-homepage', [CourseController::class, 'GetCourseHomePage']);
+Route::get('/get-courses', [CourseController::class, 'GetCourses']);
+Route::post('/get-courses-by-subtype', [CourseController::class, 'GetCoursesBySubtype']);
+Route::post('/get-courses-by-maintype', [CourseController::class, 'GetCoursesByMaintype']);
+
 Route::get('/sign-out', [LoginController::class, 'SignOut']);
-Route::get('/myinfo', [MyInfoController::class,'EditMyInfo']);
+Route::get('/myinfo', [MyInfoController::class, 'EditMyInfo']);
 Route::post('/update-myinfo', [MyInfoController::class, 'UpdateMyInfo']);
 Route::put('/update-password', [MyInfoController::class, 'UpdatePassword']);

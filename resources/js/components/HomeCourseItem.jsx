@@ -13,7 +13,7 @@ function HomeCourseItem(props) {
         <div className="course-item">
             <div className="course-thumb">
                 <Link to="/course" title={props.title}>
-                    <img src={props.img} alt={props.title} className="course-img" />
+                    <img src={"/"+props.img} alt={props.title} className="course-img" />
                 </Link>
             </div>
             <div className="course-content">
@@ -46,9 +46,7 @@ function HomeCourseItem(props) {
                 <a href="#" title={props.author} className="course-author">
                     {props.author}
                 </a>
-                <p className="course-des">
-                    {props.desc}
-                </p>
+                <p className="course-des">{props.desc}</p>
                 <div className="course-footer">
                     <div className="course-footer-left">
                         <span className="free-text" data-selected="true" data-label-id="0" data-metatip="true">{modifyCourseFee(props.fee)}</span>

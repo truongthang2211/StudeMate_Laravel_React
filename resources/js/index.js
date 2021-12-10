@@ -15,6 +15,8 @@ import CreateCourse from './pages/CreateCourse/CreateCourse';
 import CourseManage from './pages/CourseManage/CourseManage';
 import MyCourse from './pages/MyCourse/MyCourse';
 import Admin from './pages/Admin/Admin';
+import ListCourse from './pages/ListCourse/ListCourse';
+
 function Index() {
     const [ShowForm, setShowForm] = useState(false)
     const [User, setUser] = useState(() => {
@@ -39,25 +41,24 @@ function Index() {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/admin" element={<Admin User={User}/>} />
-                    <Route path="/admin/:feature" element={<Admin User={User}/>} />
+                    <Route path="/admin" element={<Admin User={User} />} />
+                    <Route path="/admin/:feature" element={<Admin User={User} />} />
                     <Route path="/" element={<UserLayout User={User} handleShowForm={handleShowForm} ShowForm={ShowForm} />} >
                         <Route path="/" element={<Home />} />
                         <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
-                        <Route exact path="/learn/:course/:lesson" element={User.loading ? <Home /> : <Learn />} />
-                        <Route exact path="/learn/:course" element={User.loading ? <Home /> : <Learn />} />
+                        <Route exact path="/learn/" element={User.loading ? <Home /> : <Learn User={User} />} />
                         <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
                         <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
+                        <Route exact path="/course-manage" element={User.loading ? <Home /> : <CourseManage User={User} />} />
                         <Route exact path="/course-manage/:feature" element={User.loading ? <Home /> : <CourseManage User={User} />} />
                         {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
                         <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User} />} />
                         <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
+                        <Route exact path="/list-course/:maintypeId/:subtypeId" element={<ListCourse />} />
                         <Route path='*' exact={true} element={<My404 />} />
                     </Route>
-                </Routes>
-            </BrowserRouter>
-            <BrowserRouter>
 
+                </Routes>
             </BrowserRouter>
         </>
     );
@@ -72,7 +73,7 @@ function UserLayout({ User, ShowForm, handleShowForm }) {
     return (
         <>
             <Navbar User={User} ShowForm={ShowForm} handleShowForm={handleShowForm} />
-            <Outlet/>
+            <Outlet />
         </>
     );
 }
