@@ -34,6 +34,7 @@ Route::get('/my-course', [CourseController::class, 'GetUserCourse']);
 Route::get('get-learn/{course_id}/{lesson_id}', [CourseController::class, 'GetLearning']);
 Route::get('/get-courses', [CourseController::class, 'GetCourses']);
 Route::get('/get-list-course', [AdminController::class, 'CourseList']);
+Route::get('/get-list-user', [AdminController::class, 'GetUsers']);
 
 
 Route::get('/sign-out', [LoginController::class, 'SignOut']);

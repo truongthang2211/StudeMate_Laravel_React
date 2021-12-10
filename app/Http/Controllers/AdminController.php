@@ -44,4 +44,18 @@ class AdminController extends Controller
         }
        
     }
+    public function GetUsers(){
+        try {
+            
+            return response()->json([
+                'status' => 400,
+                'message' => User::all()
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th,
+            ]);
+        }
+    }
 }

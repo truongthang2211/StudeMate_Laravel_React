@@ -1,0 +1,25 @@
+.admin-page-title{
+    padding: 24px 0;
+}
+.admin-search-box{
+    border: 1px solid #ccc;
+    max-width: 350px;
+    border-radius: 5px;
+    padding: 0 12px;
+}
+.admin-search-box .search-box{
+    display: flex;
+    padding: 6px 0;
+}
+.admin-search-box .search-box i{
+    font-size: 20px;
+}
+.admin-search-box .search-box input{
+    outline: none;
+    border: none;
+    flex-grow: 1;
+    padding: 0 4px;
+}
+.dataTable{
+    padding: 8px 0;
+}
