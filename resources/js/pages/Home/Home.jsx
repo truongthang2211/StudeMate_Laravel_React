@@ -403,6 +403,7 @@ function Home() {
                                 author={course.fullname}
                                 img={course.img}
                                 fee={course.fee}
+                                courseId={course.course_id}
                             />
                         )}
                     </div>
@@ -418,6 +419,7 @@ function Home() {
                                 author={course.fullname}
                                 img={course.img}
                                 fee={course.fee}
+                                courseId={course.course_id}
                             />
                         )}
                     </div>
@@ -433,6 +435,7 @@ function Home() {
                                 author={course.fullname}
                                 img={course.img}
                                 fee={course.fee}
+                                courseId={course.course_id}
                             />
                         )}
                     </div>

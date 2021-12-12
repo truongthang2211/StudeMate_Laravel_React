@@ -85,7 +85,7 @@ class CourseController extends Controller
     public function GetCourses()
     {
         $courses = DB::table('courses')
-            ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+            ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
             ->join('users', 'courses.author_id', '=', 'users.user_id')
             ->take(8)
             ->get();
@@ -101,7 +101,7 @@ class CourseController extends Controller
             $courseMainType1 = DB::table('course_maintypes')->where('TYPE_NAME', 'Tin học văn phòng')->first();
             $courseMainType2 = DB::table('course_maintypes')->where('TYPE_NAME', 'Công nghệ thông tin')->first();
             $courses1 = DB::table('courses')
-                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $courseMainType1->COURSE_MAINTYPE_ID)
@@ -134,7 +134,7 @@ class CourseController extends Controller
         try {
             $id = $request->subtypeId;
             $courses = DB::table('courses')
-                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->where('courses.course_type_id', $id)
                 ->get();
@@ -155,7 +155,7 @@ class CourseController extends Controller
         try {
             $id = $request->maintypeId;
             $courses = DB::table('courses')
-                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $id)
@@ -163,6 +163,74 @@ class CourseController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => $courses
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function GetCourseDetailByCourseId(Request $request)
+    {
+        try {
+            $id = $request->courseId;
+            $course_general = DB::table('courses')
+                ->select('course_name', 'course_desc', 'img')
+                ->where('course_id', $id)
+                ->get();
+            $course_gains = DB::table('course_gains')
+                ->select('content')
+                ->where('course_id', $id)
+                ->get();
+            $course_requires = DB::table('course_requires')
+                ->select('content')
+                ->where('course_id', $id)
+                ->get();
+            $total_chapter = DB::table('course_chapters')
+                ->select(DB::raw('COUNT(course_chapter_id) as numOfChapter'))
+                ->where('course_id', $id)
+                ->get();
+            $total_lesson = DB::table('lessons')
+                ->select(DB::raw('COUNT(course_chapter_id) as numOfLesson'))
+                ->join('course_chapters', 'lessons.chapter_id', '=', 'course_chapters.course_chapter_id')
+                ->where('course_chapters.course_id', $id)
+                ->get();
+            $total_duration = DB::table('lessons')
+                ->select(DB::raw('SUM(lessons.duration) as totalDuration'))
+                ->join('course_chapters', 'lessons.chapter_id', '=', 'course_chapters.course_chapter_id')
+                ->where('course_chapters.course_id', $id)
+                ->get();
+            $course_chapters = DB::table('course_chapters')
+                ->where('course_id', $id);
+            $list_learn = array();
+            foreach ($course_chapters->get() as $chapter) {
+                $less_in_chapter = DB::table('lessons')
+                    ->where('chapter_id', $chapter->COURSE_CHAPTER_ID)
+                    ->get();
+                $num_of_chapter_less = DB::table('lessons')
+                    ->select(DB::raw('COUNT(lesson_id) as numOfChapterLess'))
+                    ->where('chapter_id', $chapter->COURSE_CHAPTER_ID)
+                    ->get();
+                $obj = (object)[
+                    'chapterTitle' => $chapter->CHAPTER_NAME,
+                    'lessons' => $less_in_chapter,
+                    'numOfChapterLess' => $num_of_chapter_less
+
+                ];
+                array_push($list_learn, $obj);
+            }
+
+            return response()->json([
+                'status' => 200,
+                'course_general' => $course_general,
+                'course_gains' => $course_gains,
+                'course_requires' => $course_requires,
+                'total_chapter' => $total_chapter,
+                'total_lesson' => $total_lesson,
+                'list_learn' => $list_learn,
+                'total_duration' => $total_duration
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -229,12 +297,14 @@ class CourseController extends Controller
                 $id = $_COOKIE['StudyMate'];
                 $chapters = Course_Chapter::where('COURSE_ID', $course_id);
                 $lesson = 0;
-                $lesson = Learning::where('USER_ID', $id)->get('LESSON_ID')->intersect(Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))->max('LESSON_ID');
-                $firstlesson=Lesson::where('CHAPTER_ID', $chapters->min('COURSE_CHAPTER_ID'))->min('LESSON_ID');
-                if ($lesson_id=="undefined" || $lesson_id >$lesson) {
-                    $lesson_id= $lesson? $lesson : $firstlesson;
+                $lesson = Learning::where('USER_ID', $id)->get('LESSON_ID')
+                    ->intersect(Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))
+                    ->max('LESSON_ID');
+                $firstlesson = Lesson::where('CHAPTER_ID', $chapters->min('COURSE_CHAPTER_ID'))->min('LESSON_ID');
+                if ($lesson_id == "undefined" || $lesson_id > $lesson) {
+                    $lesson_id = $lesson ? $lesson : $firstlesson;
                 }
-                $lesson = $lesson? $lesson:-1;
+                $lesson = $lesson ? $lesson : -1;
                 $course = Course::where('COURSE_ID', $course_id);
                 $ListLearn = array();
                 foreach ($chapters->get() as $chapter) {
@@ -249,8 +319,8 @@ class CourseController extends Controller
                     'CourseTitle' => $course->first()->COURSE_NAME,
                     'ListLearn' => $ListLearn,
                     'LastLessonLearnt' => (int)($lesson),
-                    'LearningURL'=>Lesson::where('LESSON_ID',$lesson_id)->first()->LESSON_URL,
-                     'Author'=>Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
+                    'LearningURL' => Lesson::where('LESSON_ID', $lesson_id)->first()->LESSON_URL,
+                    'Author' => Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
 
                 ];
                 return response()->json([
@@ -271,15 +341,16 @@ class CourseController extends Controller
             ]);
         }
     }
-    public function AddLearn(Request $request){
+    public function AddLearn(Request $request)
+    {
 
-         try {
+        try {
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
-                if (!Learning::where('USER_ID',$id)->where('LESSON_ID',$request->lesson_id)->first()){
+                if (!Learning::where('USER_ID', $id)->where('LESSON_ID', $request->lesson_id)->first()) {
                     $learning = new Learning();
                     $learning->USER_ID = $id;
-                    $learning->LESSON_ID=$request->lesson_id;
+                    $learning->LESSON_ID = $request->lesson_id;
                     $learning->save();
                 }
                 return response()->json([

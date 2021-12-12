@@ -63,7 +63,7 @@ export default memo(function Learn() {
             }
             setData(res.data.message)
             setVideoID(youtube_id(res.data.message.LearningURL))
-
+            console.log(res);
         } catch (error) {
             console.log(error)
         }
@@ -183,7 +183,7 @@ export default memo(function Learn() {
             {dataLearning.ListLearn && dataLearning.ListLearn.map((item, index) => {
                 return (
                     <Collapsible className="playlist-wrapper" key={index}>
-                        <Chaper title={item.ChapterTitle} />
+                        <Chapter title={item.ChapterTitle} />
                         <div className="playlist-wrapper-list">
                             {item.Lesson.map((less, index2) => {
                                 if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID) {
@@ -366,7 +366,7 @@ function Comment(props) {
         </div>
     );
 }
-function Chaper({ title }) {
+function Chapter({ title }) {
     return (
         <div className="playplist-wrapper-header">
             <h2 className="wrapper-header-title">{title}</h2>
