@@ -10,36 +10,42 @@ function Profile({ User }) {
 
     useEffect(() => {
         showCourseInfo();
-        setCourseItem([
-            {
-                COURSE_ID: 1,
-                COURSE_NAME: 'một chấm',
-            },
-            {
-                COURSE_ID: 2,
-                COURSE_NAME: 'hai chấm ',
-            },
+        // setCourseItem([
+        //     {
+        //         COURSE_ID: 1,
+        //         COURSE_NAME: 'một chấm',
+        //     },
+        //     {
+        //         COURSE_ID: 2,
+        //         COURSE_NAME: 'hai chấm ',
+        //     },
+        // ])
 
-        ])
-    }, []);
+        axios.post('/api/get-course-item', User).then(res => {
+            //console.log(res);
+            if (res.data.status === 200) {
+                setCourseItem(res.data.courses);
+            }
+        });
 
-    // useEffect(() => {
-    //     axios.get('/api/get-course-item', User).then(res => {
-    //         console.log(res);
-    //         if (res.data.status === 200) {
-    //             setCourseItem(res.data.courses);
-    //         }
-    //     });
-    // }, []);
+    }, [User]);
+
 
     const showCourseInfo = async () => {
         try {
-            const res = await axios.get(`/api/get-course-info`, User);
+            const res = await axios.post('/api/get-course-info', User);
             console.log(res);
-            setCourseInfo([
-                learntCourse = res.data.learntCourse,
-                uppedCourse = res.data.uppedCourse,
-            ]);
+            if (res.data.status === 200) {
+                setCourseInfo({
+                    learntCourse: res.data.learntCourse,
+                    uppedCourse: res.data.uppedCourse,
+                });
+                console.log({
+                    learntCourse: res.data.learntCourse,
+                    uppedCourse: res.data.uppedCourse,
+                }
+                )
+            }
 
         } catch (error) {
             console.log(error)
@@ -111,11 +117,11 @@ function Profile({ User }) {
                                 <h3>Khóa học</h3>
                                 <div className="learnt-course">
                                     <a href="#">Khóa học đã học</a>
-                                    <span>5</span>
+                                    <span>{courseInfo.learntCourse || 0}</span>
                                 </div>
                                 <div className="upped-course">
                                     <a href="#">Khóa học đã đăng</a>
-                                    <span>{courseInfo.uppedCourse}</span>
+                                    <span>{courseInfo.uppedCourse || 0}</span>
                                 </div>
                             </div>
                             <div className="life-info">
@@ -146,18 +152,23 @@ function Profile({ User }) {
 
 export default Profile;
 export function ProfileHeader({ User }) {
-    let city_name = '';
+
+    const [city, setCity] = useState({
+        CITY_ID: User.CITY_ID,
+        CITY_NAME: '',
+    });
 
     useEffect(() => {
-        axios.get('/api/get-city', User).then(res => {
-            console.log(res);
+        axios.get('/api/get-city').then(res => {
+            //console.log(res);
             if (res.data.status === 200) {
-                city_name = res.data.city.CITY_NAME;
-                console.log(res.data.city.CITY_NAME);
+                setCity({
+                    CITY_NAME: res.data.city[0].CITY_NAME
+                });
             }
         });
+    }, [User]);
 
-    }, []);
     return (
         <div className="profile-header">
             <Avatar User={User} Width="200px" Height="200px" />
@@ -183,7 +194,7 @@ export function ProfileHeader({ User }) {
                             <span>
                                 <i className="fas fa-map-marker-alt"></i>
                             </span>
-                            <span>{city_name || "Hồ Chí Minh - Vietnam"}</span>
+                            <span>{city.CITY_NAME || "Hồ Chí Minh - Vietnam"}</span>
                         </li>
                     </ul>
                 </div>
@@ -201,6 +212,23 @@ export function ProfileHeader({ User }) {
     );
 }
 export function ProfileCourseItem({ Option, className, courseItem }) {
+
+    const [author, setAuthor] = useState({
+        AUTHOR_ID: courseItem.AUTHOR_ID,
+        AUTHOR_NAME: '',
+    });
+
+    useEffect(() => {
+        axios.post('/api/get-author').then(res => {
+            console.log(res);
+            if (res.data.status === 200) {
+                setAuthor({
+                    AUTHOR_NAME: res.data.author[0].FULLNAME,
+                });
+            }
+        });
+    }, [courseItem]);
+
     return (
         <div className={className ? "course-item " + className : "course-item"}>
             <div className="course-avt">
@@ -214,7 +242,7 @@ export function ProfileCourseItem({ Option, className, courseItem }) {
                 </div>
                 <div className="course-info-author">
                     <a href="#">
-                        <p>Nguyễn Văn Ây</p>
+                        <p>{author.FULLNAME}</p>
                     </a>
                 </div>
             </div>
