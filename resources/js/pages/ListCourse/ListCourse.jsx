@@ -416,6 +416,7 @@ function ListCourse() {
                                 author={course.fullname}
                                 img={course.img}
                                 fee={course.fee}
+                                courseId={course.course_id}
                             />
                         )}
                     </div>

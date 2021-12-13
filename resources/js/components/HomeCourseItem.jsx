@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 function HomeCourseItem(props) {
     const modifyCourseFee = (fee) => {
         if(fee === 0) return 'Free';
@@ -12,7 +13,7 @@ function HomeCourseItem(props) {
     return(<div className="wrap-course-item col-12 col-md-4 col-lg-3">
         <div className="course-item">
             <div className="course-thumb">
-                <Link to="/course" title={props.title}>
+                <Link to={"/course/" + props.courseId} title={props.title}>
                     <img src={"/"+props.img} alt={props.title} className="course-img" />
                 </Link>
             </div>
@@ -38,7 +39,7 @@ function HomeCourseItem(props) {
                     <div className="course-type">Online</div>
                 </div>
                 <h3 className="course-title">
-                    <Link to="/course" title={props.title}>
+                    <Link to={"/course/" + props.courseId} title={props.title}>
                         {props.title}
                     </Link>
                 </h3>

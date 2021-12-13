@@ -48,6 +48,8 @@ Route::get('/get-courses-homepage', [CourseController::class, 'GetCourseHomePage
 Route::get('/get-courses', [CourseController::class, 'GetCourses']);
 Route::post('/get-courses-by-subtype', [CourseController::class, 'GetCoursesBySubtype']);
 Route::post('/get-courses-by-maintype', [CourseController::class, 'GetCoursesByMaintype']);
+Route::post('/get-course-detail', [CourseController::class, 'GetCourseDetailByCourseId']);
+
 
 Route::get('/sign-out', [LoginController::class, 'SignOut']);
 Route::get('/myinfo', [MyInfoController::class, 'EditMyInfo']);

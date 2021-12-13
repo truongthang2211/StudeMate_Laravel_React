@@ -209,7 +209,7 @@ export default memo(function Learn({ LearnData, Admin }) {
             {dataLearning.ListLearn && dataLearning.ListLearn.map((item, index) => {
                 return (
                     <Collapsible className="playlist-wrapper" key={index}>
-                        <Chaper title={item.ChapterTitle} />
+                        <Chapter title={item.ChapterTitle} />
                         <div className="playlist-wrapper-list">
                             {item.Lesson.map((less, index2) => {
                                 if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID || Admin) {
@@ -392,7 +392,7 @@ function Comment(props) {
         </div>
     );
 }
-function Chaper({ title }) {
+function Chapter({ title }) {
     return (
         <div className="playplist-wrapper-header">
             <h2 className="wrapper-header-title">{title}</h2>

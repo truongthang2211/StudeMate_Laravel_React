@@ -60,6 +60,8 @@ function Index() {
                         <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User} />} />
                         <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />
                         <Route exact path="/list-course/:maintypeId/:subtypeId" element={<ListCourse />} />
+                        <Route exact path="/course/:courseId" element={<Course />} />
+
                         <Route path='*' exact={true} element={<My404 />} />
                     </Route>
 
