@@ -124,7 +124,7 @@ function MyInfo({ User }) {
                     confirmButtonText: 'Cancel'
                 })
                 //Swal("All fields are mandetory", "", "error");
-                // setError(res.data.validationErrors);
+                setError(res.data.validationErrors);
             }
             else if (res.data.status === 404) {
                 Swal.fire({
@@ -143,6 +143,7 @@ function MyInfo({ User }) {
 
     const handleCancle = (e) => {
         setUserInfo({ ...User });
+        setError([]);
     }
 
     //change password
@@ -211,7 +212,7 @@ function MyInfo({ User }) {
                             <div className="user--profile-left">
                                 <ul className="user--profile--list-function">
                                     <li className="active"><a href="#">Thông tin &amp; liên hệ </a></li>
-                                    <li><a href="#change-userName">Đổi tên người dùng </a></li>
+                                    {/* <li><a href="#change-userName">Đổi tên người dùng </a></li> */}
                                     <li><a href="#change-password">Đổi mật khẩu</a></li>
                                 </ul>
                             </div>
