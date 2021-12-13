@@ -15,24 +15,34 @@ const CreateData = {
     Description: '',
     Category: -1,
     SubCategory: -1,
+    State: 'Chờ duyệt bài',
     Image: 'https://imic.com.vn/public/site/images/no-image.jpg',
     ListIn: [],
     ListOut: [],
     AutoTitle: true,
     AutoCreateList: false,
+    Commisstion: 70,
     ListCourse: [],
     Author: -1,
+    Created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
 }
 
 
 
 let fd;
-export default function CreateCourse({ User }) {
+export default function CreateCourse({ User, CourseData, Admin, Edit }) {
     const nav = useNavigate();
-    const [Data, setData] = useState(CreateData);
+    const [Data, setData] = useState(CourseData ?? CreateData);
     useEffect(() => {
-        setData({ ...CreateData, Author: User.USER_ID })
+        if (!CourseData && User) {
+            setData({ ...Data, Author: User.USER_ID, ActionType: 'Thêm mới' })
+        }
     }, [User])
+    useEffect(() => {
+        if (CourseData && !User) {
+            setData({ ...Data, ...CourseData, ActionType: 'Sửa đổi' })
+        }
+    }, [CourseData])
     const handleOnchange = (list) => {
         const newData = { ...Data };
         list.forEach(element => {
@@ -89,7 +99,7 @@ export default function CreateCourse({ User }) {
             }`
     }
     const handleSubmit = async () => {
-        if (Data.ListCourse.length <1 ||Data.ListCourse[0].type != 'chapter') {
+        if (Data.ListCourse.length < 1 || Data.ListCourse[0].type != 'chapter') {
             Swal.fire({
                 text: 'Phải có chương ở vị trí đầu tiên',
                 icon: 'error',
@@ -98,12 +108,10 @@ export default function CreateCourse({ User }) {
             return;
         }
         const newListCourse = [];
-        let lesson_id = 0;
         for (var i = 0; i < Data.ListCourse.length; ++i) {
             if (Data.ListCourse[i].type == 'chapter') {
-                newListCourse.push({ title: Data.ListCourse[i].title, lesson: [] })
+                newListCourse.push({ title: Data.ListCourse[i].title, lesson: [], id: Data.ListCourse[i].id ?? null })
             } else {
-                ++lesson_id;
                 let duration = '';
                 let youtb_id = youtube_id(Data.ListCourse[i].URL);
                 await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
@@ -115,7 +123,7 @@ export default function CreateCourse({ User }) {
                 newListCourse.at(-1).lesson = [
                     ...newListCourse.at(-1).lesson,
                     {
-                        id: lesson_id,
+                        id: Data.ListCourse[i].id ?? null,
                         title: Data.ListCourse[i].title,
                         url: Data.ListCourse[i].URL,
                         duration: duration
@@ -123,8 +131,11 @@ export default function CreateCourse({ User }) {
             }
         }
         const newData = { ...Data, ListCourse: newListCourse }
+        console.log(newData)
         fd.append('data', JSON.stringify(newData))
-        const res = await axios.post('/api/create-course', fd, { "enctype": "multipart/form-data" })
+        const url = Admin || Edit ? "/api/update-course" : "/api/create-course-approval"
+        const res = await axios.post(url, fd, { "enctype": "multipart/form-data" })
+        console.log(res)
         if (res.data.status == 200) {
             await Swal.fire({
                 text: res.data.message,
@@ -132,6 +143,12 @@ export default function CreateCourse({ User }) {
                 confirmButtonText: 'Hay'
             })
             nav("/");
+        } else {
+            await Swal.fire({
+                text: res.data.message,
+                icon: 'error',
+                confirmButtonText: 'Hay'
+            })
         }
 
 
@@ -146,8 +163,8 @@ export default function CreateCourse({ User }) {
                 {Page === 4 && <PageFour Data={Data} handleOnchange={handleOnchange} />}
                 <div>
                     <a onClick={handlePrevious} className={Page === 1 ? buttonClassName + " disabled" : buttonClassName}>Lùi lại</a>
-                    <a onClick={Page === 4 ? handleSubmit : handleNextPage} className={CheckInput() ? buttonClassName : buttonClassName + " disabled"}>Tiếp theo</a>
-                    <a onClick={handleNextPage} className="btn my-custom-button-default my-custom-button-simple">Lưu tạm</a>
+                    <a onClick={Page === 4 ? handleSubmit : handleNextPage} className={CheckInput() ? buttonClassName : buttonClassName + " disabled"}>{Page === 4 ? "Xác nhận" : "Tiếp theo"}</a>
+                    {!Admin && <a onClick={handleNextPage} className="btn my-custom-button-default my-custom-button-simple">Lưu tạm</a>}
                 </div>
             </form>
 
@@ -160,9 +177,15 @@ function PageOne(props) {
         if (ListCategory[props.Data.Category - 1111]) {
             return ListCategory[props.Data.Category - 1111].subCatogory
         }
+        console.log()
         return []
     });
-
+    useEffect(() => {
+        console.log('???')
+        if (ListCategory[props.Data.Category - 1111]) {
+            setSubList(ListCategory[props.Data.Category - 1111].subCatogory)
+        }
+    }, [props.Data.Category])
     const handleClickCategory = (index) => {
         setSubList(ListCategory[index].subCatogory)
         props.handleOnchange([['Category', index + 1111], ['SubCategory', -1]])
@@ -263,14 +286,14 @@ function PageThree(props) {
     const [Out, setOut] = useState('');
     const AddIn = () => {
         if (In.trim() != '') {
-            props.handleOnchange([['ListIn', [...props.Data.ListIn, In]]])
+            props.handleOnchange([['ListIn', [...props.Data.ListIn, { CONTENT: In }]]])
             setIn('');
             InInput.current.focus();
         }
     }
     const AddOut = () => {
         if (Out.trim() != '') {
-            props.handleOnchange([['ListOut', [...props.Data.ListOut, Out]]])
+            props.handleOnchange([['ListOut', [...props.Data.ListOut, { CONTENT: Out }]]])
             setOut('');
             OutInput.current.focus();
         }
@@ -312,7 +335,7 @@ function PageThree(props) {
                         {props.Data.ListIn.map((In, index) => (
                             <li key={index}>
                                 <i className="fa-li fa fa-check"></i>
-                                <span>{In}</span>
+                                <span>{In.CONTENT}</span>
                                 <i onClick={() => DeleteIn(index)} className="fas fa-trash"></i>
                             </li>
                         ))}
@@ -335,7 +358,7 @@ function PageThree(props) {
                         {props.Data.ListOut.map((Out, index) => (
                             <li key={index}>
                                 <i className="fa-li fa fa-check"></i>
-                                <span>{Out}</span>
+                                <span>{Out.CONTENT}</span>
                                 <i onClick={() => DeleteOut(index)} className="fas fa-trash"></i>
                             </li>
                         ))}
@@ -531,7 +554,7 @@ function PageFour(props) {
                                                 <div className="list-title" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                     <i onClick={() => Addlesson(index)} className="fas fa-plus-circle"></i>
                                                     <span className="main-title">{data.title}</span>
-                                                    <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
+                                                    {!data.id && <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>}
                                                 </div>
                                             )}
 
@@ -545,7 +568,7 @@ function PageFour(props) {
                                                     <input className="text-input-simple mw-100 border-0 h6" placeholder="Tiêu đề của bài học" type="text" name="title" value={data.title} onChange={(e) => OnChangeHandle(e, index)} />
                                                     <br />
                                                     <input className="text-input-simple mw-100 border-0" placeholder="URL của bài học" type="text" name="URL" value={data.URL} onChange={(e) => OnChangeHandle(e, index)} />
-                                                    <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>
+                                                    {!data.id && <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>}
                                                 </div>
                                             )}
 

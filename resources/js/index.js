@@ -43,10 +43,15 @@ function Index() {
                 <Routes>
                     <Route path="/admin" element={<Admin User={User} />} />
                     <Route path="/admin/:feature" element={<Admin User={User} />} />
+                    <Route exact path="/admin/:feature/:action/:id" element={<Admin User={User} />} />
+                    <Route exact path="/admin/:feature/:action/:id/:subid" element={<Admin User={User} />} />
+                   
+                    
                     <Route path="/" element={<UserLayout User={User} handleShowForm={handleShowForm} ShowForm={ShowForm} />} >
                         <Route path="/" element={<Home />} />
                         <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
-                        <Route exact path="/learn/" element={User.loading ? <Home /> : <Learn User={User} />} />
+                        <Route exact path="/learn/:course/:lesson" element={User.loading ? <Home /> : <Learn User={User} />} />
+                        <Route exact path="/learn/:course" element={User.loading ? <Home /> : <Learn User={User} />} />
                         <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
                         <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
                         <Route exact path="/course-manage" element={User.loading ? <Home /> : <CourseManage User={User} />} />

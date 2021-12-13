@@ -9,5 +9,6 @@ class Course_Require extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $primaryKey  = 'COURSE_REQUIRE_ID';
     public $table = "Course_Requires";
 }

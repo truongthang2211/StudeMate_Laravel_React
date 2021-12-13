@@ -15,8 +15,10 @@ import './Learn.css'
 import { ListCourse } from '../../Data.js'
 
 const ThisUserID = new URLSearchParams(document.cookie.replaceAll("; ", "&")).get('StudyMate');
-export default memo(function Learn() {
+export default memo(function Learn({ LearnData, Admin }) {
+    const [pending, setPending] = useState(true);
     const { course, lesson } = useParams();
+    const { id, subid } = useParams();
     const [dataLearning, setData] = useState({});
     const [comments, setComments] = useState([]);
     const [videoid, setVideoID] = useState('');
@@ -55,19 +57,38 @@ export default memo(function Learn() {
     const navigate = useNavigate();
     useEffect(async () => {
         try {
-            const res = await axios.get(`/api/get-learn/${course}/${lesson}`)
-            if (res.data.message.LastLessonLearnt == -1) {
-                navigate(`/learn/${course}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
-            } else {
-                navigate(`/learn/${course}/${res.data.message.LastLessonLearnt+1}`)
+            const Tcourse = course ?? id;
+            const Tlesson = lesson ?? subid;
+
+
+            if (!LearnData && Tcourse) {
+                const res = await axios.get(`/api/get-learn/${Tcourse}/${Tlesson}`)
+                console.log(res)
+                if (!Admin) {
+                    if (res.data.message.LastLessonLearnt == -1) {
+                        navigate(`/learn/${Tcourse}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
+                    } else {
+                        navigate(`/learn/${Tcourse}/${res.data.message.LastLessonLearnt + 1}`)
+                    }
+                } else {
+                    navigate(`/admin/course-manage/learn/${Tcourse}/${Tlesson}`)
+
+                }
+
+                setPending(false)
+                setData(res.data.message)
+                setVideoID(youtube_id(res.data.message.LearningURL))
+            } else if (LearnData) {
+                setPending(false)
+                setData(LearnData)
+                setVideoID(youtube_id(LearnData.LearningURL))
             }
-            setData(res.data.message)
-            setVideoID(youtube_id(res.data.message.LearningURL))
+
 
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [LearnData])
     const showComment = async () => {
         try {
             const res = await axios.post(`/api/get-comments`, { lesson_id: lesson });
@@ -82,9 +103,13 @@ export default memo(function Learn() {
         // console.log('testest')
     }, [lesson])
     const handleLesson = (lesson_url, lesson_id, status) => {
+        let url = '/learn/';
+        if (Admin) {
+            url = '/admin/course-manage/learn/'
+        }
         if (status != 'block-item') {
-
-            navigate(`/learn/${course}/${lesson_id}`)
+            const Tcourse = course ?? id;
+            navigate(`${url}${Tcourse}/${lesson_id}`)
             setVideoID(youtube_id(lesson_url))
         }
     }
@@ -110,7 +135,8 @@ export default memo(function Learn() {
             clearInterval(TimerId)
         }
     }
-    return (<>
+    return (!pending && <>
+
         <div id="left-learning">
             <div className="breadcrumb">
                 <a className="breadcrumb-item" href="/"><i className="fas fa-home"></i></a>
@@ -147,9 +173,9 @@ export default memo(function Learn() {
                                                     } else {
                                                         return (
                                                             <Comment parent_index={index} index={index2} key={index2} parentComment={item.commentID}
-                                                            UsersVoted={item2.UsersVoted} updateComment={showComment}
+                                                                UsersVoted={item2.UsersVoted} updateComment={showComment}
                                                                 repl User={item2.User} Content={item2.Content} handleRepl={onClickRepl}
-                                                             commentID={item2.commentID} />
+                                                                commentID={item2.commentID} />
                                                         );
                                                     }
                                                 })}
@@ -186,14 +212,14 @@ export default memo(function Learn() {
                         <Chaper title={item.ChapterTitle} />
                         <div className="playlist-wrapper-list">
                             {item.Lesson.map((less, index2) => {
-                                if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID) {
+                                if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID || Admin) {
                                     status = 'normal-item'
                                 } else if (less.LESSON_ID < dataLearning.LastLessonLearnt + 1) {
                                     status = 'learnt-item'
                                 } else if (less.LESSON_ID > dataLearning.LastLessonLearnt + 1) {
                                     status = 'block-item'
                                 }
-                                if (less.LESSON_ID == lesson) {
+                                if (less.LESSON_ID == lesson || less.LESSON_ID == subid) {
                                     status += ' learning-item'
                                 }
                                 return (
@@ -246,7 +272,7 @@ function UserComment(props) {
         };
         setComment('')
         const res = await axios.post('/api/add-comment', data)
-        if (res.data.status==200){
+        if (res.data.status == 200) {
             props.updateComment();
         }
 
@@ -277,12 +303,12 @@ function UserComment(props) {
     );
 }
 function Comment(props) {
-    const [vote, setVote] = useState(()=>{
-        var filter = props.UsersVoted.filter(e=>e.USER_ID==ThisUserID)
-        if (filter.length){
-            return {up:filter[0].COMMENT_VOTE_STATE==1,down:filter[0].COMMENT_VOTE_STATE==0}
+    const [vote, setVote] = useState(() => {
+        var filter = props.UsersVoted.filter(e => e.USER_ID == ThisUserID)
+        if (filter.length) {
+            return { up: filter[0].COMMENT_VOTE_STATE == 1, down: filter[0].COMMENT_VOTE_STATE == 0 }
         }
-        return{ up: false, down: false }
+        return { up: false, down: false }
     })
     const handleUpVote = () => {
         var data = {
@@ -350,13 +376,13 @@ function Comment(props) {
                             <span onClick={handleUpVote}>
                                 <i className="fas fa-arrow-up font-size-h5 fa-fw"></i>
                             </span>
-                            <span>{props.UsersVoted.filter(e=>e.COMMENT_VOTE_STATE==1).length}</span>
+                            <span>{props.UsersVoted.filter(e => e.COMMENT_VOTE_STATE == 1).length}</span>
                         </span>
                         <span className={"downvote " + (vote.down ? "active" : "")}>
                             <span onClick={handleDownVote}>
                                 <i className="fas fa-arrow-down font-size-h5 fa-fw"></i>
                             </span>
-                            <span>{props.UsersVoted.filter(e=>e.COMMENT_VOTE_STATE==0).length}</span>
+                            <span>{props.UsersVoted.filter(e => e.COMMENT_VOTE_STATE == 0).length}</span>
                         </span>
                     </span>
                     <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl, props.parentComment) }} className="comment-repl" href="">Trả lời</span>

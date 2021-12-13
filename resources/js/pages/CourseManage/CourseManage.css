@@ -20,6 +20,7 @@
     padding: 36px 48px;
     /* position: fixed; */
     min-width: calc(100% - 300px);
+    min-height: 100vh;
 }
 .course-manage-overview{
     max-width: 80%;

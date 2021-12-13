@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course_MainType extends Model
 {
+    public $table = "Course_MainTypes";
     use HasFactory;
 }

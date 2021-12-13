@@ -10,29 +10,36 @@ use App\Models\Course_Chapter;
 use App\Models\Course_Review;
 use App\Models\Lesson;
 use App\Models\Learning;
+use App\Models\Approval;
+use App\Models\Notification;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\DB;
 use App\Models\Course_MainType;
+use App\Models\MongoDB;
+
+use MongoDB\BSON\ObjectId;
 
 class CourseController extends Controller
 {
-    public function CreateCourse(Request $request)
+    public function CreateorDelCourse(Request $request)
     {
         try {
+            $mg = new MongoDB();
+            $course_data = $mg->db->Approval->findOneAndDelete(array('_id' => new ObjectId($request->_id['$oid'])));
+
             DB::beginTransaction();
-            $path = 'img/course';
-            $file = $request->file('course-img');
-            $extension = $file->getClientOriginalExtension(); // you can also use file name
-            $fileName = time() . '.' . $extension;
+
 
             $course = new Course();
-            $course_data = json_decode($request->data);
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->FEE = $course_data->Price;
-            $course->IMG = $path . "/" . $fileName;
+            $course->IMG = $course_data->Image;
             $course->COURSE_DESC = $course_data->Description;
-            $course->COURSE_STATE = "Chờ duyệt bài";
-            $course->COMMISSION = 70;
+            $course->COURSE_STATE = 'Công khai';
+            if (!$request->accept) {
+                $course->COURSE_STATE = 'Từ chối';
+            }
+            $course->COMMISSION = $course_data->Commisstion;
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->AUTHOR_ID = $course_data->Author;
             $course->COURSE_TYPE_ID = $course_data->SubCategory;
@@ -41,20 +48,20 @@ class CourseController extends Controller
 
             foreach ($course_data->ListIn as $value) {
                 $course_require = new Course_Require();
-                $course_require->CONTENT = $value;
-                $course_require->COURSE_ID = $course->id;
+                $course_require->CONTENT = $value->CONTENT;
+                $course_require->COURSE_ID = $course->COURSE_ID;
                 $course_require->save();
             }
             foreach ($course_data->ListOut as $value) {
                 $course_gain = new Course_Gain();
-                $course_gain->CONTENT = $value;
-                $course_gain->COURSE_ID = $course->id;
+                $course_gain->CONTENT = $value->CONTENT;
+                $course_gain->COURSE_ID = $course->COURSE_ID;
                 $course_gain->save();
             }
             foreach ($course_data->ListCourse as $value) {
                 $course_chapter = new Course_Chapter();
                 $course_chapter->CHAPTER_NAME = $value->title;
-                $course_chapter->COURSE_ID = $course->id;
+                $course_chapter->COURSE_ID = $course->COURSE_ID;
                 $course_chapter->save();
                 $Array2 = $value->lesson;
                 foreach ($Array2 as $value2) {
@@ -62,22 +69,38 @@ class CourseController extends Controller
                     $lesson->LESSON_NAME = $value2->title;
                     $lesson->LESSON_URL = $value2->url;
                     $lesson->DURATION = $value2->duration;
-                    $lesson->CHAPTER_ID = $course_chapter->id;
+                    $lesson->CHAPTER_ID = $course_chapter->COURSE_CHAPTER_ID;
                     $lesson->save();
                 }
             }
+            $noti = new Notification();
+            $noti->USER_ID =  $course_data->Author;
+            $noti->READ_STATE = 0;
+
+
+            $approval = new Approval();
+            $approval->COURSE_ID = $course->COURSE_ID;
+            $approval->ACCEPT = $request->accept;
+            if (!$request->accept) {
+                $approval->REASON = $request->reason;
+                $noti->CONTENT = 'Khóa học ' . $course_data->CourseTitle . ' đã bị từ chối với lý do: ' .  $request->reason;
+            } else {
+                $noti->CONTENT = 'Chúc mừng khóa học ' . $course_data->CourseTitle . ' của bạn đã được duyệt!';
+            }
+            $approval->save();
+            $noti->save();
             DB::commit();
-            $file->move($path, $fileName);
+
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Tạo khóa học thành công'
+                'message' => 'thành công'
             ]);
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json([
-                'status' => 200,
-                'message' => $th->getMessage(),
+                'status' => 400,
+                'message' => $th->__toString(),
             ]);
         }
     }
@@ -230,11 +253,11 @@ class CourseController extends Controller
                 $chapters = Course_Chapter::where('COURSE_ID', $course_id);
                 $lesson = 0;
                 $lesson = Learning::where('USER_ID', $id)->get('LESSON_ID')->intersect(Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))->max('LESSON_ID');
-                $firstlesson=Lesson::where('CHAPTER_ID', $chapters->min('COURSE_CHAPTER_ID'))->min('LESSON_ID');
-                if ($lesson_id=="undefined" || $lesson_id >$lesson) {
-                    $lesson_id= $lesson? $lesson : $firstlesson;
+                $firstlesson = Lesson::where('CHAPTER_ID', $chapters->min('COURSE_CHAPTER_ID'))->min('LESSON_ID');
+                if ($lesson_id == "undefined" || $lesson_id > $lesson) {
+                    $lesson_id = $lesson ? $lesson : $firstlesson;
                 }
-                $lesson = $lesson? $lesson:-1;
+                $lesson = $lesson ? $lesson : -1;
                 $course = Course::where('COURSE_ID', $course_id);
                 $ListLearn = array();
                 foreach ($chapters->get() as $chapter) {
@@ -249,8 +272,8 @@ class CourseController extends Controller
                     'CourseTitle' => $course->first()->COURSE_NAME,
                     'ListLearn' => $ListLearn,
                     'LastLessonLearnt' => (int)($lesson),
-                    'LearningURL'=>Lesson::where('LESSON_ID',$lesson_id)->first()->LESSON_URL,
-                     'Author'=>Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
+                    'LearningURL' => Lesson::where('LESSON_ID', $lesson_id)->first()->LESSON_URL,
+                    'Author' => Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
 
                 ];
                 return response()->json([
@@ -271,15 +294,16 @@ class CourseController extends Controller
             ]);
         }
     }
-    public function AddLearn(Request $request){
+    public function AddLearn(Request $request)
+    {
 
-         try {
+        try {
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
-                if (!Learning::where('USER_ID',$id)->where('LESSON_ID',$request->lesson_id)->first()){
+                if (!Learning::where('USER_ID', $id)->where('LESSON_ID', $request->lesson_id)->first()) {
                     $learning = new Learning();
                     $learning->USER_ID = $id;
-                    $learning->LESSON_ID=$request->lesson_id;
+                    $learning->LESSON_ID = $request->lesson_id;
                     $learning->save();
                 }
                 return response()->json([
@@ -296,6 +320,115 @@ class CourseController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => $th,
+            ]);
+        }
+    }
+    function UpdateCourse(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $file = $request->file('course-img');
+            $path = 'img/course';
+            $fileName = '';
+            if ($file && $file->getClientOriginalExtension()) {
+                $extension = $file->getClientOriginalExtension(); // you can also use file name
+                $fileName = time() . '.' . $extension;
+            }
+
+
+            $course_data = json_decode($request->data);
+            $course = Course::where('COURSE_ID', $course_data->CourseID)->first();
+            $course->COURSE_NAME = $course_data->CourseTitle;
+            $course->FEE = $course_data->Price;
+            if ($file && $file->getClientOriginalExtension()) {
+                $course->IMG = $path . "/" . $fileName;
+            }
+            $course->COURSE_DESC = $course_data->Description;
+            $course->COURSE_STATE = $course_data->State;
+            $course->COMMISSION = $course_data->Commisstion;
+            $course->COURSE_NAME = $course_data->CourseTitle;
+            $course->COURSE_TYPE_ID = $course_data->SubCategory;
+
+            $course->save();
+            Course_Require::where('COURSE_ID', $course_data->CourseID)->delete();
+            Course_Gain::where('COURSE_ID', $course_data->CourseID)->delete();
+            foreach ($course_data->ListIn as $value) {
+                $course_require = new Course_Require();
+                $course_require->CONTENT = $value->CONTENT;
+                $course_require->COURSE_ID = $course->COURSE_ID;
+                $course_require->save();
+            }
+            foreach ($course_data->ListOut as $value) {
+                $course_gain = new Course_Gain();
+                $course_gain->CONTENT = $value->CONTENT;
+                $course_gain->COURSE_ID = $course->COURSE_ID;
+                $course_gain->save();
+            }
+            foreach ($course_data->ListCourse as $value) {
+                $course_chapter = new Course_Chapter();
+                if ($value->id) {
+                    $course_chapter = Course_Chapter::where('COURSE_CHAPTER_ID', $value->id)->first();
+                }
+                $course_chapter->CHAPTER_NAME = $value->title;
+                $course_chapter->COURSE_ID = $course->COURSE_ID;
+                $course_chapter->save();
+                $Array2 = $value->lesson;
+                foreach ($Array2 as $value2) {
+                    $lesson = new Lesson();
+                    if ($value2->id) {
+                        $lesson = Lesson::where('LESSON_ID', $value2->id)->first();
+                    }
+                    $lesson->LESSON_NAME = $value2->title;
+                    $lesson->LESSON_URL = $value2->url;
+                    $lesson->DURATION = $value2->duration;
+                    $lesson->CHAPTER_ID = $course_chapter->COURSE_CHAPTER_ID;
+
+                    $lesson->save();
+                }
+            }
+            DB::commit();
+            if ($file && $file->getClientOriginalExtension())
+                $file->move($path, $fileName);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Sửa khóa học thành công'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 400,
+                'message' => $th->__toString(),
+            ]);
+        }
+    }
+    public function AddCourseApproval(Request $request)
+    {
+        try {
+
+
+            $mg = new MongoDB();
+            $db = $mg->db;
+            $approval = $db->Approval;
+            $path = 'img/course';
+            $file = $request->file('course-img');
+            $extension = $file->getClientOriginalExtension(); // you can also use file name
+            $fileName = time() . '.' . $extension;
+            $store_data = json_decode($request->data);
+            $store_data->Image =  $path . "/" . $fileName;
+            $file->move($path, $fileName);
+
+            $insertRs = $approval->insertOne($store_data);
+
+            $t = $approval->findOne(array('_id' => new ObjectId('61b596d2af5c0000230005c4')));
+            return response()->json([
+                'status' => 400,
+                'message' => 'Thành công'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th->__toString(),
             ]);
         }
     }

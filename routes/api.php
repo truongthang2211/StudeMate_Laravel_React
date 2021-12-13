@@ -25,7 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/sign-up', [LoginController::class, 'SignUp']);
 Route::post('/sign-in', [LoginController::class, 'SignIn']);
-Route::post('/create-course', [CourseController::class, 'CreateCourse']);
+Route::post('/action-course', [CourseController::class, 'CreateorDelCourse']);
+Route::post('/create-course-approval', [CourseController::class, 'AddCourseApproval']);
 Route::post('/add-learn', [CourseController::class, 'AddLearn']);
 Route::post('/get-comments', [CommentController::class, 'GetListCommentByLesson']);
 Route::post('/add-comment', [CommentController::class, 'AddComment']);
@@ -33,7 +34,14 @@ Route::post('/comment-vote', [CommentController::class, 'VoteComment']);
 Route::get('/my-course', [CourseController::class, 'GetUserCourse']);
 Route::get('get-learn/{course_id}/{lesson_id}', [CourseController::class, 'GetLearning']);
 Route::get('/get-list-course', [AdminController::class, 'CourseList']);
+Route::get('/get-list-createapp', [AdminController::class, 'GetCreateCourseApproval']);
 Route::get('/get-list-user', [AdminController::class, 'GetUsers']);
+Route::post('/get-user', [AdminController::class, 'GetUserByID']);
+Route::post('/get-course', [AdminController::class, 'GetUserByID']);
+Route::post('/get-learn-app', [AdminController::class, 'GetLearningAppById']);
+Route::get('/get-overview', [AdminController::class, 'Overview']);
+Route::post('/lock-course-action', [AdminController::class, 'LockCourseAction']);
+Route::post('/update-course', [CourseController::class, 'UpdateCourse']);
 
 
 Route::get('/get-courses-homepage', [CourseController::class, 'GetCourseHomePage']);

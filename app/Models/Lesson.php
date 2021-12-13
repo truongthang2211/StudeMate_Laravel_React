@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Lesson extends Model
 {
     use HasFactory;
+    public $primaryKey  = 'LESSON_ID';
     public $timestamps = false;
 
 }
