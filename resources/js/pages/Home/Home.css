@@ -3,6 +3,7 @@
     --main-blue: #00A19D;
     --main-yellow: #FFB344;
     --main-red: #E05D5D;
+    --main-green: #6ECB63;
     --white: #fff;
     --title: #3b3c54;
     --text: #42526e;
@@ -10,9 +11,26 @@
     --box-shadow-color: rgba(188, 188, 188, .5);
 }
 
+/* COMMON */
+.like-color{
+    color: var(--main-green);
+}
 
+.dislike-color{
+    color: var(--main-red);
+}
 
+.text-color{
+    color: var(--text)
+}
 
+.ml-2{
+    margin-left: 2px;
+}
+
+.ml-8{
+    margin-left: 8px;
+}
 
 /* HEADER */
 
@@ -225,7 +243,7 @@
 .course-content .course-rating li {
     list-style: none;
     display: inline-block;
-    color: #fec000;
+    color: var(--text);
     font-size: 15px;
 }
 

@@ -10,4 +10,6 @@ class Course_Review extends Model
     use HasFactory;
     public $timestamps = false;
     public $table = "Course_Reviews";
+    protected $primaryKey = ['USER_ID', 'COURSE_ID'];
+    public $incrementing = false;
 }
