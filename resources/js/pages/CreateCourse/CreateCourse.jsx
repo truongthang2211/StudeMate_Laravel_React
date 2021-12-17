@@ -30,7 +30,7 @@ const CreateData = {
 
 
 let fd;
-export default function CreateCourse({ User, CourseData, Admin, Edit }) {
+export default function CreateCourse({ User, CourseData, Admin }) {
     const nav = useNavigate();
     const [Data, setData] = useState(CourseData ?? CreateData);
     useEffect(() => {
@@ -91,13 +91,7 @@ export default function CreateCourse({ User, CourseData, Admin, Edit }) {
         var match = url.match(regExp);
         return (match && match[7].length == 11) ? match[7] : false;
     }
-    const msecToTime = ms => {
-        const seconds = Math.floor((ms / 1000) % 60)
-        const minutes = Math.floor((ms / (60 * 1000)) % 60)
-        const hours = Math.floor((ms / (3600 * 1000)) % 3600)
-        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds
-            }`
-    }
+    
     const handleSubmit = async () => {
         if (Data.ListCourse.length < 1 || Data.ListCourse[0].type != 'chapter') {
             Swal.fire({
@@ -107,49 +101,67 @@ export default function CreateCourse({ User, CourseData, Admin, Edit }) {
             })
             return;
         }
-        const newListCourse = [];
-        for (var i = 0; i < Data.ListCourse.length; ++i) {
-            if (Data.ListCourse[i].type == 'chapter') {
-                newListCourse.push({ title: Data.ListCourse[i].title, lesson: [], id: Data.ListCourse[i].id ?? null })
-            } else {
-                let duration = '';
-                let youtb_id = youtube_id(Data.ListCourse[i].URL);
-                await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
-                    .then(data => data.json()).then(data => {
-                        console.log(data)
-                        duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
+        Swal.fire({
+            title: 'Bạn có chắc muốn ' + Data.ActionType.toLowerCase() + ' khóa học?',
+            showCancelButton: true,
+            confirmButtonText: 'Xác nhận',
+            showLoaderOnConfirm: true,
+            icon: "question",
+            preConfirm: async () => {
+                const newListCourse = [];
+                for (var i = 0; i < Data.ListCourse.length; ++i) {
+                    if (Data.ListCourse[i].type == 'chapter') {
+                        newListCourse.push({ title: Data.ListCourse[i].title, lesson: [], id: Data.ListCourse[i].id ?? null })
+                    } else {
+                        let duration = '';
+                        let youtb_id = youtube_id(Data.ListCourse[i].URL);
+                        await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=${youtb_id}&key=${API_KEY}`)
+                            .then(data => data.json()).then(data => {
+                                console.log(data)
+                                duration = (moment.duration(data.items[0].contentDetails.duration).asMilliseconds())
 
+                            })
+                        newListCourse.at(-1).lesson = [
+                            ...newListCourse.at(-1).lesson,
+                            {
+                                id: Data.ListCourse[i].id ?? null,
+                                title: Data.ListCourse[i].title,
+                                url: Data.ListCourse[i].URL,
+                                duration: duration
+                            }]
+                    }
+                }
+                const newData = { ...Data, ListCourse: newListCourse }
+                console.log(newData)
+                fd.append('data', JSON.stringify(newData))
+                const url = Admin? "/api/update-course" : "/api/create-course-approval"
+                return axios.post(url, fd, { "enctype": "multipart/form-data" })
+                    .then( async(res) => {
+                        console.log(res)
+                        if (res.data.status == 200) {
+                            await Swal.fire({
+                                text: res.data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Hay'
+                            })
+                            nav("/");
+                        } else {
+                            await Swal.fire({
+                                text: res.data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Hay'
+                            })
+                        }
                     })
-                newListCourse.at(-1).lesson = [
-                    ...newListCourse.at(-1).lesson,
-                    {
-                        id: Data.ListCourse[i].id ?? null,
-                        title: Data.ListCourse[i].title,
-                        url: Data.ListCourse[i].URL,
-                        duration: duration
-                    }]
-            }
-        }
-        const newData = { ...Data, ListCourse: newListCourse }
-        console.log(newData)
-        fd.append('data', JSON.stringify(newData))
-        const url = Admin || Edit ? "/api/update-course" : "/api/create-course-approval"
-        const res = await axios.post(url, fd, { "enctype": "multipart/form-data" })
-        console.log(res)
-        if (res.data.status == 200) {
-            await Swal.fire({
-                text: res.data.message,
-                icon: 'success',
-                confirmButtonText: 'Hay'
-            })
-            nav("/");
-        } else {
-            await Swal.fire({
-                text: res.data.message,
-                icon: 'error',
-                confirmButtonText: 'Hay'
-            })
-        }
+                    .catch(error => {
+                        Swal.showValidationMessage(
+                            `Request failed: ${error}`
+                        )
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+
 
 
     }
@@ -164,7 +176,6 @@ export default function CreateCourse({ User, CourseData, Admin, Edit }) {
                 <div>
                     <a onClick={handlePrevious} className={Page === 1 ? buttonClassName + " disabled" : buttonClassName}>Lùi lại</a>
                     <a onClick={Page === 4 ? handleSubmit : handleNextPage} className={CheckInput() ? buttonClassName : buttonClassName + " disabled"}>{Page === 4 ? "Xác nhận" : "Tiếp theo"}</a>
-                    {!Admin && <a onClick={handleNextPage} className="btn my-custom-button-default my-custom-button-simple">Lưu tạm</a>}
                 </div>
             </form>
 

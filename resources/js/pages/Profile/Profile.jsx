@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import './Profile.css'
 
-function Profile({ User }) {
-
+function Profile(props) {
+    const { user_id } = useParams();
+    const [User, setUser] = useState(props.User)
     const [courseItem, setCourseItem] = useState([]);
     const [courseInfo, setCourseInfo] = useState([]);
-
+    useEffect(async () => {
+        const res = await axios.post('/api/get-user', {user_id: user_id})
+        setUser(res.data.message)
+    }, [])
     useEffect(() => {
-        showCourseInfo();
-        // setCourseItem([
-        //     {
-        //         COURSE_ID: 1,
-        //         COURSE_NAME: 'một chấm',
-        //     },
-        //     {
-        //         COURSE_ID: 2,
-        //         COURSE_NAME: 'hai chấm ',
-        //     },
-        // ])
 
-        axios.post('/api/get-course-item', User).then(res => {
-            //console.log(res);
-            if (res.data.status === 200) {
-                setCourseItem(res.data.courses);
-            }
-        });
+        if (User) {
+            showCourseInfo();
+            axios.post('/api/get-course-item', User).then(res => {
+                //console.log(res);
+                if (res.data.status === 200) {
+                    setCourseItem(res.data.courses);
+                }
+            });
 
+        }
     }, [User]);
-
+    
 
     const showCourseInfo = async () => {
         try {
@@ -56,9 +53,10 @@ function Profile({ User }) {
         <>
 
             <div className="all-profile">
-                <link rel="stylesheet" href="css/override-container.css" />
+                <link rel="stylesheet" href="/css/override-container.css" />
                 <div className="profile-background">
                     <img src={User.BACKGROUND_IMG || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
+                    <div className="profile-background-shadow"></div>
                 </div>
                 <div className="container main-profile">
                     <ProfileHeader User={User} />

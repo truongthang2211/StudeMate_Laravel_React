@@ -11,6 +11,10 @@
 .anal-info-time{
     color: #666;
 }
-.anal-combobox{
+.type-combobox,
+.time-combobox{
     float: right;
+}
+.type-combobox{
+    margin-right: 12px;
 }

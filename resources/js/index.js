@@ -52,10 +52,11 @@ function Index() {
                         <Route exact path="/course" element={<Course User={User} handleShowForm={handleShowForm} />} />
                         <Route exact path="/learn/:course/:lesson" element={User.loading ? <Home /> : <Learn User={User} />} />
                         <Route exact path="/learn/:course" element={User.loading ? <Home /> : <Learn User={User} />} />
-                        <Route exact path="/profile" element={User.loading ? <Home /> : <Profile User={User} />} />
+                        <Route exact path="/profile/:user_id" element={User.loading ? <Home /> : <Profile User={User} />} />
                         <Route exact path="/myinfo" element={User.loading ? <Home /> : <MyInfo User={User} />} />
                         <Route exact path="/course-manage" element={User.loading ? <Home /> : <CourseManage User={User} />} />
                         <Route exact path="/course-manage/:feature" element={User.loading ? <Home /> : <CourseManage User={User} />} />
+                        <Route exact path="/course-manage/:feature/edit/:course_id" element={User.loading ? <Home /> : <CourseManage User={User} />} />
                         {/* <Route exact path="/mycourse" element={User.loading ? <Home /> : <MyCourse User={User} />} /> */}
                         <Route exact path="/create-course" element={User.loading ? <Home /> : <CreateCourse User={User} />} />
                         <Route exact path="/login" element={!User.loading ? <Home /> : <Login />} />

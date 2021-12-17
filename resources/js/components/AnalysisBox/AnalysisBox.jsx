@@ -9,7 +9,7 @@ export const options = {
             position: 'top',
         },
         title: {
-            display: true,
+            display: false,
             text: 'Chart.js Line Chart',
         },
     },
@@ -38,23 +38,15 @@ export const data = {
         },
     ],
 };
-function AnalysisBox() {
+function AnalysisBox(props) {
     return (
         <div className="analysisbox">
-            <select className="anal-combobox">
-                <option value="">Tất cả</option>
-                <option value="">Hôm nay</option>
-                <option value="">Hôm qua</option>
-                <option value="">3 ngày qua</option>
-                <option value="">7 ngày qua</option>
-                <option value="">Tháng này</option>
-                <option value="">3 Tháng qua</option>
-                <option value="">Năm này</option>
-            </select>
+            {props.children}
+            
             <div className="analysis-graph">
-                <Line options={options} data={data} />
+                <Line options={options} data={props.Data} />
             </div>
-          
+
         </div>
     );
 }
@@ -63,7 +55,7 @@ export default AnalysisBox;
 
 export function AnalysisItemInfo(props) {
     return (
-        <div className={props.className?"anal-info-item " + props.className:"anal-info-item"}>
+        <div className={props.className ? "anal-info-item " + props.className : "anal-info-item"}>
             <div className="anal-info-title">
                 {props.title}
             </div>

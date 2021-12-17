@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Account;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -92,6 +92,7 @@ class LoginController extends Controller
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
                 $user = User::where('USER_ID', $id)->first();
+
                 return response()->json([
                     'status' => 200,
                     'message' => 'Lay User thanh cong',
@@ -106,6 +107,51 @@ class LoginController extends Controller
             }
         } catch (\Throwable $th) {
             return $th;
+        }
+    }
+    public function GetNotifications(){
+        try {
+            if (isset($_COOKIE['StudyMate'])) {
+                $id = $_COOKIE['StudyMate'];
+                $noti = Notification::where('USER_ID', $id)->orderBy('NOTI_ID', 'DESC')->get();
+
+                return response()->json([
+                    'status' => 200,
+                    'message' => $noti,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+    public function ReadNotifications(){
+        try {
+            if (isset($_COOKIE['StudyMate'])) {
+                $id = $_COOKIE['StudyMate'];
+                $noti = Notification::where('USER_ID', $id)->update(array('READ_STATE'=>1));
+
+                return response()->json([
+                    'status' => 200,
+                    'message' => $noti,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 201,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th,
+            ]);
         }
     }
 }

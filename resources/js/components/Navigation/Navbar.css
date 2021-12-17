@@ -42,6 +42,10 @@
     position: relative;
     margin-top: 4px;
 }
+.navbar__user_notifi :hover{
+    cursor: pointer;
+}
+
 .navbar__user_notifi:hover .dropdown-form{
     visibility: visible;
     opacity: 1;
@@ -108,6 +112,9 @@
     padding: 8px 16px;
     border-top: 1px solid var(--main-blue);
 }
+.notification__info.read{
+    background-color: #faf4f4;
+}
 .notification .info_avatar{
     padding-right: 8px;
 }
@@ -156,8 +163,13 @@
     background-color: var(--main-yellow);
     color: #fff;
 }
-
-
+.notifi-content{
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.notifi-content::-webkit-scrollbar{
+    display: none;
+}
 @media (max-width: 992px){
     .navbar-nav{
         display: inline-block;

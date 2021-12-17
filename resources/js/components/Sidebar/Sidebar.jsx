@@ -9,7 +9,7 @@ function Sidebar(props) {
             <div id="sidebar">
                 <div className="sidebar__userinfo">
                     <Avatar User={props.User} Width="112px" Height="112px" />
-                    <h5>{props.User.FULLNAME}</h5>
+                    <h5>{props.User&&props.User.FULLNAME}</h5>
                 </div>
                 <div className="sidebar__listfeature">
                         {props.children}

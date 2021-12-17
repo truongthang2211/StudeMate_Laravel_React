@@ -7,7 +7,7 @@ import {
     Route,
     useHistory,
     useParams,
-    useNavigate
+    useNavigate, Link
 } from "react-router-dom";
 import YouTube from 'react-youtube';
 import Collapsible from '../../components/Collapsible/Collapsible';
@@ -18,7 +18,7 @@ const ThisUserID = new URLSearchParams(document.cookie.replaceAll("; ", "&")).ge
 export default memo(function Learn({ LearnData, Admin }) {
     const [pending, setPending] = useState(true);
     const { course, lesson } = useParams();
-    const { id, subid } = useParams();
+    const { feature, id, subid } = useParams();
     const [dataLearning, setData] = useState({});
     const [comments, setComments] = useState([]);
     const [videoid, setVideoID] = useState('');
@@ -54,6 +54,13 @@ export default memo(function Learn({ LearnData, Admin }) {
         var match = url.match(regExp);
         return (match && match[7].length == 11) ? match[7] : false;
     }
+    const msecToTime = ms => {
+        const seconds = Math.floor((ms / 1000) % 60)
+        const minutes = Math.floor((ms / (60 * 1000)) % 60)
+        const hours = Math.floor((ms / (3600 * 1000)) % 3600)
+        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds
+            }`
+    }
     const navigate = useNavigate();
     useEffect(async () => {
         try {
@@ -71,7 +78,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                         navigate(`/learn/${Tcourse}/${res.data.message.LastLessonLearnt + 1}`)
                     }
                 } else {
-                    navigate(`/admin/course-manage/learn/${Tcourse}/${Tlesson}`)
+                    navigate(`/admin/${feature}/learn/${Tcourse}/${Tlesson}`)
 
                 }
 
@@ -139,9 +146,9 @@ export default memo(function Learn({ LearnData, Admin }) {
 
         <div id="left-learning">
             <div className="breadcrumb">
-                <a className="breadcrumb-item" href="/"><i className="fas fa-home"></i></a>
-                <a className="breadcrumb-item" href="/learn">Khóa học</a>
-                <a className="breadcrumb-item" href="/learn/lap-trinh-7">Lập trình</a>
+                <Link className="breadcrumb-item" to="/"><i className="fas fa-home"></i></Link>
+                <Link className="breadcrumb-item" to={`/list-course/${dataLearning.CourseMainType&&dataLearning.CourseMainType.COURSE_MAINTYPE_ID}`}>{dataLearning.CourseMainType&&dataLearning.CourseMainType.TYPE_NAME}</Link>
+                <Link className="breadcrumb-item" to={`/list-course/null/${dataLearning.CourseType&&dataLearning.CourseType.COURSE_SUBTYPE_ID}`}>{dataLearning.CourseType&&dataLearning.CourseType.TYPE_NAME}</Link>
                 <span className="breadcrumb-item active">{dataLearning.CourseTitle}</span>
             </div>
             <div className="video-learning">
@@ -152,8 +159,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                     <div className="info-learning-content">
                         <div className="tabs-bar">
                             <div className="tab-item selected-tab">Trao đổi</div>
-                            <div className="tab-item">Bài giảng</div>
-                            <div className="tab-item">File đính kèm</div>
+                          
                         </div>
                         <div className="info-learning-comment">
                             <UserComment updateComment={showComment} />
@@ -192,40 +198,31 @@ export default memo(function Learn({ LearnData, Admin }) {
 
         </div>
         <div id="right-learning">
-            <header className="playlist-header" style={{ '--process': "67%" }}>
-                <div className="background-process">
-                </div>
-                <div className="playlist-header-content">
-                    <h1 className="playlist-title">{dataLearning.CourseTitle}</h1>
-                    <div className="playlist-info">
-                        <p className="playlist-description">
-                            Hoàn thành
-                            <strong>76</strong>/<strong>113</strong>
-                            bài học (<strong>67%</strong>)
-                        </p>
-                    </div>
-                </div>
-            </header>
+            <RightHeader learnt={dataLearning.ListLearn && dataLearning.ListLearn.reduce((a, b) => a + b.Lesson.filter(e => e.LESSON_ID <= dataLearning.LastLessonLearnt).length, 0)} 
+            totalLesson={dataLearning.ListLearn && dataLearning.ListLearn.reduce((a, b) => a + b.Lesson.length, 0)} 
+            title={dataLearning.ListLearn && dataLearning.CourseTitle}/>
             {dataLearning.ListLearn && dataLearning.ListLearn.map((item, index) => {
                 return (
                     <Collapsible className="playlist-wrapper" key={index}>
-                        <Chapter title={item.ChapterTitle} />
+                        <Chapter learnt={item.Lesson.filter(e => e.LESSON_ID <= dataLearning.LastLessonLearnt).length}
+                            title={item.ChapterTitle} totalLesson={item.Lesson.length} Duration={msecToTime(item.Lesson.reduce((a, b) => a + b.DURATION, 0))} />
                         <div className="playlist-wrapper-list">
-                            {item.Lesson.map((less, index2) => {
-                                if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID || Admin) {
-                                    status = 'normal-item'
-                                } else if (less.LESSON_ID < dataLearning.LastLessonLearnt + 1) {
-                                    status = 'learnt-item'
-                                } else if (less.LESSON_ID > dataLearning.LastLessonLearnt + 1) {
-                                    status = 'block-item'
-                                }
-                                if (less.LESSON_ID == lesson || less.LESSON_ID == subid) {
-                                    status += ' learning-item'
-                                }
-                                return (
-                                    <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={less.DURATION} />
-                                );
-                            })}
+                            {
+                                item.Lesson.map((less, index2) => {
+                                    if (less.LESSON_ID == dataLearning.LastLessonLearnt + 1 || (dataLearning.LastLessonLearnt == -1 && less.LESSON_ID == lesson) || dataLearning.Author == ThisUserID || Admin) {
+                                        status = 'normal-item'
+                                    } else if (less.LESSON_ID < dataLearning.LastLessonLearnt + 1) {
+                                        status = 'learnt-item'
+                                    } else if (less.LESSON_ID > dataLearning.LastLessonLearnt + 1) {
+                                        status = 'block-item'
+                                    }
+                                    if (less.LESSON_ID == lesson || less.LESSON_ID == subid) {
+                                        status += ' learning-item'
+                                    }
+                                    return (
+                                        <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={msecToTime(less.DURATION)} />
+                                    );
+                                })}
                         </div>
                     </Collapsible>
                 );
@@ -392,11 +389,11 @@ function Comment(props) {
         </div>
     );
 }
-function Chapter({ title }) {
+function Chapter(props) {
     return (
         <div className="playplist-wrapper-header">
-            <h2 className="wrapper-header-title">{title}</h2>
-            <p className="wrapper-header-detail">2/2 | 05:44</p>
+            <h2 className="wrapper-header-title">{props.title}</h2>
+            <p className="wrapper-header-detail">{props.learnt}/{props.totalLesson} | {props.Duration}</p>
         </div>
     );
 }
@@ -417,5 +414,23 @@ function Lession({ title, duration, handleLesson, videoURL, lesson_id, status })
                 </div>
             </div>
         </div>
+    );
+}
+function RightHeader(props) {
+    return (
+        <header className="playlist-header" style={{ '--process':(props.learnt/props.totalLesson*100).toFixed(2)+'%'}}>
+            <div className="background-process">
+            </div>
+            <div className="playlist-header-content">
+                <h1 className="playlist-title">{props.title}</h1>
+                <div className="playlist-info">
+                    <p className="playlist-description">
+                        Hoàn thành
+                        <strong> {props.learnt}</strong>/<strong>{props.totalLesson} </strong>
+                        bài học (<strong>{(props.learnt/props.totalLesson*100).toFixed(2)} %</strong>)
+                    </p>
+                </div>
+            </div>
+        </header>
     );
 }

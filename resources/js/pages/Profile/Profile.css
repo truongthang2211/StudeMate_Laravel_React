@@ -16,6 +16,7 @@ video {
     min-height: calc(100vh - 64px);
     /* background-image: linear-gradient(180deg, #ebebeb 75%,#aaa); */
     position: relative;
+    background-color: #000;
 }
 
 .main-profile {
@@ -31,6 +32,15 @@ video {
     max-height: 100%;
     width: 100%;
     overflow: hidden;
+}
+.profile-background .profile-background-shadow{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    top: 0;
+    left: 0;
+    box-shadow: rgb(0 0 0 / 48%) 0px -165px 50px 0px inset, rgb(0 0 0) 0px -50px 30px -18px inset;
 }
 .profile-background img,
 .profile-background video{

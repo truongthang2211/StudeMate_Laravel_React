@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/sign-up', [LoginController::class, 'SignUp']);
 Route::post('/sign-in', [LoginController::class, 'SignIn']);
+Route::get('/get-noti', [LoginController::class, 'GetNotifications']);
+Route::get('/read-noti', [LoginController::class, 'ReadNotifications']);
 Route::post('/action-course', [CourseController::class, 'CreateorDelCourse']);
 Route::post('/create-course-approval', [CourseController::class, 'AddCourseApproval']);
 Route::post('/add-learn', [CourseController::class, 'AddLearn']);
@@ -38,11 +40,18 @@ Route::get('/get-list-course', [AdminController::class, 'CourseList']);
 Route::get('/get-list-createapp', [AdminController::class, 'GetCreateCourseApproval']);
 Route::get('/get-list-user', [AdminController::class, 'GetUsers']);
 Route::post('/get-user', [AdminController::class, 'GetUserByID']);
-Route::post('/get-course', [AdminController::class, 'GetUserByID']);
+Route::post('/get-course', [AdminController::class, 'GetCourseByID']);
 Route::post('/get-learn-app', [AdminController::class, 'GetLearningAppById']);
-Route::get('/get-overview', [AdminController::class, 'Overview']);
+Route::get('/get-overview-admin', [AdminController::class, 'Overview']);
 Route::post('/lock-course-action', [AdminController::class, 'LockCourseAction']);
+Route::post('/login', [AdminController::class, 'AdminLogin']);
+Route::get('/get-list-approvaled', [AdminController::class, 'GetApprovaled']);
+Route::get('/get-user-admin', [AdminController::class, 'GetCurrentUser']);
 Route::post('/update-course', [CourseController::class, 'UpdateCourse']);
+Route::post('/update-course-app', [CourseController::class, 'UpdateCourseApp']);
+Route::get('/get-overview', [CourseController::class, 'GetOverview']);
+Route::get('/get-registered-courses', [CourseController::class, 'GetRegisteredCourse']);
+Route::get('/my-course-app', [CourseController::class, 'GetUserCourseApp']);
 
 
 Route::get('/get-courses-homepage', [CourseController::class, 'GetCourseHomePage']);

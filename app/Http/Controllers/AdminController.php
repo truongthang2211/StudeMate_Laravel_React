@@ -12,6 +12,7 @@ use App\Models\Course_Gain;
 use App\Models\Notification;
 use App\Models\Course_Chapter;
 use App\Models\MongoDB;
+use App\Models\Approval;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\DB;
 use MongoDB\BSON\ObjectId;
@@ -71,34 +72,59 @@ class AdminController extends Controller
     public function Overview()
     {
         try {
-            $UserToDay = Account::whereRaw('DATE(CREATED_AT)=CURRENT_DATE')->count();
-            $UserYesterDay = Account::whereRaw('DATE(CREATED_AT)=SUBDATE(CURRENT_DATE(),1)')->count();
-            $RevenueToDay = DB::table('enrollments')->whereRaw('DATE(ENROLL_TIME)=CURRENT_DATE')->join('payments', 'enrollments.enrollment_id', '=', 'payments.enrollment_id')->where('RECEIVER_ID', 1111)->sum('AMOUNT');
-            $RevenueYesterDay = DB::table('enrollments')->whereRaw('DATE(ENROLL_TIME)=SUBDATE(CURRENT_DATE(),1)')->join('payments', 'enrollments.enrollment_id', '=', 'payments.enrollment_id')->where('RECEIVER_ID', 1111)->sum('AMOUNT');
-            $TotalRevenue = DB::table('payments')->where('RECEIVER_ID', 1111)->sum('AMOUNT');
+            if (isset($_COOKIE['StudyMateAdmin'])) {
+                $id = $_COOKIE['StudyMateAdmin'];
+                $UserToDay = Account::whereRaw('DATE(CREATED_AT)=CURRENT_DATE')->count();
+                $UserYesterDay = Account::whereRaw('DATE(CREATED_AT)=SUBDATE(CURRENT_DATE(),1)')->count();
+                $RevenueToDay = DB::table('enrollments')->whereRaw('DATE(ENROLL_TIME)=CURRENT_DATE')->join('payments', 'enrollments.enrollment_id', '=', 'payments.enrollment_id')->where('RECEIVER_ID', $id)->sum('AMOUNT');
+                $RevenueYesterDay = DB::table('enrollments')->whereRaw('DATE(ENROLL_TIME)=SUBDATE(CURRENT_DATE(),1)')->join('payments', 'enrollments.enrollment_id', '=', 'payments.enrollment_id')->where('RECEIVER_ID', $id)->sum('AMOUNT');
+                $TotalRevenue = DB::table('payments')->where('RECEIVER_ID', $id)->sum('AMOUNT');
 
 
-            $topCourse =  DB::table('enrollments')->selectRaw('enrollments.course_id, courses.COURSE_NAME ,COUNT(enrollments.course_id) as enrolled')->join('courses', 'enrollments.course_id', '=', 'courses.course_id')->groupBy('enrollments.course_id', 'courses.COURSE_NAME')->get();
+                $topCourse =  DB::select("SELECT C.COURSE_ID , c.COURSE_NAME, IFNULL(registered,0) as registered
+                FROM COURSES C 
+                LEFT JOIN (SELECT COURSE_ID, COUNT(*) as registered
+                          FROM enrollments 
+                          GROUP BY enrollments.COURSE_ID) a on c.COURSE_ID = a.Course_ID
+                ORDER BY registered DESC
+                LIMIT 5");
 
-            $topUser = DB::table('Comments')
-                ->selectRaw('Comments.user_id, users.fullname ,COUNT(Comments.user_id) as voted')
-                ->join('comment_votes', 'comments.comment_id', '=', 'comment_votes.comment_id')
-                ->where('COMMENT_VOTE_STATE', 1)
-                ->groupBy('comments.user_id', 'users.fullname')
-                ->join('users', 'comments.user_id', '=', 'users.user_id')->get();
-            $ans = (object)[
-                'UserToDay'=>$UserToDay,
-                'UserYesterDay' =>$UserYesterDay,
-                'RevenueToDay' =>$RevenueToDay,
-                'RevenueYesterDay' =>$RevenueYesterDay,
-                'TotalRevenue' =>$TotalRevenue,
-                'topCourse' =>$topCourse,
-                'topUser' =>$topUser,
-            ];
-            return response()->json([
-                'status' => 400,
-                'message' => $ans
-            ]);
+                $topUser = DB::select("SELECT USERS.USER_ID,USERS.FULLNAME,IFNULL(voted,0) as voted
+                FROM USERS
+                LEFT JOIN (
+                    SELECT COMMENTS.USER_ID, COUNT(*) as voted
+                    FROM COMMENTS JOIN (SELECT COMMENT_ID
+                                               FROM COMMENT_VOTES
+                                            WHERE COMMENT_VOTE_STATE = 1) as B ON COMMENTS.COMMENT_ID = B.COMMENT_ID
+                    GROUP BY USER_ID
+                ) as C ON USERS.USER_ID=C.USER_ID
+                ORDER BY voted DESC
+                LIMIT 5");
+
+                $payments = DB::select(@"SELECT * FROM PAYMENTS P JOIN Enrollments E ON P.ENROLLMENT_ID = E.ENROLLMENT_ID WHERE RECEIVER_ID = " . $id);
+                $ans = (object)[
+                    'UserToDay' => $UserToDay,
+                    'UserYesterDay' => $UserYesterDay,
+                    'RevenueToDay' => $RevenueToDay,
+                    'RevenueYesterDay' => $RevenueYesterDay,
+                    'TotalRevenue' => $TotalRevenue,
+                    'topCourse' => $topCourse,
+                    'topUser' => $topUser,
+                    'Courses' => Course::all(),
+                    'Accounts' => Account::all(),
+                    'Payments' => $payments,
+                ];
+                return response()->json([
+                    'status' => 400,
+                    'message' => $ans
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 400,
@@ -106,7 +132,7 @@ class AdminController extends Controller
             ]);
         }
     }
-    public function GetUserByID(Request $request)
+    public function GetCourseByID(Request $request)
     {
         try {
             $course = Course::where('COURSE_ID', $request->course_id)->first();
@@ -138,6 +164,7 @@ class AdminController extends Controller
                 'Category' => $main_type,
                 'CourseTitle' => $course->COURSE_NAME,
                 'Description' => $course->COURSE_DESC,
+                'Price' => (int)$course->FEE,
                 'Image' => '/' . $course->IMG,
                 'SubCategory' => $course->COURSE_TYPE_ID,
                 'ListIn' => $list_in,
@@ -266,6 +293,89 @@ class AdminController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => $th->__toString(),
+            ]);
+        }
+    }
+    public function AdminLogin(Request $request)
+    {
+        $status_code = 200;
+        $message = "Đăng nhập thành công";
+        try {
+            $User = User::where('email', $request->username)->first();
+            $Account = Account::where('username', $request->username)->first();
+            $ID = $User ? $User->USER_ID : ($Account ? $Account->USER_ID : null);
+            $Account = $Account ? $Account : Account::where('user_id', $ID)->first();
+            if (($User || $Account) && $Account->ACCOUNT_ROLE == 'Admin') {
+                if (!password_verify($request->password, $Account->PWD)) {
+                    $status_code = 400;
+                    $message = "Sai mật khẩu";
+                } else {
+                    setcookie("StudyMateAdmin", $ID, time() + 60 * 60 * 24, "/");
+                }
+            } else {
+
+                $status_code = 400;
+                $message = 'Email hoặc username không hợp lệ';
+            }
+            return response()->json([
+                'status' => $status_code,
+                'message' => $message,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 404,
+                'message' => $ID,
+            ]);
+        }
+    }
+    public function GetCurrentUser()
+    {
+        try {
+            if (isset($_COOKIE['StudyMateAdmin'])) {
+                $id = $_COOKIE['StudyMateAdmin'];
+                $user = User::where('USER_ID', $id)->first();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Lay User thanh cong',
+                    'user' => $user
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+    public function GetApprovaled(){
+        try {
+
+            return response()->json([
+                'status' => 200,
+                'message' => Approval::all()
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th,
+            ]);
+        }
+    }
+    public function GetUserByID(Request $request)
+    {
+        try {
+           
+            return response()->json([
+                'status' => 200,
+                'message' => User::where('USER_ID',$request->user_id)->first()
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th,
             ]);
         }
     }
