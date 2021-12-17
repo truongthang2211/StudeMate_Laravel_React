@@ -34,7 +34,7 @@ function Profile(props) {
             });
 
             axios.post('/api/get-list-upped-courses', User).then(res => {
-                //console.log(res);
+                console.log(res);
                 if (res.data.status === 200) {
                     setUppedCourses(res.data.uppedCourses);
                 }
@@ -70,7 +70,7 @@ function Profile(props) {
             <div className="all-profile">
                 <link rel="stylesheet" href="/css/override-container.css" />
                 <div className="profile-background">
-                    <img src={`/${props.User.BACKGROUND_IMG}` || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
+                    <img src={`/${User.BACKGROUND_IMG}` || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
                     <div className="profile-background-shadow"></div>
                 </div>
                 <div className="container main-profile">
