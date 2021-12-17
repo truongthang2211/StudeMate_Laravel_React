@@ -59,6 +59,9 @@ Route::get('/get-courses', [CourseController::class, 'GetCourses']);
 Route::post('/get-courses-by-subtype', [CourseController::class, 'GetCoursesBySubtype']);
 Route::post('/get-courses-by-maintype', [CourseController::class, 'GetCoursesByMaintype']);
 Route::post('/get-course-detail', [CourseController::class, 'GetCourseDetailByCourseId']);
+Route::post('/get-reviews', [CourseController::class, 'GetReviewsByCourseId']);
+Route::post('/add-review', [CourseController::class, 'AddCourseReview']);
+Route::post('/check-enrolled', [CourseController::class, 'CheckEnrolled']);
 
 
 Route::get('/sign-out', [LoginController::class, 'SignOut']);

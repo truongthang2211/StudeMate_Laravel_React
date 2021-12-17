@@ -1,15 +1,148 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Course.css'
+import Swal from 'sweetalert2'
 import CourseGain from '../../components/CourseGain';
 import CourseRequire from '../../components/CourseRequire';
 import CourseChapter from '../../components/CourseChapter';
 import CourseLesson from '../../components/CourseLesson';
 import Collapsible from '../../components/Collapsible/Collapsible';
 
+function InputReviewBlock(props) {
+    const [reviewContent, setReviewContent] = useState();
+    const [voteUp, setVoteUp] = useState(false);
+    const [voteDown, setVoteDown] = useState(false);
+    const reviewRef = useRef();
+    const handleVoteUp = () => {
+        setVoteUp(up => !up)
+        if (voteDown) {
+            handleVoteDown()
+        }
+    }
+    const handleVoteDown = () => {
+        setVoteDown(down => !down)
+        if (voteUp) {
+            handleVoteUp()
+        }
+    }
+    // TextArea
+    const handleOnPaste = (e) => {
+        e.preventDefault();
+        var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand("insertHTML", false, text);
+    }
+    const handleOnChange = (e) => {
+        setReviewContent(e.target.value);
+    }
+
+    const handleSubmit = async () => {
+        if (props.checkCommented) {
+            if (!voteUp && !voteDown) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Vui lòng vote cho khóa học!',
+                })
+            }
+            else {
+                const data = {
+                    course_id: props.courseId,
+                    content: reviewContent,
+                    state: voteUp ? 1 : 0,
+                };
+                setReviewContent('');
+                setVoteUp(false);
+                setVoteDown(false);
+                const res = await axios.post('/api/add-review', data);
+                console.log(res)
+                if (res.data.status === 200) {
+                    props.showReviews();
+                }
+            }
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Bạn đã đánh giá cho khóa học này rồi!',
+            })
+        }
+    }
+
+    return (
+        <div className="input-review-block">
+            <div className="user-avatar">
+                <img src={props.userImg} />
+            </div>
+            <div className="input-review-content">
+                <textarea className="review-input"
+                    ref={reviewRef}
+                    autoFocus
+                    placeholder="Viết gì gì đó đi..."
+                    tabIndex="0"
+                    dir="ltr"
+                    spellCheck="false"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    onPaste={handleOnPaste}
+                    value={reviewContent}
+                    onChange={handleOnChange}
+                >
+                </textarea>
+                <div className="review-option">
+                    <ul>
+                        <li onClick={handleVoteUp}>
+                            <i className={voteUp ? "far fa-thumbs-up like active" : "far fa-thumbs-up like"}></i>
+                        </li>
+                        <li onClick={handleVoteDown}>
+                            <i className={voteDown ? "far fa-thumbs-down dislike active" : "far fa-thumbs-down dislike"}></i>
+                        </li>
+                        <li>
+                            <button onClick={handleSubmit} className="btn btn-review">Đánh giá</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function Review(props) {
+    return (
+        <div className="wrap-review">
+            <div className="user-avatar">
+                <img src={props.img} />
+            </div>
+            <div className="review-content">
+                <div className="review-body">
+                    <div className="review-user">
+                        <a href="#"><strong>{props.username}</strong></a>
+                    </div>
+                    <div className="review-text">{props.content}</div>
+                </div>
+                <div className="review-footer">
+                    <i className={props.state === 1 ? "far fa-thumbs-up like-color" : "far fa-thumbs-down dislike-color"}></i>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export default function Course({ User, handleShowForm }) {
+
+    const cookieObj = new URLSearchParams(document.cookie.replaceAll("; ", "&"))
+    const user_id = cookieObj.get("StudyMate")
+
+    const msecToTime = ms => {
+        const seconds = Math.floor((ms / 1000) % 60)
+        const minutes = Math.floor((ms / (60 * 1000)) % 60)
+        const hours = Math.floor((ms / (3600 * 1000)) % 3600)
+        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds
+            }`
+    }
     const handleRegister = (e) => {
         if (User.loading) {
             e.preventDefault();
@@ -19,6 +152,9 @@ export default function Course({ User, handleShowForm }) {
 
     const { courseId } = useParams();
     const [course, setCourse] = useState();
+    const [reviews, setReviews] = useState([]);
+    const [checkEnrolled, setCheckEnrolled] = useState(false);
+
     useEffect(async () => {
         try {
             const resCourse = await axios.post('/api/get-course-detail', { courseId });
@@ -27,14 +163,35 @@ export default function Course({ User, handleShowForm }) {
         } catch (error) {
             console.log(error);
         }
-    }, []);
-    const msecToTime = ms => {
-        const seconds = Math.floor((ms / 1000) % 60)
-        const minutes = Math.floor((ms / (60 * 1000)) % 60)
-        const hours = Math.floor((ms / (3600 * 1000)) % 3600)
-        return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds
-            }`
+    }, [courseId]);
+
+    useEffect(async () => {
+        try {
+            const resCheck = await axios.post('/api/check-enrolled', { courseId });
+            const flag = resCheck && resCheck.data.message.USER_ID == user_id && resCheck.data.message.COURSE_ID == courseId;
+            setCheckEnrolled(flag);
+            console.log(resCheck);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [courseId]);
+
+    const showReviews = async () => {
+        try {
+            const res = await axios.post(`/api/get-reviews`, { course_id: courseId });
+            console.log(res)
+            setReviews(res.data.message)
+        } catch (error) {
+            console.log(error)
+        }
     }
+    useEffect(() => {
+        showReviews();
+        // console.log('testest')
+    }, [courseId])
+
+    console.log(User);
+
     return (
         <>
             <div id="main">
@@ -94,6 +251,23 @@ export default function Course({ User, handleShowForm }) {
                                         )}
                                     </ul>
                                 </div>
+                                <div className="course-reviews">
+                                    <h3 className="review-title">Đánh giá khóa học</h3>
+                                    {checkEnrolled ? <InputReviewBlock
+                                        userImg={User.AVATAR_IMG}
+                                        checkCommented={reviews && reviews.filter(e => e.user.USER_ID == user_id).length == 0 ? true : false}
+                                        showReviews={showReviews}
+                                        courseId={courseId}
+                                        response={reviews} /> : <div></div>
+                                    }
+                                    <div className="list-review-block">
+                                        {reviews.map((review, index) => {
+                                            return (
+                                                <Review key={index} img={review.user.AVATAR_IMG} username={review.user.FULLNAME} content={review.review_content} state={review.review_state} />
+                                            )
+                                        })}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="grid__column-4">
@@ -104,7 +278,9 @@ export default function Course({ User, handleShowForm }) {
                                     <p>Xem giới thiệu khóa học</p>
                                 </div>
                                 <h5 className="course-fee">Miễn phí</h5>
-                                <Link to="/learn" onClick={handleRegister} className="course-btn">ĐĂNG KÝ HỌC</Link>
+                                <Link to="/learn" onClick={handleRegister} className="course-btn">
+                                    {checkEnrolled ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
+                                </Link>
                                 <ul>
                                     <li>
                                         <i className="fas fa-seedling"></i>

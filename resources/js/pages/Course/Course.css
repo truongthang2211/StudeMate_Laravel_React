@@ -14,6 +14,27 @@ font-size: 16px;
 background-color: #f1f1f1;
 }
 
+:root {
+    --main-blue: #00A19D;
+    --main-yellow: #FFB344;
+    --main-red: #E05D5D;
+    --main-green: #6ECB63;
+    --white: #fff;
+    --title: #3b3c54;
+    --text: #42526e;
+    --menu-transition: 0.7s;
+    --box-shadow-color: rgba(188, 188, 188, .5);
+}
+
+/* COMMON */
+.like-color{
+    color: var(--main-green) !important;
+}
+
+.dislike-color{
+    color: var(--main-red) !important;
+}
+
 /* COMMON */
 #main ul{
 display: flex;
@@ -226,4 +247,104 @@ padding-left: 18px;
 #main .course-thumb img{
 width: 98%;
 filter: brightness(0.7);
+}
+
+/* COURSE REVIEW */
+.review-title{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    margin-top: 24px;
+}
+.user-avatar{
+    flex-shrink: 0;
+}
+.user-avatar img{
+    border-radius: 50%;
+    height: 64px;
+    width: 64px;
+}
+.input-review-block{
+    display: flex;
+    width: 100%;
+    margin-bottom: 24px;
+}
+.input-review-block .input-review-content{
+    background-color: #fbf8f8;
+    margin-left: 16px;
+    padding: 12px 12px 4px 12px;
+    flex: 1;
+    min-height: 120px;
+    height: auto;
+    border-radius: 0.5rem;
+}
+.input-review-block .review-input{
+    width: 100%;
+    background-color: transparent;
+    flex-grow: 1;
+    overflow: hidden;
+    border: none !important;
+    resize: none !important;
+    outline: none !important;
+}
+.input-review-block .review-option ul{
+    float: right;
+}
+.input-review-block .review-option li{
+    float: right !important;
+    margin-left: 12px;
+    padding-bottom: 0 !important;
+}
+.input-review-block .review-option i{
+    font-size: 32px !important;
+    color: #494949 !important;
+}
+.input-review-block .like:hover{
+    font-size: 40px !important;
+    cursor: pointer;
+    color: var(--main-green) !important;
+}
+.input-review-block .dislike:hover{
+    font-size: 40px !important;
+    cursor: pointer;
+    color: var(--main-red) !important;
+}
+.input-review-block .like.active{
+    cursor: pointer;
+    color: var(--main-green) !important;
+}
+.input-review-block .dislike.active{
+    cursor: pointer;
+    color: var(--main-red) !important;
+}
+.input-review-block .btn-review {
+    background-color: var(--main-red);
+    color: #fff;
+    padding: 4px 16px;
+    float: right;
+}
+.input-review-block .btn-review:hover {
+    background-color: var(--main-yellow);
+    color: #fff;
+}
+
+.wrap-review {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 24px;
+}
+.wrap-review i{
+    font-size: 32px !important;
+}
+.wrap-review .review-content{
+    width: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+    background-color: #fbf8f8 !important;
+    margin-left: 16px;
+    padding: 12px 12px 4px 12px;
+    border-radius: 0.5rem;
+}
+.wrap-review .review-footer{
+    float: right;
 }

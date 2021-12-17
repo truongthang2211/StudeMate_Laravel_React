@@ -195,6 +195,33 @@ class CourseController extends Controller
             ]);
         }
     }
+    public function CheckEnrolled(Request $request)
+    {
+        try {
+            if (isset($_COOKIE['StudyMate'])) {
+                $user_id = $_COOKIE['StudyMate'];
+                $ans = DB::table('enrollments')
+                    ->where('user_id', $user_id)
+                    ->where('course_id', $request->courseId)
+                    ->first();
+                return response()->json([
+                    'status' => 200,
+                    'message' => $ans
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 
     public function GetCourseDetailByCourseId(Request $request)
     {
@@ -680,6 +707,62 @@ class CourseController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => $th,
+            ]);
+        }
+    }
+    public function GetReviewsByCourseId(Request $request)
+    {
+        try {
+            $review_list = DB::table('course_reviews')
+                ->where('course_id', $request->course_id)->get();
+            $ans = array();
+            foreach ($review_list as $review) {
+                $user = DB::table('users')
+                    ->where('user_id', $review->USER_ID)->first();
+                $obj = (object)[
+                    'user' => $user,
+                    'review_content' => $review->CONTENT,
+                    'review_state' => $review->COURSE_REVIEW_STATE
+                ];
+                array_push($ans, $obj);
+            }
+            return response()->json([
+                'status' => 200,
+                'message' => $ans
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+    public function AddCourseReview(Request $request)
+    {
+        try {
+            if (isset($_COOKIE['StudyMate'])) {
+                $id = $_COOKIE['StudyMate'];
+                $review = new Course_Review();
+                $review->USER_ID = $id;
+                $review->COURSE_ID = $request->course_id;
+                $review->COURSE_REVIEW_STATE = $request->state;
+                $review->CONTENT = $request->content;
+                $review->save();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Thêm course_review thành công'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th->getMessage(),
             ]);
         }
     }
