@@ -74,7 +74,7 @@ function InputReviewBlock(props) {
     return (
         <div className="input-review-block">
             <div className="user-avatar">
-                <img src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=i1SBPX81GKUAX_deJFe&_nc_ht=scontent.fsgn5-11.fna&oh=d685f02a12ebb0131217f4705e5c5795&oe=61C416A0" />
+                <img src={props.userImg} />
             </div>
             <div className="input-review-content">
                 <textarea className="review-input"
@@ -153,7 +153,7 @@ export default function Course({ User, handleShowForm }) {
     const { courseId } = useParams();
     const [course, setCourse] = useState();
     const [reviews, setReviews] = useState([]);
-    const [checkEnrolled, setCheckEnrolled] = useState(0);
+    const [checkEnrolled, setCheckEnrolled] = useState(false);
 
     useEffect(async () => {
         try {
@@ -167,16 +167,14 @@ export default function Course({ User, handleShowForm }) {
 
     useEffect(async () => {
         try {
-            const resCheck = await axios.post('/api/check-enrolled',{courseId});
-            if (resCheck && resCheck.data.message.USER_ID === user_id && resCheck.data.message.COURSE_ID === courseId) {
-                setCheckEnrolled(1);
-            }
+            const resCheck = await axios.post('/api/check-enrolled', { courseId });
+            const flag = resCheck && resCheck.data.message.USER_ID == user_id && resCheck.data.message.COURSE_ID == courseId;
+            setCheckEnrolled(flag);
             console.log(resCheck);
         } catch (error) {
             console.log(error);
         }
     }, [courseId]);
-
 
     const showReviews = async () => {
         try {
@@ -191,6 +189,8 @@ export default function Course({ User, handleShowForm }) {
         showReviews();
         // console.log('testest')
     }, [courseId])
+
+    console.log(User);
 
     return (
         <>
@@ -253,7 +253,8 @@ export default function Course({ User, handleShowForm }) {
                                 </div>
                                 <div className="course-reviews">
                                     <h3 className="review-title">Đánh giá khóa học</h3>
-                                    {checkEnrolled === 0 ? <InputReviewBlock
+                                    {checkEnrolled ? <InputReviewBlock
+                                        userImg={User.AVATAR_IMG}
                                         checkCommented={reviews && reviews.filter(e => e.user.USER_ID == user_id).length == 0 ? true : false}
                                         showReviews={showReviews}
                                         courseId={courseId}
@@ -278,7 +279,7 @@ export default function Course({ User, handleShowForm }) {
                                 </div>
                                 <h5 className="course-fee">Miễn phí</h5>
                                 <Link to="/learn" onClick={handleRegister} className="course-btn">
-                                    {checkEnrolled === 1 ? "ĐĂNG KÝ HỌC" : "VÀO HỌC"}
+                                    {checkEnrolled ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
                                 </Link>
                                 <ul>
                                     <li>
