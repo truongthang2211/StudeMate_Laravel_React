@@ -8,15 +8,17 @@ function Profile(props) {
     const { user_id } = useParams();
     const [User, setUser] = useState(props.User)
     const [courseItem, setCourseItem] = useState([]);
-    const [courseInfo, setCourseInfo] = useState([]);
+    // const [courseInfo, setCourseInfo] = useState([]);
+    const [learntCourses, setLearntCourses] = useState([]);
+    const [uppedCourses, setUppedCourses] = useState([]);
     useEffect(async () => {
-        const res = await axios.post('/api/get-user', {user_id: user_id})
+        const res = await axios.post('/api/get-user', { user_id: user_id })
         setUser(res.data.message)
     }, [])
     useEffect(() => {
 
         if (User) {
-            showCourseInfo();
+            // showCourseInfo();
             axios.post('/api/get-course-item', User).then(res => {
                 //console.log(res);
                 if (res.data.status === 200) {
@@ -24,30 +26,43 @@ function Profile(props) {
                 }
             });
 
+            axios.post('/api/get-list-learnt-courses', User).then(res => {
+                //console.log(res);
+                if (res.data.status === 200) {
+                    setLearntCourses(res.data.learntCourses);
+                }
+            });
+
+            axios.post('/api/get-list-upped-courses', User).then(res => {
+                //console.log(res);
+                if (res.data.status === 200) {
+                    setUppedCourses(res.data.uppedCourses);
+                }
+            });
         }
     }, [User]);
-    
 
-    const showCourseInfo = async () => {
-        try {
-            const res = await axios.post('/api/get-course-info', User);
-            console.log(res);
-            if (res.data.status === 200) {
-                setCourseInfo({
-                    learntCourse: res.data.learntCourse,
-                    uppedCourse: res.data.uppedCourse,
-                });
-                console.log({
-                    learntCourse: res.data.learntCourse,
-                    uppedCourse: res.data.uppedCourse,
-                }
-                )
-            }
 
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const showCourseInfo = async () => {
+    //     try {
+    //         const res = await axios.post('/api/get-course-info', User);
+    //         //console.log(res);
+    //         if (res.data.status === 200) {
+    //             setCourseInfo({
+    //                 learntCourse: res.data.learntCourse,
+    //                 uppedCourse: res.data.uppedCourse,
+    //             });
+    //             console.log({
+    //                 learntCourse: res.data.learntCourse,
+    //                 uppedCourse: res.data.uppedCourse,
+    //             }
+    //             )
+    //         }
+
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return (
         <>
@@ -55,7 +70,7 @@ function Profile(props) {
             <div className="all-profile">
                 <link rel="stylesheet" href="/css/override-container.css" />
                 <div className="profile-background">
-                    <img src={User.BACKGROUND_IMG || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
+                    <img src={`/${props.User.BACKGROUND_IMG}` || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
                     <div className="profile-background-shadow"></div>
                 </div>
                 <div className="container main-profile">
@@ -71,43 +86,28 @@ function Profile(props) {
                                             courseItem={course}
                                         />
                                     ))}
-
-
-                                    {/* <div className="course-item">
-                                        <div className="course-avt">
-                                            <img src="https://codelearn.io/CodeCamp/CodeCamp/Upload/Course/1e746fe3cbe448bda850d8b953a78954.jpg" alt="" />
-                                        </div>
-                                        <div className="course-info">
-                                            <div className="course-info-title">
-                                                <a href="#">
-                                                    <h4>Java căn bản</h4>
-                                                </a>
-                                            </div>
-                                            <div className="course-info-author">
-                                                <a href="#">
-                                                    <p>Nguyễn Văn Ây</p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="course-item">
-                                        <div className="course-avt">
-                                            <img src="	https://codelearn.io/CodeCamp/CodeCamp/Upload/Course/adbef92753d242bcb79ca8f74cd615a5.jpg" alt="" />
-                                        </div>
-                                        <div className="course-info">
-                                            <div className="course-info-title">
-                                                <a href="#">
-                                                    <h4>SQL căn bản</h4>
-                                                </a>
-                                            </div>
-                                            <div className="course-info-author">
-                                                <a href="#">
-                                                    <p>Nguyễn Văn Bi</p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div> */}
                                 </div>
+
+                                <h3>Khóa học đã học</h3>
+                                <div className="course-section">
+                                    {learntCourses.map(course => (
+                                        <ProfileCourseItem
+                                            key={course.COURSE_ID}
+                                            courseItem={course}
+                                        />
+                                    ))}
+                                </div>
+
+                                <h3>Khóa học đã đăng</h3>
+                                <div className="course-section">
+                                    {uppedCourses.map(course => (
+                                        <ProfileCourseItem
+                                            key={course.COURSE_ID}
+                                            courseItem={course}
+                                        />
+                                    ))}
+                                </div>
+
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-12 white right-content">
@@ -115,11 +115,11 @@ function Profile(props) {
                                 <h3>Khóa học</h3>
                                 <div className="learnt-course">
                                     <a href="#">Khóa học đã học</a>
-                                    <span>{courseInfo.learntCourse || 0}</span>
+                                    <span>{learntCourses.length || 0}</span>
                                 </div>
                                 <div className="upped-course">
                                     <a href="#">Khóa học đã đăng</a>
-                                    <span>{courseInfo.uppedCourse || 0}</span>
+                                    <span>{uppedCourses.length || 0}</span>
                                 </div>
                             </div>
                             <div className="life-info">
@@ -202,8 +202,8 @@ export function ProfileHeader({ User }) {
                     <p className="time"><i>{User.BIO || "Rồi ai cũng khát"}</i> </p>
                 </div>
                 <div className="profile-social">
-                    <a href={User.FACEBOOK || ""}><i className="fab fa-facebook-square"></i></a>
-                    <a href={User.LINKEDIN || ""}><i className="fab fa-linkedin"></i></a>
+                    <a href={User.FACEBOOK || ""} target="_blank"><i className="fab fa-facebook-square"></i></a>
+                    <a href={User.LINKEDIN || ""} target="_blank"><i className="fab fa-linkedin"></i></a>
                 </div>
             </div>
         </div >
@@ -217,8 +217,8 @@ export function ProfileCourseItem({ Option, className, courseItem }) {
     });
 
     useEffect(() => {
-        axios.post('/api/get-author').then(res => {
-            console.log(res);
+        axios.post('/api/get-author', courseItem).then(res => {
+            //console.log(res);
             if (res.data.status === 200) {
                 setAuthor({
                     AUTHOR_NAME: res.data.author[0].FULLNAME,
@@ -230,7 +230,7 @@ export function ProfileCourseItem({ Option, className, courseItem }) {
     return (
         <div className={className ? "course-item " + className : "course-item"}>
             <div className="course-avt">
-                <img src={courseItem.IMG || "https://codelearn.io/CodeCamp/CodeCamp/Upload/Course/1e746fe3cbe448bda850d8b953a78954.jpg"} alt="" />
+                <img src={`/${courseItem.IMG}` || "https://codelearn.io/CodeCamp/CodeCamp/Upload/Course/1e746fe3cbe448bda850d8b953a78954.jpg"} alt="" />
             </div>
             <div className="course-info">
                 <div className="course-info-title">
@@ -240,7 +240,7 @@ export function ProfileCourseItem({ Option, className, courseItem }) {
                 </div>
                 <div className="course-info-author">
                     <a href="#">
-                        <p>{author.FULLNAME}</p>
+                        <p>{author.AUTHOR_NAME}</p>
                     </a>
                 </div>
             </div>

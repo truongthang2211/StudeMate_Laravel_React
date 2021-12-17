@@ -71,6 +71,45 @@ class ProfileController extends Controller {
         }
     }
 
+    public function GetListLearntCourses(Request $request) {
+        try{
+            $learntCourses = Course::join('enrollments', 'enrollments.COURSE_ID', '=', 'courses.COURSE_ID')
+                            ->join('users', 'users.USER_ID', '=', 'enrollments.USER_ID')
+                            ->where('users.USER_ID', $request->USER_ID)
+                            ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
+
+            return response()->json([
+                'status'=> 200,
+                'learntCourses'=>$learntCourses,
+            ]);
+
+        } catch (\Throwable $th) { 
+            return response()->json([
+                'status'=> 422,
+                'message'=>$th->getMessage(),
+            ]);
+        }
+    }
+
+    public function GetListUppedCourses(Request $request) {
+        try{
+            $uppedCourses = Course::join('users', 'users.USER_ID', '=', 'courses.AUTHOR_ID')
+                            ->where('users.USER_ID', $request->USER_ID)
+                            ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
+
+            return response()->json([
+                'status'=> 200,
+                'uppedCourses'=>$uppedCourses,
+            ]);
+
+        } catch (\Throwable $th) { 
+            return response()->json([
+                'status'=> 422,
+                'message'=>$th->getMessage(),
+            ]);
+        }
+    }
+
     public function GetCourseInfo(Request $request) {
         try{
             $learntCourse = Course::join('enrollments', 'enrollments.COURSE_ID', '=', 'courses.COURSE_ID')

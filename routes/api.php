@@ -71,5 +71,7 @@ Route::put('/update-password', [MyInfoController::class, 'UpdatePassword']);
 
 Route::get('/get-city', [ProfileController::class, 'GetCity']);
 Route::post('/get-course-item', [ProfileController::class, 'GetProfileCourseItem']);
+Route::post('/get-list-learnt-courses', [ProfileController::class, 'GetListLearntCourses']);
+Route::post('/get-list-upped-courses', [ProfileController::class, 'GetListUppedCourses']);
 Route::post('/get-course-info', [ProfileController::class, 'GetCourseInfo']);
 Route::post('/get-author', [ProfileController::class, 'GetAuthor']);
