@@ -17,30 +17,16 @@ function Profile(props) {
     }, [])
     useEffect(() => {
 
-        if (User) {
-            // showCourseInfo();
-            axios.post('/api/get-course-item', User).then(res => {
-                //console.log(res);
-                if (res.data.status === 200) {
-                    setCourseItem(res.data.courses);
-                }
-            });
+        axios.get('/api/get-course-item').then(res => {
+            console.log(res);
+            if (res.data.status === 200) {
+                setCourseItem(res.data.courses);
+                setLearntCourses(res.data.learntCourses);
+                setUppedCourses(res.data.uppedCourses);
+            }
+        });
 
-            axios.post('/api/get-list-learnt-courses', User).then(res => {
-                //console.log(res);
-                if (res.data.status === 200) {
-                    setLearntCourses(res.data.learntCourses);
-                }
-            });
-
-            axios.post('/api/get-list-upped-courses', User).then(res => {
-                console.log(res);
-                if (res.data.status === 200) {
-                    setUppedCourses(res.data.uppedCourses);
-                }
-            });
-        }
-    }, [User]);
+    }, []);
 
 
     // const showCourseInfo = async () => {
@@ -70,7 +56,7 @@ function Profile(props) {
             <div className="all-profile">
                 <link rel="stylesheet" href="/css/override-container.css" />
                 <div className="profile-background">
-                    <img src={`/${User.BACKGROUND_IMG}` || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
+                    <img src={User.BACKGROUND_IMG && `/${User.BACKGROUND_IMG}` || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
                     <div className="profile-background-shadow"></div>
                 </div>
                 <div className="container main-profile">
@@ -212,21 +198,21 @@ export function ProfileHeader({ User }) {
 }
 export function ProfileCourseItem({ Option, className, courseItem }) {
 
-    const [author, setAuthor] = useState({
-        AUTHOR_ID: courseItem.AUTHOR_ID,
-        AUTHOR_NAME: '',
-    });
+    // const [author, setAuthor] = useState({
+    //     AUTHOR_ID: courseItem.AUTHOR_ID,
+    //     AUTHOR_NAME: '',
+    // });
 
-    useEffect(() => {
-        axios.post('/api/get-author', courseItem).then(res => {
-            //console.log(res);
-            if (res.data.status === 200) {
-                setAuthor({
-                    AUTHOR_NAME: res.data.author[0].FULLNAME,
-                });
-            }
-        });
-    }, [courseItem]);
+    // useEffect(() => {
+    //     axios.post('/api/get-author', courseItem).then(res => {
+    //         //console.log(res);
+    //         if (res.data.status === 200) {
+    //             setAuthor({
+    //                 AUTHOR_NAME: res.data.author[0].FULLNAME,
+    //             });
+    //         }
+    //     });
+    // }, [courseItem]);
 
     return (
         <div className={className ? "course-item " + className : "course-item"}>
@@ -241,7 +227,7 @@ export function ProfileCourseItem({ Option, className, courseItem }) {
                 </div>
                 <div className="course-info-author">
                     <a href="#">
-                        <p>{author.AUTHOR_NAME}</p>
+                        <p>{courseItem.FULLNAME}</p>
                     </a>
                 </div>
             </div>

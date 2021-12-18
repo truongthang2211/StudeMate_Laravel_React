@@ -49,19 +49,38 @@ class ProfileController extends Controller {
             //                 ->where('users.USER_ID', $request->USER_ID)
             //                 ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
 
-            $courses = DB::table('users')->join('learnings', 'learnings.USER_ID', '=', 'users.USER_ID')
-                            ->join('lessons ', 'lessons.LESSON_ID', '=', 'learnings.LESSON_ID')
-                            ->join('course_chapters', 'course_chapters.COURSE_CHAPTER_ID', '=', 'lessons.CHAPTER_ID')
-                            ->join('courses', 'courses.COURSE_ID', '=', 'course_chapters.COURSE_ID')
-                            ->where('users.USER_ID', $request->USER_ID)
-                            ->orderBy('LEARN_TIME', 'DESC')
-                            ->take(3)
-                            ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
+            if (isset($_COOKIE['StudyMate'])) {
+                $id = $_COOKIE['StudyMate'];
+
+            $courses = DB::select("SELECT courses.COURSE_ID, COURSE_NAME, IMG, FULLNAME FROM lessons, learnings, course_chapters ,courses, users
+            WHERE lessons.LESSON_ID = learnings.LESSON_ID and course_chapters.COURSE_CHAPTER_ID = lessons.CHAPTER_ID
+            and courses.COURSE_ID = course_chapters.COURSE_ID and users.USER_ID = courses.AUTHOR_ID and learnings.USER_ID = $id
+            GROUP BY courses.COURSE_ID, COURSE_NAME, IMG, FULLNAME
+            ORDER BY LEARN_TIME DESC LIMIT 3");
+
+            $learntCourses = Course::join('enrollments', 'enrollments.COURSE_ID', '=', 'courses.COURSE_ID')
+            ->join('users', 'users.USER_ID', '=', 'courses.AUTHOR_ID')
+            ->where('enrollments.USER_ID', $id)->where('COURSE_STATE', 'Công khai')
+            ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'FULLNAME']);
+
+            $uppedCourses = Course::join('users', 'users.USER_ID', '=', 'courses.AUTHOR_ID')
+                            ->where('courses.AUTHOR_ID', $id)->where('COURSE_STATE', 'Công khai')
+                            ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'FULLNAME']);
 
             return response()->json([
                 'status'=> 200,
                 'courses'=>$courses,
+                'learntCourses'=>$learntCourses,
+                'uppedCourses'=>$uppedCourses
             ]);
+
+        } else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Cookies het han',
+                'user' => null
+            ]);
+        }
 
         } catch (\Throwable $th) { 
             return response()->json([
@@ -75,9 +94,9 @@ class ProfileController extends Controller {
         try{
             $learntCourses = Course::join('enrollments', 'enrollments.COURSE_ID', '=', 'courses.COURSE_ID')
                             ->join('users', 'users.USER_ID', '=', 'enrollments.USER_ID')
-                            ->where('users.USER_ID', $request->USER_ID)->where('COURSE_STATE', 'Công khai')
+                            ->where('enrollments.USER_ID', $request->USER_ID)->where('COURSE_STATE', 'Công khai')
                             ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
-
+            
             return response()->json([
                 'status'=> 200,
                 'learntCourses'=>$learntCourses,
