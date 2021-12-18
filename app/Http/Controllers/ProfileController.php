@@ -54,7 +54,7 @@ class ProfileController extends Controller {
                             ->join('course_chapters', 'course_chapters.COURSE_CHAPTER_ID', '=', 'lessons.CHAPTER_ID')
                             ->join('courses', 'courses.COURSE_ID', '=', 'course_chapters.COURSE_ID')
                             ->where('users.USER_ID', $request->USER_ID)
-                            ->orderBy('LEARN_TIME', DESC)
+                            ->orderBy('LEARN_TIME', 'DESC')
                             ->take(3)
                             ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
 
@@ -75,7 +75,7 @@ class ProfileController extends Controller {
         try{
             $learntCourses = Course::join('enrollments', 'enrollments.COURSE_ID', '=', 'courses.COURSE_ID')
                             ->join('users', 'users.USER_ID', '=', 'enrollments.USER_ID')
-                            ->where('users.USER_ID', $request->USER_ID)
+                            ->where('users.USER_ID', $request->USER_ID)->where('COURSE_STATE', 'Công khai')
                             ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
 
             return response()->json([
@@ -94,7 +94,7 @@ class ProfileController extends Controller {
     public function GetListUppedCourses(Request $request) {
         try{
             $uppedCourses = Course::join('users', 'users.USER_ID', '=', 'courses.AUTHOR_ID')
-                            ->where('users.USER_ID', $request->USER_ID)
+                            ->where('users.USER_ID', $request->USER_ID)->where('COURSE_STATE', 'Công khai')
                             ->get(['courses.COURSE_ID', 'COURSE_NAME', 'IMG', 'AUTHOR_ID']);
 
             return response()->json([

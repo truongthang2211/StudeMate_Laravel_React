@@ -87,7 +87,8 @@ function Profile(props) {
                                         />
                                     ))}
                                 </div>
-
+                            </div>
+                            <div className="recent-learn" id="learnt-course">
                                 <h3>Khóa học đã học</h3>
                                 <div className="course-section">
                                     {learntCourses.map(course => (
@@ -97,7 +98,8 @@ function Profile(props) {
                                         />
                                     ))}
                                 </div>
-
+                            </div>
+                            <div className="recent-learn" id="created-course">
                                 <h3>Khóa học đã đăng</h3>
                                 <div className="course-section">
                                     {uppedCourses.map(course => (
@@ -107,18 +109,17 @@ function Profile(props) {
                                         />
                                     ))}
                                 </div>
-
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-12 white right-content">
                             <div className="course-profile-info">
                                 <h3>Khóa học</h3>
                                 <div className="learnt-course">
-                                    <a href="#">Khóa học đã học</a>
+                                    <a href="#learnt-course">Khóa học đã học</a>
                                     <span>{learntCourses.length || 0}</span>
                                 </div>
                                 <div className="upped-course">
-                                    <a href="#">Khóa học đã đăng</a>
+                                    <a href="#created-course">Khóa học đã đăng</a>
                                     <span>{uppedCourses.length || 0}</span>
                                 </div>
                             </div>
