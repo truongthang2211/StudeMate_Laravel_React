@@ -3,7 +3,7 @@ import SignUpForm from '../../components/SignUpForm';
 
 import './Login.css'
 function Login() {
- 
+
     const revealAnimations = () => {
         const sr = window.sr = ScrollReveal()
         sr.reveal('.feature', {
@@ -54,7 +54,7 @@ function Login() {
                         <section className="hero">
                             <div className="container">
                                 <div className="hero-inner">
-                                    <SignUpForm/>
+                                    <SignUpForm />
                                     <div className="hero-media">
                                         <div className="header-illustration">
                                             <img className="header-illustration-image asset-light"
@@ -66,7 +66,7 @@ function Login() {
                                                 alt="Hero media illustration" />
                                         </div>
                                         <div className="hero-media-container">
-                                            <img className="hero-media-image asset-light" src="https://ih1.redbubble.net/image.1744015318.0248/st,small,507x507-pad,600x600,f8f8f8.jpg"
+                                            <img className="hero-media-image asset-light" src="\img\courses\register.PNG"
                                                 alt="Hero media" />
                                         </div>
                                     </div>
@@ -88,7 +88,9 @@ function Login() {
                                                 <img className="features-illustration asset-light"
                                                     src="img/login/features-illustration-light.svg"
                                                     alt="Feature illustration" />
-                                                <img className="features-box asset-light" src="img/login/features-box-light.svg"
+                                                {/* <img className="features-box asset-light" src="img/login/features-box-light.svg"
+                                                    alt="Feature box" /> */}
+                                                <img className="features-box asset-light" src="https://thumbs.dreamstime.com/b/join-us-hand-drawn-illustration-cartoon-style-holding-sign-red-white-join-us-hand-drawn-illustration-cartoon-style-holding-153300538.jpg"
                                                     alt="Feature box" />
                                                 <img className="features-illustration asset-light"
                                                     src="img/login/features-illustration-top-light.svg"
