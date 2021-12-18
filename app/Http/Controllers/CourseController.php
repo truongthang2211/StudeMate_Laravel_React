@@ -390,13 +390,13 @@ class CourseController extends Controller
         try {
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
-                $this_course = Course::where('COURSE_ID',$course_id)->first();
-                $CourseType = Course_SubType::where('COURSE_SUBTYPE_ID',$this_course->COURSE_TYPE_ID)->first();
-                $CourseMainType = Course_MainType::where('COURSE_MAINTYPE_ID',$CourseType->PARENT_TYPE_ID)->first();
+                $this_course = Course::where('COURSE_ID', $course_id)->first();
+                $CourseType = Course_SubType::where('COURSE_SUBTYPE_ID', $this_course->COURSE_TYPE_ID)->first();
+                $CourseMainType = Course_MainType::where('COURSE_MAINTYPE_ID', $CourseType->PARENT_TYPE_ID)->first();
                 $chapters = Course_Chapter::where('COURSE_ID', $course_id);
                 $lesson = 0;
                 $lesson = Learning::where('USER_ID', $id)
-                    ->whereIn('LESSON_ID',Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))
+                    ->whereIn('LESSON_ID', Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))
                     ->max('LESSON_ID');
                 $firstlesson = Lesson::where('CHAPTER_ID', $chapters->min('COURSE_CHAPTER_ID'))->min('LESSON_ID');
                 if ($lesson_id == "undefined" || $lesson_id > $lesson) {
@@ -419,8 +419,8 @@ class CourseController extends Controller
                     'LastLessonLearnt' => (int)($lesson),
                     'LearningURL' => Lesson::where('LESSON_ID', $lesson_id)->first()->LESSON_URL,
                     'Author' => Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
-                    'CourseType'=>$CourseType,
-                    'CourseMainType'=>$CourseMainType,
+                    'CourseType' => $CourseType,
+                    'CourseMainType' => $CourseMainType,
                 ];
                 return response()->json([
                     'status' => 200,
@@ -759,6 +759,36 @@ class CourseController extends Controller
                     'user' => null
                 ]);
             }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 400,
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+    public function SearchCourse(Request $request)
+    {
+        try {
+            //code...
+            $search_course = DB::select("SELECT  b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,count(e.COURSE_ID) enrolled, voted,unvoted
+            FROM (
+                SELECT a.*,u.*
+                FROM (
+                    SELECT * FROM courses c WHERE c.COURSE_NAME LIKE '%$request->search_data%' 
+                ) a join users u on a.Author_id = u.USER_ID
+            ) b join enrollments e on b.COURSE_ID = b.COURSE_ID join 
+            (SELECT cr.COURSE_ID,SUM(IF(cr.COURSE_REVIEW_STATE=1,1,0))
+             voted,SUM(IF(cr.COURSE_REVIEW_STATE=0,1,0)) unvoted
+             FROM course_reviews cr 
+             WHERE cr.COURSE_REVIEW_STATE = 1
+             GROUP BY cr.COURSE_ID) cr on cr.COURSE_ID = b.COURSE_ID
+            GROUP BY b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,e.COURSE_ID, voted,unvoted");
+
+
+            return response()->json([
+                'status' => 200,
+                'message' => $search_course,
+            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 400,

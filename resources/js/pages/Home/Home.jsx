@@ -26,16 +26,7 @@ function Home() {
             <div id="header" style={{ backgroundImage: "url('img/courses/header-img.png')" }}>
                 <div className="container" >
                     <h2>Hãy bắt đầu hành trình học tập online của bạn từ hôm nay !</h2>
-                    <div id="search">
-                        <div className="input-group">
-                            <form action="" id="form-search">
-                                <input name="name" id="search-course" className="form-control" type="text" placeholder="Tìm kiếm khóa học ..." />
-                                <span className="input-group-btn">
-                                    <i className="fas fa-search"></i>
-                                </span>
-                            </form>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div className="slider container">

@@ -1,16 +1,17 @@
-import { React, useEffect,useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSpring, animated, styled } from 'react-spring'
 import './Navbar.css'
 import LoginForm from '../../components/LoginForm';
 import axios from 'axios';
 import moment from 'moment';
+import { useNavigate } from "react-router-dom";
 function formatNumber(num) {
   return num.toString().replace(/\B(?=(\d{3})+\b)/g, ",")
 }
 moment.locale('vi');
 function Navbar({ ShowForm, handleShowForm, User }) {
-
+  const nav = useNavigate();
   const animation = useSpring({
     config: {
       duration: 200
@@ -45,25 +46,30 @@ function Navbar({ ShowForm, handleShowForm, User }) {
       Mask.style.visibility = 'hidden';
     }
   }, [])
-  const [noti ,setNoti] = useState()
-  const updateNoti = async ()=>{
+  const [noti, setNoti] = useState()
+  const updateNoti = async () => {
     const res = await axios.get('/api/get-noti');
     console.log(res)
     setNoti(res.data.message);
   }
-  const ReadNoti = async ()=>{
-    if (noti.filter(e=>e.READ_STATE ==0 ).length >0){
+  const ReadNoti = async () => {
+    if (noti.filter(e => e.READ_STATE == 0).length > 0) {
       const res = await axios.get('/api/read-noti');
       console.log(res)
-      if (res.data.status == 200){
+      if (res.data.status == 200) {
         updateNoti();
       }
     }
 
   }
-  useEffect(()=>{
+  useEffect(() => {
     updateNoti();
-  },[])
+  }, [])
+  const [searchData,setSearchData] = useState('');
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    nav(`/search/${searchData}`)
+  }
   return (
     <>
       {ShowForm &&
@@ -79,20 +85,17 @@ function Navbar({ ShowForm, handleShowForm, User }) {
           <div id="mask"></div>
 
           <div className="navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a href="#" className="nav-link">Khóa học</a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">Xếp hạng</a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">FAQS</a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">Tài trợ</a>
-              </li>
-            </ul>
+            <div id="search">
+              <div className="input-group">
+                <form action="" id="form-search" onSubmit={handleSearch}>
+                  <input value={searchData} name="search" id="search-course" className="form-control" 
+                  type="text" placeholder="Tìm kiếm khóa học ..." onChange={e=> setSearchData(e.target.value)}/>
+                  <span className="input-group-btn">
+                    <i className="fas fa-search"></i>
+                  </span>
+                </form>
+              </div>
+            </div>
           </div>
 
           <div className="navbar__user">
@@ -104,14 +107,14 @@ function Navbar({ ShowForm, handleShowForm, User }) {
             {!User.loading && <>
               <div onClick={ReadNoti} className="navbar__user_notifi">
                 <i className="far fa-bell"></i>
-                <span className="noti-number">{noti&&noti.filter(e=>e.READ_STATE==0).length}</span>
+                <span className="noti-number">{noti && noti.filter(e => e.READ_STATE == 0).length}</span>
                 <div className="notifi-form dropdown-form">
                   <div className="notifi-header">
                     <h4>Thông báo</h4>
                   </div>
                   <div className="notifi-content">
                     <div className="notification">
-                      {noti&&noti.map(e=><NotiItem key={e.NOTI_ID} Time={e.CREATED_AT} Content={e.CONTENT} Read={e.READ_STATE}/>)}
+                      {noti && noti.map(e => <NotiItem key={e.NOTI_ID} Time={e.CREATED_AT} Content={e.CONTENT} Read={e.READ_STATE} />)}
                     </div>
                   </div>
                 </div>
@@ -150,10 +153,10 @@ function Navbar({ ShowForm, handleShowForm, User }) {
 export default Navbar;
 function NotiItem(props) {
   return (
-    <div className={`notification__info ${props.Read==1?"read":""}`}>
+    <div className={`notification__info ${props.Read == 1 ? "read" : ""}`}>
       <div className="info">
-        <p style={{ 'fontSize': '18px' }}>{props.Content||''}</p>
-        <p className="time">{props.Time&&moment(props.Time,"YYYY-MM-DD HH:mm:ss").fromNow()}</p>
+        <p style={{ 'fontSize': '18px' }}>{props.Content || ''}</p>
+        <p className="time">{props.Time && moment(props.Time, "YYYY-MM-DD HH:mm:ss").fromNow()}</p>
       </div>
     </div>
   )

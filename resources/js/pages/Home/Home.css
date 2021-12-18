@@ -44,12 +44,12 @@
     color: var(--white);
 }
 
-#header  .container #search {
+#search {
     margin: 0;
-    padding-top: 30px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 350px;
 }
 
 #search .input-group {
@@ -71,6 +71,7 @@
     padding-left: 10px;
     background: none;
     position: relative;
+    border-radius: 20px;
 }
 
 #form-search span {

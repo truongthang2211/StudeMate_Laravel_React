@@ -28,7 +28,7 @@ class CommentController extends Controller
                         'User' => $sub_user,
                         'Content' => $subcomment->CONTENT,
                         'ParentComment' => $subcomment->PARENT_COMMENT_ID,
-                        'CommentTime' => $subcomment->COMMENT_TIME,
+                        'CommentTime' => (string)$subcomment->COMMENT_TIME,
                         'UsersVoted'=>Comment_Vote::where('COMMENT_ID', $subcomment->COMMENT_ID)->get(),
                     ];
                     array_push($ans2, $object);
@@ -38,7 +38,7 @@ class CommentController extends Controller
                     'User' => $user,
                     'Content' => $comment->CONTENT,
                     'ParentComment' => $comment->PARENT_COMMENT_ID,
-                    'CommentTime' => $comment->COMMENT_TIME,
+                    'CommentTime' => (string)$comment->COMMENT_TIME,
                     'SubComments' => $ans2,
                     'UsersVoted'=>Comment_Vote::where('COMMENT_ID', $comment->COMMENT_ID)->get(),
                 ];

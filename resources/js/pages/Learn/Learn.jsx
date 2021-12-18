@@ -1,17 +1,13 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
 import axios from 'axios';
 import {
-    BrowserRouter as Router,
-    generatePath,
-    Switch,
-    Route,
-    useHistory,
     useParams,
     useNavigate, Link
 } from "react-router-dom";
 import YouTube from 'react-youtube';
 import Collapsible from '../../components/Collapsible/Collapsible';
 import './Learn.css'
+import moment from 'moment';
 import { ListCourse } from '../../Data.js'
 
 const ThisUserID = new URLSearchParams(document.cookie.replaceAll("; ", "&")).get('StudyMate');
@@ -74,8 +70,10 @@ export default memo(function Learn({ LearnData, Admin }) {
                 if (!Admin) {
                     if (res.data.message.LastLessonLearnt == -1) {
                         navigate(`/learn/${Tcourse}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
-                    } else {
+                    } else if (!lesson){
                         navigate(`/learn/${Tcourse}/${res.data.message.LastLessonLearnt + 1}`)
+                    }else {
+                        navigate(`/learn/${Tcourse}/${Tlesson}`)
                     }
                 } else {
                     navigate(`/admin/${feature}/learn/${Tcourse}/${Tlesson}`)
@@ -169,7 +167,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                                         return (
                                             <li key={index}>
                                                 <Comment key={index} User={item.User} index={index} Content={item.Content}
-                                                    parentComment={item.commentID} UsersVoted={item.UsersVoted}
+                                                    parentComment={item.commentID} UsersVoted={item.UsersVoted} Time={item.CommentTime}
                                                     Upvote={item.UpVote} Downvote={item.DownVote} handleRepl={onClickRepl}
                                                     commentID={item.commentID} updateComment={showComment} />
                                                 {item.SubComments.map((item2, index2) => {
@@ -179,7 +177,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                                                     } else {
                                                         return (
                                                             <Comment parent_index={index} index={index2} key={index2} parentComment={item.commentID}
-                                                                UsersVoted={item2.UsersVoted} updateComment={showComment}
+                                                                UsersVoted={item2.UsersVoted} updateComment={showComment} Time={item.CommentTime}
                                                                 repl User={item2.User} Content={item2.Content} handleRepl={onClickRepl}
                                                                 commentID={item2.commentID} />
                                                         );
@@ -383,7 +381,7 @@ function Comment(props) {
                         </span>
                     </span>
                     <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl, props.parentComment) }} className="comment-repl" href="">Trả lời</span>
-                    <span className="comment-datetime">{props.Time}</span>
+                    <span className="comment-datetime">{moment(props.Time,"YYYY-MM-DD HH:mm:ss").fromNow()}</span>
                 </div>
             </div>
         </div>

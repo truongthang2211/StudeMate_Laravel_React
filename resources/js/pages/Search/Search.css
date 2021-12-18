@@ -1,0 +1,18 @@
+.u-hot-cate,
+.u-hot-cate ul{
+    display: flex;
+}
+.u-hot-cate{
+    padding: 12px 12px;
+    background: #fefefe;
+    border-radius: 5px;
+}
+.u-hot-cate ul li{
+    margin-left: 20px;
+}
+.u-hot-cate ul li:hover{
+    cursor: pointer;
+}
+.u-hot-cate {
+    margin-bottom: 12px;
+}
