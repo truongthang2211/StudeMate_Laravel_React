@@ -79,9 +79,9 @@ function Login() {
                                 <div className="features-inner section-inner has-bottom-divider">
                                     <div className="features-header text-center">
                                         <div className="container-sm">
-                                            <h2 className="section-title mt-0">The Product</h2>
-                                            <p className="section-paragraph">Lorem ipsum is common placeholder text used to
-                                                demonstrate the graphic elements of a document or visual presentation.</p>
+                                            <h2 className="section-title mt-0">Studymate - Tương lai tốt hơn bắt đầu từ đây</h2>
+                                            <p className="section-paragraph">Studymate phát triển một môi trường học trực tuyến cung cấp các khóa học ở nhiều lĩnh vực khác nhau.
+                                                Kết nối những người có cùng chung niềm đam mê để cùng nhau xây dựng một cộng đồng lớn mạnh.</p>
                                             <div className="features-image">
 
 
