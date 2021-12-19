@@ -10,10 +10,12 @@ use App\Models\Course_Chapter;
 use App\Models\Course_Review;
 use App\Models\Course_MainType;
 use App\Models\Lesson;
+use App\Models\User;
 use App\Models\Learning;
 use App\Models\Approval;
 use App\Models\Notification;
 use App\Models\Enrollment;
+use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use App\Models\Course_SubType;
 use App\Models\MongoDB;
@@ -195,6 +197,7 @@ class CourseController extends Controller
             ]);
         }
     }
+
     public function CheckEnrolled(Request $request)
     {
         try {
@@ -223,12 +226,86 @@ class CourseController extends Controller
         }
     }
 
+    public function InsertPayment($user_id, $receiver_id, $amount, $enrollment_id)
+    {
+        try {
+            $payment = new Payment();
+            $payment->USER_ID = $user_id;
+            $payment->RECEIVER_ID = $receiver_id;
+            $payment->AMOUNT = $amount;
+            $payment->ENROLLMENT_ID = $enrollment_id;
+            $payment->save();
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function UpdateReceiverCoin($user_id, $amount)
+    {
+        try {
+            $user = User::where('user_id', $user_id)->first();
+            $user->COIN += $amount;
+            $user->save();
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function UpdateSenderCoin($user_id, $amount)
+    {
+        try {
+            $user = User::where('user_id', $user_id)->first();
+            $user->COIN = $amount;
+            $user->save();
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function InsertEnrollment(Request $request)
+    {
+        try {
+            $enrollment = new Enrollment();
+            $enrollment->USER_ID = $request->user_id;
+            $enrollment->COURSE_ID = $request->course_id;
+            $enrollment->save();
+            $enrollment_id = DB::table('enrollments')
+                ->where('user_id', $request->user_id)
+                ->where('course_id', $request->course_id)
+                ->select('enrollment_id')
+                ->first();
+            $flag = $this->InsertPayment($request->user_id, $request->admin_id, $request->admin_coin, $enrollment_id->enrollment_id);
+            $flag1 = $this->InsertPayment($request->user_id, $request->author_id, $request->author_coin, $enrollment_id->enrollment_id);
+            $flag2 = $this->UpdateReceiverCoin($request->admin_id, $request->admin_coin);
+            $flag3 = $this->UpdateReceiverCoin($request->author_id, $request->author_coin);
+            $flag4 = $this->UpdateSenderCoin($request->user_id, $request->user_current_coin);
+            if ($flag && $flag1 && $flag2 && $flag3 && $flag4) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 1
+                ]);
+            }
+            return response()->json([
+                'status' => 200,
+                'message' => 0
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => 0
+            ]);
+        }
+    }
+
     public function GetCourseDetailByCourseId(Request $request)
     {
         try {
             $id = $request->courseId;
             $course_general = DB::table('courses')
-                ->select('course_name', 'course_desc', 'img')
+                ->select('course_name', 'course_desc', 'course_state', 'img', 'fee', 'commission', 'author_id')
                 ->where('course_id', $id)
                 ->get();
             $course_gains = DB::table('course_gains')
@@ -281,7 +358,7 @@ class CourseController extends Controller
                 'total_chapter' => $total_chapter,
                 'total_lesson' => $total_lesson,
                 'list_learn' => $list_learn,
-                'total_duration' => $total_duration
+                'total_duration' => $total_duration,
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -390,13 +467,13 @@ class CourseController extends Controller
         try {
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
-                $this_course = Course::where('COURSE_ID',$course_id)->first();
-                $CourseType = Course_SubType::where('COURSE_SUBTYPE_ID',$this_course->COURSE_TYPE_ID)->first();
-                $CourseMainType = Course_MainType::where('COURSE_MAINTYPE_ID',$CourseType->PARENT_TYPE_ID)->first();
+                $this_course = Course::where('COURSE_ID', $course_id)->first();
+                $CourseType = Course_SubType::where('COURSE_SUBTYPE_ID', $this_course->COURSE_TYPE_ID)->first();
+                $CourseMainType = Course_MainType::where('COURSE_MAINTYPE_ID', $CourseType->PARENT_TYPE_ID)->first();
                 $chapters = Course_Chapter::where('COURSE_ID', $course_id);
                 $lesson = 0;
                 $lesson = Learning::where('USER_ID', $id)
-                    ->whereIn('LESSON_ID',Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))
+                    ->whereIn('LESSON_ID', Lesson::whereIn('CHAPTER_ID', $chapters->get('COURSE_CHAPTER_ID'))->get('LESSON_ID'))
                     ->max('LESSON_ID');
                 $firstlesson = Lesson::where('CHAPTER_ID', $chapters->min('COURSE_CHAPTER_ID'))->min('LESSON_ID');
                 if ($lesson_id == "undefined" || $lesson_id > $lesson) {
@@ -419,8 +496,8 @@ class CourseController extends Controller
                     'LastLessonLearnt' => (int)($lesson),
                     'LearningURL' => Lesson::where('LESSON_ID', $lesson_id)->first()->LESSON_URL,
                     'Author' => Course::where('COURSE_ID', $course_id)->first()->AUTHOR_ID,
-                    'CourseType'=>$CourseType,
-                    'CourseMainType'=>$CourseMainType,
+                    'CourseType' => $CourseType,
+                    'CourseMainType' => $CourseMainType,
                 ];
                 return response()->json([
                     'status' => 200,

@@ -62,6 +62,7 @@ Route::post('/get-course-detail', [CourseController::class, 'GetCourseDetailByCo
 Route::post('/get-reviews', [CourseController::class, 'GetReviewsByCourseId']);
 Route::post('/add-review', [CourseController::class, 'AddCourseReview']);
 Route::post('/check-enrolled', [CourseController::class, 'CheckEnrolled']);
+Route::post('/insert-enrollment', [CourseController::class, 'InsertEnrollment']);
 
 
 Route::get('/sign-out', [LoginController::class, 'SignOut']);

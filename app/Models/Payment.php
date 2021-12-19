@@ -10,4 +10,5 @@ class Payment extends Model
     use HasFactory;
     public $timestamps = false;
     public $primaryKey  = 'PAYMENT_ID';
+    public $table = "Payments";
 }
