@@ -23,11 +23,11 @@ function HomeCourseItem(props) {
                         <li>
                             <i className="far fa-thumbs-up like-color"></i>
                         </li>
-                        <li className="ml-2">100</li>
+                        <li className="ml-2">{props.upVote}</li>
                         <li>
                             <i className="far fa-thumbs-down dislike-color ml-8"></i>
                         </li>
-                        <li className="ml-2">100</li>
+                        <li className="ml-2">{props.downVote}</li>
                     </ul>
                     <div className="course-type">Online</div>
                 </div>
@@ -37,9 +37,9 @@ function HomeCourseItem(props) {
                     </Link>
                 </h3>
                 {/* <!-- Course's author infor --> */}
-                <a href="#" title={props.author} className="course-author">
+                <Link to={"/profile/" + props.author_id} title={props.author} className="course-author">
                     {props.author}
-                </a>
+                </Link>
                 <p className="course-des">{props.desc}</p>
                 <div className="course-footer">
                     <div className="course-footer-left">

@@ -49,7 +49,7 @@ function Index() {
                     
                     <Route path="/" element={<UserLayout User={User} handleShowForm={handleShowForm} ShowForm={ShowForm} />} >
                         <Route path="/" element={<Home />} />
-                        <Route exact path="/course/:courseId" element={<Course User={User} handleShowForm={handleShowForm} />} />
+                        <Route exact path="/course/:courseId" element={<Course User={User} callback={LoadUser} handleShowForm={handleShowForm} />} />
                         <Route exact path="/learn/:course/:lesson" element={User.loading ? <Home /> : <Learn User={User} />} />
                         <Route exact path="/learn/:course" element={User.loading ? <Home /> : <Learn User={User} />} />
                         <Route exact path="/profile/:user_id" element={User.loading ? <Home /> : <Profile User={User} />} />
