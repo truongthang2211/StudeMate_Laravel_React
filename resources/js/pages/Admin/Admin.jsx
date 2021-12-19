@@ -759,7 +759,7 @@ function UpdateAction(props) {
     )
 }
 function Feature({ feature, action, id }) {
-    const [data, setData] = useState();
+    const [data, setData] = useState({});
     useEffect(async () => {
         let url;
         let post_obj;

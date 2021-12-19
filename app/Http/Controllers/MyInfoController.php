@@ -23,20 +23,7 @@ class MyInfoController extends Controller {
     public function UpdateMyInfo(Request $request) {
         try {
 
-            $validator = Validator::make($request->all(),[
-                'FULLNAME'=>'required|max:191',
-                'PHONE'=>'required|max:12',
-            ]);
-
-            if($validator->fails())
-            {
-                return response()->json([
-                    'status'=> 422,
-                    'validationErrors'=> $validator->messages(),
-                ]);
-            }
             
-            else{
                 
                 $userData = json_decode($request->data);
                 $user = User::where("EMAIL",$userData->EMAIL)->first();
@@ -72,7 +59,6 @@ class MyInfoController extends Controller {
                     'message'=>'User Updated Successfully',
                     'User'=>$user,
                 ]);
-            }
                       
         } catch (\Throwable $th) {
             return response()->json([

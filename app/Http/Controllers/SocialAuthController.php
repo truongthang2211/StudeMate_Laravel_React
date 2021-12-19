@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Account;
+use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
@@ -39,7 +41,7 @@ class SocialAuthController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         // dd($authUser->email);
         setcookie("email", $authUser->email, time() + 60 * 15, "/");
-         dd(Session::get('pre_url'));
+        dd(Session::get('pre_url'));
         return Redirect::to(Session::get('pre_url'));
     }
 
@@ -51,17 +53,28 @@ class SocialAuthController extends Controller
     public function findOrCreateUser($user, $provider)
     {
         // dd($user);
-        $authUser = User::where('email', $user->email)->first();
-        if ($authUser) {
-            return $authUser;
+        try {
+            $authUser = User::where('email', $user->email)->first();
+            if ($authUser) {
+                return $authUser;
+            }
+            DB::beginTransaction();
+            $account = new Account();
+            $account->USERNAME = $user->email;
+            $account->ACCOUNT_ROLE = 'User';
+            $account->save();
+            $newuser = new User();
+            $newuser->FULLNAME = $user->name;
+            $newuser->EMAIL = $user->email;
+            $newuser->AVATAR_IMG = $user->avatar;
+            DB::commit();
+            return $newuser;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
         }
-        return User::create([
-            'name'     => $user->name,
-            'email'    => $user->email,
-            'username'    => $user->email,
-            'provider' => $provider,
-            'provider_id' => $user->id,
-            'avatar' => $user->avatar
-        ]);
+
+
+        
     }
 }

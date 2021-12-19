@@ -6,7 +6,6 @@ import './CreateCourse.css'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { ListCategory, ListCourse } from '../../Data.js'
-console.log(ListCategory)
 const API_KEY = 'AIzaSyAzSvXwjoICRPziR_FXQmuus_eSvMTin7I';
 
 const CreateData = {

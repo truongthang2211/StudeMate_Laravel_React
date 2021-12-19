@@ -467,6 +467,12 @@ class CourseController extends Controller
         try {
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
+                $enroll = Enrollment::where('USER_ID',$id)->where('COURSE_ID',$course_id)->first();
+                if (!$enroll){
+                    return response()->json([
+                        'status' => 201,
+                    ]);
+                }
                 $this_course = Course::where('COURSE_ID', $course_id)->first();
                 $CourseType = Course_SubType::where('COURSE_SUBTYPE_ID', $this_course->COURSE_TYPE_ID)->first();
                 $CourseMainType = Course_MainType::where('COURSE_MAINTYPE_ID', $CourseType->PARENT_TYPE_ID)->first();
@@ -847,19 +853,20 @@ class CourseController extends Controller
     {
         try {
             //code...
-            $search_course = DB::select("SELECT  b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,count(e.COURSE_ID) enrolled, voted,unvoted
+            $search_course = DB::select("SELECT b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname, enrolled, voted,unvoted
             FROM (
                 SELECT a.*,u.*
                 FROM (
                     SELECT * FROM courses c WHERE c.COURSE_NAME LIKE '%$request->search_data%' and c.Course_state = 'Công khai'
                 ) a join users u on a.Author_id = u.USER_ID
-            ) b left join enrollments e on b.COURSE_ID = b.COURSE_ID left join 
+            ) b left join (SELECT COURSE_ID,COUNT(COURSE_ID) enrolled
+                		FROM enrollments
+                          GROUP BY enrollments.COURSE_ID) e on b.COURSE_ID = e.COURSE_ID left join 
             (SELECT cr.COURSE_ID,SUM(IF(cr.COURSE_REVIEW_STATE=1,1,0))
              voted,SUM(IF(cr.COURSE_REVIEW_STATE=0,1,0)) unvoted
              FROM course_reviews cr 
-             WHERE cr.COURSE_REVIEW_STATE = 1
              GROUP BY cr.COURSE_ID) cr on cr.COURSE_ID = b.COURSE_ID
-            GROUP BY b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,e.COURSE_ID, voted,unvoted");
+            GROUP BY b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,e.enrolled, voted,unvoted");
 
 
             return response()->json([

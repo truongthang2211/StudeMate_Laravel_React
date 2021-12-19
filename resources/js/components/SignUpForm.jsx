@@ -24,6 +24,13 @@ export default memo(function SignUpForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         signupref.current.disabled = true;
+        Swal.fire({
+            title: "Checking...",
+            text: "Please wait",
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false
+        })
         axios.post('/api/sign-up', state)
             .then(async (response) => {
                 if (response.data.status == 200) {

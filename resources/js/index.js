@@ -7,7 +7,7 @@ import Navbar from './components/Navigation/Navbar';
 import Profile from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
-import My404 from './components/My404';
+import My404 from './pages/My404/My404';
 import MyInfo from './pages/MyInfo/MyInfo';
 import Course from './pages/Course/Course';
 import Learn from './pages/Learn/Learn';

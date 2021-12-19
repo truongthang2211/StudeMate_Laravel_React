@@ -8,6 +8,7 @@ import YouTube from 'react-youtube';
 import Collapsible from '../../components/Collapsible/Collapsible';
 import './Learn.css'
 import moment from 'moment';
+import My404 from '../My404/My404'
 import { ListCourse } from '../../Data.js'
 
 const ThisUserID = new URLSearchParams(document.cookie.replaceAll("; ", "&")).get('StudyMate');
@@ -64,9 +65,12 @@ export default memo(function Learn({ LearnData, Admin }) {
             const Tlesson = lesson ?? subid;
 
 
-            if (!LearnData && Tcourse) {
+            if (!LearnData) {
                 const res = await axios.get(`/api/get-learn/${Tcourse}/${Tlesson}`)
                 console.log(res)
+                if (res.data.status == 201){
+                    navigate('/404')
+                }
                 if (!Admin) {
                     if (res.data.message.LastLessonLearnt == -1) {
                         navigate(`/learn/${Tcourse}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
@@ -83,7 +87,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                 setPending(false)
                 setData(res.data.message)
                 setVideoID(youtube_id(res.data.message.LearningURL))
-            } else if (LearnData) {
+            } else if (LearnData&&LearnData.LearningURL) {
                 setPending(false)
                 setData(LearnData)
                 setVideoID(youtube_id(LearnData.LearningURL))
@@ -95,22 +99,25 @@ export default memo(function Learn({ LearnData, Admin }) {
         }
     }, [LearnData])
     const showComment = async () => {
-        try {
-            const res = await axios.post(`/api/get-comments`, { lesson_id: lesson });
-            console.log(res)
-            setComments(res.data.message)
-        } catch (error) {
-            console.log(error)
+        if (feature != 'approval'){
+            try {
+                const res = await axios.post(`/api/get-comments`, { lesson_id: lesson || subid});
+                console.log(res)
+                setComments(res.data.message)
+            } catch (error) {
+                console.log(error)
+            }
         }
+        
     }
     useEffect(() => {
         showComment();
         // console.log('testest')
-    }, [lesson])
+    }, [lesson,subid])
     const handleLesson = (lesson_url, lesson_id, status) => {
         let url = '/learn/';
         if (Admin) {
-            url = '/admin/course-manage/learn/'
+            url = `/admin/${feature}/learn/`
         }
         if (status != 'block-item') {
             const Tcourse = course ?? id;
@@ -120,7 +127,7 @@ export default memo(function Learn({ LearnData, Admin }) {
     }
     let TimerId = 0;
     const handleVideoPlaying = async (e) => {
-        if (e.data == 1) {
+        if (e.data == 1 && !Admin) {
             TimerId = setInterval(() => {
                 if (e.target.getCurrentTime() / e.target.getDuration() > 0.8) {
                     if (dataLearning.LastLessonLearnt + 1 == lesson || dataLearning.LastLessonLearnt == -1) {
@@ -214,11 +221,11 @@ export default memo(function Learn({ LearnData, Admin }) {
                                     } else if (less.LESSON_ID > dataLearning.LastLessonLearnt + 1) {
                                         status = 'block-item'
                                     }
-                                    if (less.LESSON_ID == lesson || less.LESSON_ID == subid) {
+                                    if ((!Admin &&less.LESSON_ID == lesson )|| less.LESSON_ID == subid ||  subid==index2) {
                                         status += ' learning-item'
                                     }
                                     return (
-                                        <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={msecToTime(less.DURATION)} />
+                                        <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID??index2} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={msecToTime(less.DURATION)} />
                                     );
                                 })}
                         </div>

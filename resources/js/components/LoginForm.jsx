@@ -22,6 +22,13 @@ function LoginForm({ handleShowForm, setUser }) {
     console.log('render login-form')
     const handleSubmit = async (e) => {
         e.preventDefault();
+        Swal.fire({
+            title: "Checking...",
+            text: "Please wait",
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false
+        })
         axios.post('/api/sign-in', state)
             .then(function (response) {
                 if (response.data.status == 200) {

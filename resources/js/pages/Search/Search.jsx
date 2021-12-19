@@ -37,7 +37,6 @@ export default function Search() {
         }
         setData(TempData);
     }
-    console.log(key);
     return (
         <div id="content" className="container">
             <div className="content-section" style={{ padding: '32px 12px' }}>
@@ -45,11 +44,11 @@ export default function Search() {
                 <div className="u-hot-cate hidden-xs">
                     <span className="order-new-seo">
                         <i className="fa fa-sort" aria-hidden="true"></i>Sắp xếp</span>
-                    <ul><li><a onClick={handleSort} class={selectSort == "MostLearn" ? "active" : ""} name="MostLearn" rel="nofollow">Học nhiều nhất</a>
-                    </li><li><a onClick={handleSort} class={selectSort == "HighRate" ? "active" : ""} name="HighRate" rel="nofollow">Đánh giá cao</a>
-                        </li><li><a onClick={handleSort} class={selectSort == "Newest" ? "active" : ""} name="Newest" rel="nofollow">Mới nhất</a></li>
-                        <li><a onClick={handleSort} class={selectSort == "LowtoHigh" ? "active" : ""} name="LowtoHigh" rel="nofollow">Giá thấp đến cao</a>
-                        </li><li><a onClick={handleSort} class={selectSort == "HightoLow" ? "active" : ""} name="HightoLow" rel="nofollow">Giá cao đến thấp</a></li>
+                    <ul><li><a onClick={handleSort} className={selectSort == "MostLearn" ? "active" : ""} name="MostLearn" rel="nofollow">Học nhiều nhất</a>
+                    </li><li><a onClick={handleSort} className={selectSort == "HighRate" ? "active" : ""} name="HighRate" rel="nofollow">Đánh giá cao</a>
+                        </li><li><a onClick={handleSort} className={selectSort == "Newest" ? "active" : ""} name="Newest" rel="nofollow">Mới nhất</a></li>
+                        <li><a onClick={handleSort} className={selectSort == "LowtoHigh" ? "active" : ""} name="LowtoHigh" rel="nofollow">Giá thấp đến cao</a>
+                        </li><li><a onClick={handleSort} className={selectSort == "HightoLow" ? "active" : ""} name="HightoLow" rel="nofollow">Giá cao đến thấp</a></li>
                     </ul>
                 </div>
                 <div className="section-courses">

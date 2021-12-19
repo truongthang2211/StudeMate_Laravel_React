@@ -8,7 +8,7 @@ import DataTable from 'react-data-table-component';
 import RatingBox from '../../components/RatingBox/RatingBox';
 import moment from 'moment';
 import CreateCourse from '../CreateCourse/CreateCourse';
-import My404 from '../../components/My404';
+import My404 from '../My404/My404'
 function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+\b)/g, ",")
 }
