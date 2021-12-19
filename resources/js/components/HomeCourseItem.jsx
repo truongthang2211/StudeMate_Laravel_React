@@ -23,11 +23,11 @@ function HomeCourseItem(props) {
                         <li>
                             <i className="far fa-thumbs-up like-color"></i>
                         </li>
-                        <li className="ml-2">{props.like || 0}</li>
+                        <li className="ml-2">{props.upVote}</li>
                         <li>
                             <i className="far fa-thumbs-down dislike-color ml-8"></i>
                         </li>
-                        <li className="ml-2">{props.dislike || 0}</li>
+                        <li className="ml-2">{props.downVote}</li>
                     </ul>
                     <div className="course-type">Online</div>
                 </div>

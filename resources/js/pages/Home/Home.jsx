@@ -389,12 +389,15 @@ function Home() {
                         {data.map((course, index) =>
                             <HomeCourseItem
                                 key={index}
-                                desc={course.course_desc}
-                                title={course.course_name}
-                                author={course.fullname}
-                                img={course.img}
-                                fee={course.fee}
-                                courseId={course.course_id}
+                                desc={course.course.course_desc}
+                                title={course.course.course_name}
+                                author={course.course.fullname}
+                                img={course.course.img}
+                                fee={course.course.fee}
+                                courseId={course.course.course_id}
+                                upVote={course.upVote[0].numOfUpvote}
+                                downVote={course.downVote[0].numOfDownvote}
+                                author_id={course.course.author_id}
                             />
                         )}
                     </div>
@@ -405,12 +408,15 @@ function Home() {
                         {courses.TinHocVanPhong && courses.TinHocVanPhong.map((course, index) =>
                             <HomeCourseItem
                                 key={index}
-                                desc={course.course_desc}
-                                title={course.course_name}
-                                author={course.fullname}
-                                img={course.img}
-                                fee={course.fee}
-                                courseId={course.course_id}
+                                desc={course.course.course_desc}
+                                title={course.course.course_name}
+                                author={course.course.fullname}
+                                img={course.course.img}
+                                fee={course.course.fee}
+                                courseId={course.course.course_id}
+                                upVote={course.upVote[0].numOfUpvote}
+                                downVote={course.downVote[0].numOfDownvote}
+                                author_id={course.course.author_id}
                             />
                         )}
                     </div>
@@ -421,12 +427,15 @@ function Home() {
                         {courses.CNTT && courses.CNTT.map((course, index) =>
                             <HomeCourseItem
                                 key={index}
-                                desc={course.course_desc}
-                                title={course.course_name}
-                                author={course.fullname}
-                                img={course.img}
-                                fee={course.fee}
-                                courseId={course.course_id}
+                                desc={course.course.course_desc}
+                                title={course.course.course_name}
+                                author={course.course.fullname}
+                                img={course.course.img}
+                                fee={course.course.fee}
+                                courseId={course.course.course_id}
+                                upVote={course.upVote[0].numOfUpvote}
+                                downVote={course.downVote[0].numOfDownvote}
+                                author_id={course.course.author_id}
                             />
                         )}
                     </div>

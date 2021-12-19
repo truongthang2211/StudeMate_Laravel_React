@@ -110,11 +110,31 @@ class CourseController extends Controller
 
     public function GetCourses()
     {
-        $courses = DB::table('courses')
-            ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+        $list_courses = DB::table('courses')
+            ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname', 'courses.author_id')
             ->join('users', 'courses.author_id', '=', 'users.user_id')->where('COURSE_STATE', 'Công khai')
             ->take(8)
             ->get();
+        $courses = array();
+        foreach ($list_courses as $course) 
+        {
+            $total_upvote = DB::table('courses')
+                ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                ->where('course_review_state', 1)
+                ->select(DB::raw('COUNT(*) as numOfUpvote'))
+                ->get();
+            $total_downvote = DB::table('courses')
+                ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                ->where('course_review_state', 0)
+                ->select(DB::raw('COUNT(*) as numOfDownvote'))
+                ->get();
+            $obj = (object)[
+                'course' => $course,
+                'upVote' => $total_upvote,
+                'downVote' => $total_downvote
+            ];
+            array_push($courses, $obj);
+        }
         return response()->json([
             'status' => 200,
             'message' => $courses,
@@ -124,25 +144,61 @@ class CourseController extends Controller
     public function GetCourseHomePage()
     {
         try {
+            $result1 = array();
+            $result2 = array();
             $courseMainType1 = DB::table('course_maintypes')->where('TYPE_NAME', 'Tin học văn phòng')->first();
             $courseMainType2 = DB::table('course_maintypes')->where('TYPE_NAME', 'Công nghệ thông tin')->first();
-            $courses1 = DB::table('courses')
-                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+            $course1 = DB::table('courses')
+                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname', 'courses.author_id')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $courseMainType1->COURSE_MAINTYPE_ID)->where('COURSE_STATE', 'Công khai')
                 ->take(8)
                 ->get();
-            $courses2 = DB::table('courses')
+            foreach ($course1 as $course) {
+                $total_upvote = DB::table('courses')
+                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                    ->where('course_review_state', 1)
+                    ->select(DB::raw('COUNT(*) as numOfUpvote'))
+                    ->get();
+                $total_downvote = DB::table('courses')
+                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                    ->where('course_review_state', 0)
+                    ->select(DB::raw('COUNT(*) as numOfDownvote'))
+                    ->get();
+                $obj = (object)[
+                    'course' => $course,
+                    'upVote' => $total_upvote,
+                    'downVote' => $total_downvote
+                ];
+                array_push($result1, $obj);
+            }
+            $course2 = DB::table('courses')
                 ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $courseMainType2->COURSE_MAINTYPE_ID)->where('COURSE_STATE', 'Công khai')
                 ->take(8)
                 ->get();
-            $result = (object)['TinHocVanPhong' => $courses1, 'CNTT' => $courses2];
-            // $array = array();
-            // array_push($array, 'gia tri');
+            foreach ($course2 as $course) {
+                $total_upvote = DB::table('courses')
+                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                    ->where('course_review_state', 1)
+                    ->select(DB::raw('COUNT(*) as numOfUpvote'))
+                    ->get();
+                $total_downvote = DB::table('courses')
+                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                    ->where('course_review_state', 0)
+                    ->select(DB::raw('COUNT(*) as numOfDownvote'))
+                    ->get();
+                $obj = (object)[
+                    'course' => $course,
+                    'upVote' => $total_upvote,
+                    'downVote' => $total_downvote
+                ];
+                array_push($result2, $obj);
+            }
+            $result = (object)['TinHocVanPhong' => $result1, 'CNTT' => $result2];
             return response()->json([
                 'status' => 200,
                 'message' => $result
@@ -159,11 +215,30 @@ class CourseController extends Controller
     {
         try {
             $id = $request->subtypeId;
-            $courses = DB::table('courses')
-                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+            $list_course = DB::table('courses')
+                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname', 'courses.author_id')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->where('courses.course_type_id', $id)->where('COURSE_STATE', 'Công khai')
                 ->get();
+            $courses = array();
+            foreach ($list_course as $course) {
+                $total_upvote = DB::table('courses')
+                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                    ->where('course_review_state', 1)
+                    ->select(DB::raw('COUNT(*) as numOfUpvote'))
+                    ->get();
+                $total_downvote = DB::table('courses')
+                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                    ->where('course_review_state', 0)
+                    ->select(DB::raw('COUNT(*) as numOfDownvote'))
+                    ->get();
+                $obj = (object)[
+                    'course' => $course,
+                    'upVote' => $total_upvote,
+                    'downVote' => $total_downvote
+                ];
+                array_push($courses, $obj);
+            }
             return response()->json([
                 'status' => 200,
                 'message' => $courses
@@ -181,7 +256,7 @@ class CourseController extends Controller
         try {
             $id = $request->maintypeId;
             $courses = DB::table('courses')
-                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname', 'courses.author_id')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $id)->where('COURSE_STATE', 'Công khai')
@@ -210,6 +285,42 @@ class CourseController extends Controller
                 return response()->json([
                     'status' => 200,
                     'message' => $ans
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Cookies het han',
+                    'user' => null
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 200,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function CheckOwner(Request $request)
+    {
+        try {
+            if (isset($_COOKIE['StudyMate'])) {
+                $user_id = $_COOKIE['StudyMate'];
+                $ans = DB::table('courses')
+                    ->where('author_id', $user_id)
+                    ->where('course_id', $request->courseId)
+                    ->select(DB::raw('COUNT(*) as result'))
+                    ->first();
+                if ($ans->result == 1) 
+                {
+                    return response()->json([
+                        'status' => 200,
+                        'message' => true
+                    ]);
+                }
+                return response()->json([
+                    'status' => 200,
+                    'message' => false
                 ]);
             } else {
                 return response()->json([
@@ -305,7 +416,8 @@ class CourseController extends Controller
         try {
             $id = $request->courseId;
             $course_general = DB::table('courses')
-                ->select('course_name', 'course_desc', 'course_state', 'img', 'fee', 'commission', 'author_id')
+                ->select('course_name', 'course_desc', 'course_state', 'img', 'fee', 'commission', 'author_id', 'fullname')
+                ->join('users', 'users.user_id', '=', 'courses.author_id')
                 ->where('course_id', $id)
                 ->get();
             $course_gains = DB::table('course_gains')
@@ -853,7 +965,7 @@ class CourseController extends Controller
     {
         try {
             //code...
-            $search_course = DB::select("SELECT b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname, enrolled, voted,unvoted
+            $search_course = DB::select("SELECT b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname, enrolled, upVote,downVote
             FROM (
                 SELECT a.*,u.*
                 FROM (
@@ -863,10 +975,10 @@ class CourseController extends Controller
                 		FROM enrollments
                           GROUP BY enrollments.COURSE_ID) e on b.COURSE_ID = e.COURSE_ID left join 
             (SELECT cr.COURSE_ID,SUM(IF(cr.COURSE_REVIEW_STATE=1,1,0))
-             voted,SUM(IF(cr.COURSE_REVIEW_STATE=0,1,0)) unvoted
+            upVote,SUM(IF(cr.COURSE_REVIEW_STATE=0,1,0)) downVote
              FROM course_reviews cr 
              GROUP BY cr.COURSE_ID) cr on cr.COURSE_ID = b.COURSE_ID
-            GROUP BY b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,e.enrolled, voted,unvoted");
+            GROUP BY b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname,e.enrolled, upVote,downVote");
 
 
             return response()->json([

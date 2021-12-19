@@ -81,7 +81,7 @@ function InputReviewBlock(props) {
                 <textarea className="review-input"
                     ref={reviewRef}
                     autoFocus
-                    placeholder="Viết gì gì đó đi..."
+                    placeholder="Viết gì đó đi..."
                     tabIndex="0"
                     dir="ltr"
                     spellCheck="false"
@@ -132,7 +132,7 @@ function Review(props) {
     )
 }
 
-export default function Course({ User, handleShowForm }) {
+export default function Course({ User, handleShowForm,callback }) {
 
     const cookieObj = new URLSearchParams(document.cookie.replaceAll("; ", "&"))
     const user_id = cookieObj.get("StudyMate")
@@ -145,22 +145,38 @@ export default function Course({ User, handleShowForm }) {
             }`
     }
 
+    const modifyCourseFee = (fee) => {
+        if (fee === 0) return 'Free';
+        else {
+            const condition = fee / 1000 >= 1000 ? true : false;
+            if (condition) return `${fee / 1000000}.000.000 VND`;
+            else return `${fee / 1000}.000 VND`;
+        }
+    }
+
     const { courseId } = useParams();
     const [course, setCourse] = useState();
     const [reviews, setReviews] = useState([]);
     const [checkEnrolled, setCheckEnrolled] = useState(false);
     const [enrollment, setEnrollment] = useState();
+    const [checkOwner, setCheckOwner] = useState(false);
 
+    // GET COURSE DETAIL
     useEffect(async () => {
         try {
             const resCourse = await axios.post('/api/get-course-detail', { courseId });
+            if (resCourse.data.course_general[0].author_id == user_id){
+                setCheckOwner(true);
+            }
             setCourse(resCourse.data);
             console.log(resCourse);
+            console.log(user_id);
         } catch (error) {
             console.log(error);
         }
     }, [courseId]);
 
+    // CHECK ENROLLED
     useEffect(async () => {
         try {
             const resCheck = await axios.post('/api/check-enrolled', { courseId });
@@ -193,12 +209,14 @@ export default function Course({ User, handleShowForm }) {
         return true;
     }
 
+    // Define useNav for navigation
     const nav = useNavigate();
     const handleAfterEnroll = () => {
         nav("/learn/" + courseId);
     }
 
-    const registerFlag = false;
+    let registerFlag = false;
+
     const handleRegister = (e) => {
         if (User.loading) {
             e.preventDefault();
@@ -246,6 +264,8 @@ export default function Course({ User, handleShowForm }) {
                             catch (error) {
                                 console.log(error);
                             }
+                            registerFlag = true;
+                            callback()
                         }
                     }).then(async (result) => {
                         if (result.isConfirmed) {
@@ -261,6 +281,9 @@ export default function Course({ User, handleShowForm }) {
             }
         }
     }
+
+    console.log(checkEnrolled);
+    console.log(checkOwner);
 
     return (
         <>
@@ -348,8 +371,8 @@ export default function Course({ User, handleShowForm }) {
                                     <p>Xem giới thiệu khóa học</p>
                                 </div>
                                 <h5 className="course-fee">Miễn phí</h5>
-                                <Link to={registerFlag ? "/learn/" + courseId : "/course/" + courseId} onClick={handleRegister} className="course-btn">
-                                    {checkEnrolled ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
+                                <Link to={checkEnrolled || checkOwner ? "/learn/" + courseId : "/course/" + courseId} onClick={checkEnrolled || checkOwner ? handleAfterEnroll : handleRegister} className="course-btn">
+                                    {checkEnrolled || checkOwner ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
                                 </Link>
                                 <ul>
                                     <li>
@@ -371,6 +394,23 @@ export default function Course({ User, handleShowForm }) {
                                     <li>
                                         <i className="fas fa-battery-full"></i>
                                         <span>Học mọi lúc mọi nơi</span>
+                                    </li>
+                                    <li>
+                                        <i className="fas fa-user-graduate"></i>
+                                        <span>
+                                            Tác giả
+                                            <strong>
+                                                <Link to={course ? "/profile/" + course.course_general[0].author_id : ""}>
+                                                    {course ? " " + course.course_general[0].fullname : ""}
+                                                </Link>
+                                            </strong>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <i className="fas fa-coins"></i>
+                                        <span>
+                                            Học phí <strong>{course && modifyCourseFee(course.course_general[0].fee)}</strong>
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
