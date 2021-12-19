@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Course.css'
-import Swal from 'sweetalert2'
+import './Course.css';
+import Swal from 'sweetalert2';
 import CourseGain from '../../components/CourseGain';
 import CourseRequire from '../../components/CourseRequire';
 import CourseChapter from '../../components/CourseChapter';
 import CourseLesson from '../../components/CourseLesson';
 import Collapsible from '../../components/Collapsible/Collapsible';
+import { useNavigate } from 'react-router';
 
 function InputReviewBlock(props) {
     const [reviewContent, setReviewContent] = useState();
@@ -143,17 +144,12 @@ export default function Course({ User, handleShowForm }) {
         return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds
             }`
     }
-    const handleRegister = (e) => {
-        if (User.loading) {
-            e.preventDefault();
-            handleShowForm();
-        }
-    }
 
     const { courseId } = useParams();
     const [course, setCourse] = useState();
     const [reviews, setReviews] = useState([]);
     const [checkEnrolled, setCheckEnrolled] = useState(false);
+    const [enrollment, setEnrollment] = useState();
 
     useEffect(async () => {
         try {
@@ -187,10 +183,84 @@ export default function Course({ User, handleShowForm }) {
     }
     useEffect(() => {
         showReviews();
-        // console.log('testest')
     }, [courseId])
 
-    console.log(User);
+    const checkPayment = (courseFee, userCurrentCoin) => {
+        const deviant = userCurrentCoin - courseFee;
+        if (deviant < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    const nav = useNavigate();
+    const handleAfterEnroll = () => {
+        nav("/learn/" + courseId);
+    }
+
+    const registerFlag = false;
+    const handleRegister = (e) => {
+        if (User.loading) {
+            e.preventDefault();
+            handleShowForm();
+        }
+        else {
+            if (course) {
+                const courseFee = course.course_general[0].fee;
+                let userCurrentCoin = User.COIN;
+                if (!checkPayment(courseFee, userCurrentCoin)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Số dư hiện tại của bạn không đủ! Vui lòng nạp thêm!'
+                    })
+                }
+                else {
+                    const adminCoin = courseFee * course.course_general[0].commission * 0.01;
+                    const authorCoin = courseFee - adminCoin;
+                    userCurrentCoin -= courseFee;
+
+                    Swal.fire({
+                        title: 'Xác nhận thanh toán',
+                        text: "Bạn có chắc muốn mua khóa học này?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Confirm',
+                        preConfirm: async () => {
+                            const enrollData = {
+                                user_id: user_id,
+                                admin_id: 1111,
+                                author_id: course.course_general[0].author_id,
+                                course_id: courseId,
+                                admin_coin: adminCoin,
+                                author_coin: authorCoin,
+                                user_current_coin: userCurrentCoin
+                            };
+                            try {
+                                const resEnrollment = await axios.post('/api/insert-enrollment', enrollData);
+                                setEnrollment(resEnrollment.data);
+                                console.log(resEnrollment);
+                            }
+                            catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            await Swal.fire(
+                                'Thành công!',
+                                'Bạn đã sở hữu khóa học này.',
+                                'success',
+                                handleAfterEnroll()
+                            )
+                        }
+                    })
+                }
+            }
+        }
+    }
 
     return (
         <>
@@ -278,7 +348,7 @@ export default function Course({ User, handleShowForm }) {
                                     <p>Xem giới thiệu khóa học</p>
                                 </div>
                                 <h5 className="course-fee">Miễn phí</h5>
-                                <Link to="/learn" onClick={handleRegister} className="course-btn">
+                                <Link to={registerFlag ? "/learn/" + courseId : "/course/" + courseId} onClick={handleRegister} className="course-btn">
                                     {checkEnrolled ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
                                 </Link>
                                 <ul>
