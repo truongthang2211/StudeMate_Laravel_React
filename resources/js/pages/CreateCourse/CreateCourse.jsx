@@ -21,7 +21,7 @@ const CreateData = {
     ListOut: [],
     AutoTitle: true,
     AutoCreateList: false,
-    Commission: 70,
+    Commission: 20,
     ListCourse: [],
     Author: -1,
     Created_at: moment().format('YYYY-MM-DD HH:mm:ss'),

@@ -34,6 +34,9 @@ export default function Admin() {
         </>
     );
 }
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+\b)/g, ",")
+}
 function AdminLogin() {
     const [state, setState] = useState({
         username: '',
@@ -87,6 +90,7 @@ function AdminPage({ User }) {
     if (id) {
         return <Feature action={action} feature={feature} id={id} />;
     }
+    
     const handleLogout = () => {
         document.cookie = 'StudyMateAdmin' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         window.location.reload();
@@ -261,9 +265,7 @@ function Overview() {
         updateAnalBox(typevalue, time);
 
     }
-    function formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+\b)/g, ",")
-    }
+
     const CourseToday = !data ? "Loading..." :
         data.Courses.filter(e => moment().format("DD/MM/YYYY") == moment(e.CREATED_AT, "YYYY-MM-DD HH:mm:ss")
             .format("DD/MM/YYYY")).length
@@ -382,7 +384,7 @@ const usermanageColumn = [
     },
     {
         name: 'Coin',
-        selector: row => row.COIN,
+        selector: row => formatNumber(row.COIN),
         sortable: true,
     },
     {
@@ -556,7 +558,7 @@ function CourseManage(props) {
         },
         {
             name: 'Giá',
-            selector: row => row.Fee,
+            selector: row => formatNumber(row.Fee),
             sortable: true,
         },
         {
