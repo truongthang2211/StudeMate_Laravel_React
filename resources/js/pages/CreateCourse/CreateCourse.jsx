@@ -6,6 +6,7 @@ import './CreateCourse.css'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { ListCategory, ListCourse } from '../../Data.js'
+console.log(ListCategory)
 const API_KEY = 'AIzaSyAzSvXwjoICRPziR_FXQmuus_eSvMTin7I';
 
 const CreateData = {
@@ -21,7 +22,7 @@ const CreateData = {
     ListOut: [],
     AutoTitle: true,
     AutoCreateList: false,
-    Commisstion: 70,
+    Commission: 70,
     ListCourse: [],
     Author: -1,
     Created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -91,7 +92,7 @@ export default function CreateCourse({ User, CourseData, Admin }) {
         var match = url.match(regExp);
         return (match && match[7].length == 11) ? match[7] : false;
     }
-    
+
     const handleSubmit = async () => {
         if (Data.ListCourse.length < 1 || Data.ListCourse[0].type != 'chapter') {
             Swal.fire({
@@ -134,9 +135,9 @@ export default function CreateCourse({ User, CourseData, Admin }) {
                 const newData = { ...Data, ListCourse: newListCourse }
                 console.log(newData)
                 fd.append('data', JSON.stringify(newData))
-                const url = Admin? "/api/update-course" : "/api/create-course-approval"
+                const url = Admin ? "/api/update-course" : "/api/create-course-approval"
                 return axios.post(url, fd, { "enctype": "multipart/form-data" })
-                    .then( async(res) => {
+                    .then(async (res) => {
                         console.log(res)
                         if (res.data.status == 200) {
                             await Swal.fire({
@@ -169,7 +170,7 @@ export default function CreateCourse({ User, CourseData, Admin }) {
         <div className="container">
             <form id="create-course-form" className="create-course-form">
                 <h2 className="create-course-title">Tạo khóa học</h2>
-                {Page === 1 && <PageOne Data={Data} handleOnchange={handleOnchange} />}
+                {Page === 1 && <PageOne Data={Data} Admin={Admin} handleOnchange={handleOnchange} />}
                 {Page === 2 && <PageTwo Data={Data} handleOnchange={handleOnchange} />}
                 {Page === 3 && <PageThree Data={Data} handleOnchange={handleOnchange} />}
                 {Page === 4 && <PageFour Data={Data} handleOnchange={handleOnchange} />}
@@ -219,7 +220,17 @@ function PageOne(props) {
         }
         props.handleOnchange([['Price', SoTien]])
     }
-
+    const onCommissionChange = (e) => {
+        if (/[a-zA-Z]/.test(e.target.value.toString())) {
+            return;
+        }
+        e.target.value = e.target.value == '' ? '0' : e.target.value;
+        let HoaHong = parseInt(e.target.value.replace(/,/g, ""))
+        if (HoaHong > 100) {
+            HoaHong = 100
+        }
+        props.handleOnchange([['Commission', HoaHong]])
+    }
     return (
         <div className="page-one-form">
             <div className="page-one-input">
@@ -235,6 +246,12 @@ function PageOne(props) {
                         <label htmlFor="title" className="create-course-form-label">Giá bán</label>
                     </div>
                 </div>
+                {props.Admin&&<div className="create-course-input-item">
+                    <div className="input-field">
+                        <input type="text" name="Price" value={formatNumber(props.Data.Commission)} onChange={(e) => onCommissionChange(e)} className="create-course-form-input" placeholder=" " />
+                        <label htmlFor="title" className="create-course-form-label">Hoa hồng</label>
+                    </div>
+                </div>}
                 <div className="create-course-input-item">
                     <div className="input-field input-desc">
                         <textarea type="text" name="Description" value={props.Data.Description} onChange={(e) => props.handleOnchange([[e.target.name, e.target.value]])} className="create-course-form-input course-form-area" placeholder=" " />

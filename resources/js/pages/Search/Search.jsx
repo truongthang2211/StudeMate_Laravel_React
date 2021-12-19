@@ -6,6 +6,7 @@ import './Search.css'
 export default function Search() {
     const { key } = useParams();
     const [Data, setData] = useState();
+    const [selectSort, setSelectSort] = useState('MostLearn');
     useEffect(async () => {
         const res = await axios.post('/api/search-course', { search_data: key });
         console.log(res);
@@ -13,6 +14,28 @@ export default function Search() {
     }, [key])
     const handleSort = (e) => {
         console.log(e.target.name)
+        setSelectSort(e.target.name);
+        var TempData = [...Data]
+        switch (e.target.name) {
+            case 'MostLearn':
+                TempData.sort((a, b) => b.enrolled - a.enrolled);
+                break;
+            case 'HighRate':
+                TempData.sort((a, b) => b.voted - a.voted);
+                break;
+            case 'Newest':
+                TempData.sort((a, b) => b.CREATED_AT.localeCompare(a.CREATED_AT));
+                break;
+            case 'LowtoHigh':
+                TempData.sort((a, b) => 1*(b.FEE - a.FEE));
+                break;
+            case 'HightoLow':
+                TempData.sort((a, b) => b.FEE - a.FEE);
+                break;
+            default:
+                break;
+        }
+        setData(TempData);
     }
     console.log(key);
     return (
@@ -22,11 +45,11 @@ export default function Search() {
                 <div className="u-hot-cate hidden-xs">
                     <span className="order-new-seo">
                         <i className="fa fa-sort" aria-hidden="true"></i>Sắp xếp</span>
-                    <ul><li><a onClick={handleSort} name="MostLearn" rel="nofollow">Học nhiều nhất</a>
-                    </li><li><a onClick={handleSort} name="HighRate" rel="nofollow">Đánh giá cao</a>
-                        </li><li><a onClick={handleSort} name="Newest" rel="nofollow">Mới nhất</a></li>
-                        <li><a onClick={handleSort} name="LowtoHigh" rel="nofollow">Giá thấp đến cao</a>
-                        </li><li><a onClick={handleSort} name="HightoLow" rel="nofollow">Giá cao đến thấp</a></li>
+                    <ul><li><a onClick={handleSort} class={selectSort == "MostLearn" ? "active" : ""} name="MostLearn" rel="nofollow">Học nhiều nhất</a>
+                    </li><li><a onClick={handleSort} class={selectSort == "HighRate" ? "active" : ""} name="HighRate" rel="nofollow">Đánh giá cao</a>
+                        </li><li><a onClick={handleSort} class={selectSort == "Newest" ? "active" : ""} name="Newest" rel="nofollow">Mới nhất</a></li>
+                        <li><a onClick={handleSort} class={selectSort == "LowtoHigh" ? "active" : ""} name="LowtoHigh" rel="nofollow">Giá thấp đến cao</a>
+                        </li><li><a onClick={handleSort} class={selectSort == "HightoLow" ? "active" : ""} name="HightoLow" rel="nofollow">Giá cao đến thấp</a></li>
                     </ul>
                 </div>
                 <div className="section-courses">

@@ -167,6 +167,7 @@ class AdminController extends Controller
                 'Price' => (int)$course->FEE,
                 'Image' => '/' . $course->IMG,
                 'SubCategory' => $course->COURSE_TYPE_ID,
+                'Commission' => $course->COMMISSION,
                 'ListIn' => $list_in,
                 'ListOut' => $list_out,
                 'ListCourse' => $list_course,
@@ -198,7 +199,7 @@ class AdminController extends Controller
                     'CourseTitle' => $item->CourseTitle,
                     'Fee' => $item->Price,
                     'CourseState' => $item->State,
-                    'Commission' => $item->Commisstion,
+                    'Commission' => $item->Commission,
                     'CourseCreate' => $item->Created_at,
                     'ActionType' => $item->ActionType,
                     'CourseType' => $CourseType->TYPE_NAME,
@@ -350,7 +351,8 @@ class AdminController extends Controller
             return $th;
         }
     }
-    public function GetApprovaled(){
+    public function GetApprovaled()
+    {
         try {
 
             return response()->json([
@@ -367,10 +369,10 @@ class AdminController extends Controller
     public function GetUserByID(Request $request)
     {
         try {
-           
+
             return response()->json([
                 'status' => 200,
-                'message' => User::where('USER_ID',$request->user_id)->first()
+                'message' => User::where('USER_ID', $request->user_id)->first()
             ]);
         } catch (\Throwable $th) {
             return response()->json([

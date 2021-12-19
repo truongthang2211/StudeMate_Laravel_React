@@ -90,7 +90,7 @@ function Navbar({ ShowForm, handleShowForm, User }) {
                 <form action="" id="form-search" onSubmit={handleSearch}>
                   <input value={searchData} name="search" id="search-course" className="form-control" 
                   type="text" placeholder="Tìm kiếm khóa học ..." onChange={e=> setSearchData(e.target.value)}/>
-                  <span className="input-group-btn">
+                  <span onClick={handleSearch} className="input-group-btn">
                     <i className="fas fa-search"></i>
                   </span>
                 </form>

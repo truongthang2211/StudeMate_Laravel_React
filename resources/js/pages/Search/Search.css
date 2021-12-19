@@ -16,3 +16,7 @@
 .u-hot-cate {
     margin-bottom: 12px;
 }
+.u-hot-cate .active{
+    font-weight: bold;
+    color: var(--main-red);
+}

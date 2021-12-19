@@ -40,7 +40,7 @@ class CourseController extends Controller
             if (!$request->accept) {
                 $course->COURSE_STATE = 'Từ chối';
             }
-            $course->COMMISSION = $course_data->Commisstion;
+            $course->COMMISSION = $course_data->Commission;
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->AUTHOR_ID = $course_data->Author;
             $course->COURSE_TYPE_ID = $course_data->SubCategory;
@@ -491,7 +491,7 @@ class CourseController extends Controller
             }
             $course->COURSE_DESC = $course_data->Description;
             $course->COURSE_STATE = $course_data->State;
-            $course->COMMISSION = $course_data->Commisstion;
+            $course->COMMISSION = $course_data->Commission;
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->COURSE_TYPE_ID = $course_data->SubCategory;
 
@@ -561,7 +561,7 @@ class CourseController extends Controller
             $course->IMG = $course_data->Image;
             $course->COURSE_DESC = $course_data->Description;
             $course->COURSE_STATE = 'Công khai';
-            $course->COMMISSION = $course_data->Commisstion;
+            $course->COMMISSION = $course_data->Commission;
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->COURSE_TYPE_ID = $course_data->SubCategory;
 
@@ -774,9 +774,9 @@ class CourseController extends Controller
             FROM (
                 SELECT a.*,u.*
                 FROM (
-                    SELECT * FROM courses c WHERE c.COURSE_NAME LIKE '%$request->search_data%' 
+                    SELECT * FROM courses c WHERE c.COURSE_NAME LIKE '%$request->search_data%' and c.Course_state = 'Công khai'
                 ) a join users u on a.Author_id = u.USER_ID
-            ) b join enrollments e on b.COURSE_ID = b.COURSE_ID join 
+            ) b left join enrollments e on b.COURSE_ID = b.COURSE_ID left join 
             (SELECT cr.COURSE_ID,SUM(IF(cr.COURSE_REVIEW_STATE=1,1,0))
              voted,SUM(IF(cr.COURSE_REVIEW_STATE=0,1,0)) unvoted
              FROM course_reviews cr 

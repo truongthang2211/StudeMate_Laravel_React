@@ -87,9 +87,8 @@
 
 #form-search span:hover {
     border-radius: 3px;
-    background-color: var(--main-yellow);
+    color: var(--main-yellow);
     cursor: pointer;
-    color: var(--white);
 }
 
 /* Slider */

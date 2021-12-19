@@ -36,7 +36,7 @@ function ListCourse() {
 
     return (
         <>
-            <div id="header" style={{ backgroundImage: "url('/img/courses/header-img.png')" }}>
+            {/* <div id="header" style={{ backgroundImage: "url('/img/courses/header-img.png')" }}>
                 <div className="container" >
                     <h2>Learning online. Let's start your knowledge journey!</h2>
                     <div id="search">
@@ -50,7 +50,7 @@ function ListCourse() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="slider container">
                 <div className="row">
                     <div className="col-lg-3 menu-left-new">

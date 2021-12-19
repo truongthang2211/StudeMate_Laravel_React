@@ -23,12 +23,12 @@ function Home() {
 
     return (
         <>
-            <div id="header" style={{ backgroundImage: "url('img/courses/header-img.png')" }}>
+            {/* <div id="header" style={{ backgroundImage: "url('img/courses/header-img.png')" }}>
                 <div className="container" >
                     <h2>Hãy bắt đầu hành trình học tập online của bạn từ hôm nay !</h2>
-                    
+
                 </div>
-            </div>
+            </div> */}
             <div className="slider container">
                 <div className="row">
                     <div className="col-lg-3 menu-left-new">
