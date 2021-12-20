@@ -107,7 +107,7 @@ function Navbar({ ShowForm, handleShowForm, User }) {
             {!User.loading && <>
               <div onClick={ReadNoti} className="navbar__user_notifi">
                 <i className="far fa-bell"></i>
-                <span className="noti-number">{noti && noti.filter(e => e.READ_STATE == 0).length}</span>
+                {noti && noti.filter(e => e.READ_STATE == 0).length>0&&<span className="noti-number">{noti && noti.filter(e => e.READ_STATE == 0).length}</span>}
                 <div className="notifi-form dropdown-form">
                   <div className="notifi-header">
                     <h4>Thông báo</h4>

@@ -89,7 +89,7 @@ class AdminController extends Controller
                 ORDER BY registered DESC
                 LIMIT 5");
 
-                $topUser = DB::select("SELECT USERS.USER_ID,USERS.FULLNAME,IFNULL(voted,0) as voted
+                $topUser = DB::select("SELECT USERS.USER_ID,USERS.FULLNAME,IFNULL(voted,0) cmt,IFNULL(baihoc,0) baihoc,IFNULL(khoahoc,0) khoahoc, (IFNULL(voted,0)+IFNULL(baihoc,0)*2+IFNULL(khoahoc,0)*3) total
                 FROM USERS
                 LEFT JOIN (
                     SELECT COMMENTS.USER_ID, COUNT(*) as voted
@@ -98,7 +98,14 @@ class AdminController extends Controller
                                             WHERE COMMENT_VOTE_STATE = 1) as B ON COMMENTS.COMMENT_ID = B.COMMENT_ID
                     GROUP BY USER_ID
                 ) as C ON USERS.USER_ID=C.USER_ID
-                ORDER BY voted DESC
+                LEFT JOIN (SELECT c.AUTHOR_ID,COUNT(*) baihoc
+                     FROM courses c join course_chapters cc on c.COURSE_ID = cc.COURSE_ID join lessons ls on ls.CHAPTER_ID = cc.COURSE_CHAPTER_ID
+                     GROUP BY c.AUTHOR_ID) X on X.AUTHOR_ID = USERS.USER_ID
+                LEFT JOIN (SELECT COUNT(*) khoahoc,c.AUTHOR_ID
+                          FROM course_reviews cr join courses c on cr.COURSE_ID = c.COURSE_ID
+                          WHERE cr.COURSE_REVIEW_STATE=1
+                          GROUP BY c.AUTHOR_ID) Y on Y.AUTHOR_ID = users.USER_ID
+                ORDER BY total DESC
                 LIMIT 5");
 
                 $payments = DB::select(@"SELECT * FROM PAYMENTS P JOIN Enrollments E ON P.ENROLLMENT_ID = E.ENROLLMENT_ID WHERE RECEIVER_ID = " . $id);

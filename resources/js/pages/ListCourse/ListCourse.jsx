@@ -15,8 +15,8 @@ function ListCourse() {
         useEffect(async () => {
             try {
                 const resCourses = await axios.post('/api/get-courses-by-maintype',{maintypeId});
-                setCourses(resCourses.data.message);
                 console.log(resCourses);
+                setCourses(resCourses.data.message);
             } catch (error) {
                 console.log(error);
             }

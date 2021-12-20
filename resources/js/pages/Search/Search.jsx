@@ -21,13 +21,13 @@ export default function Search() {
                 TempData.sort((a, b) => b.enrolled - a.enrolled);
                 break;
             case 'HighRate':
-                TempData.sort((a, b) => b.voted - a.voted);
+                TempData.sort((a, b) => b.upVote - a.upVote);
                 break;
             case 'Newest':
                 TempData.sort((a, b) => b.CREATED_AT.localeCompare(a.CREATED_AT));
                 break;
             case 'LowtoHigh':
-                TempData.sort((a, b) => 1*(b.FEE - a.FEE));
+                TempData.sort((a, b) => -1*(b.FEE - a.FEE));
                 break;
             case 'HightoLow':
                 TempData.sort((a, b) => b.FEE - a.FEE);
@@ -61,8 +61,8 @@ export default function Search() {
                             img={course.IMG}
                             fee={course.FEE}
                             courseId={course.COURSE_ID}
-                            like={course.voted}
-                            dislike={course.unvoted}
+                            upVote={course.upVote}
+                            downVote={course.downVote}
                             author_id={course.USER_ID}
                         />
                     )}

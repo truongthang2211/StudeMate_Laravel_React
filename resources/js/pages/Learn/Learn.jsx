@@ -68,15 +68,15 @@ export default memo(function Learn({ LearnData, Admin }) {
             if (!LearnData) {
                 const res = await axios.get(`/api/get-learn/${Tcourse}/${Tlesson}`)
                 console.log(res)
-                if (res.data.status == 201){
+                if (res.data.status == 201) {
                     navigate('/404')
                 }
                 if (!Admin) {
                     if (res.data.message.LastLessonLearnt == -1) {
                         navigate(`/learn/${Tcourse}/${res.data.message.ListLearn[0].Lesson[0].LESSON_ID}`)
-                    } else if (!lesson){
+                    } else if (!lesson) {
                         navigate(`/learn/${Tcourse}/${res.data.message.LastLessonLearnt + 1}`)
-                    }else {
+                    } else {
                         navigate(`/learn/${Tcourse}/${Tlesson}`)
                     }
                 } else {
@@ -87,7 +87,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                 setPending(false)
                 setData(res.data.message)
                 setVideoID(youtube_id(res.data.message.LearningURL))
-            } else if (LearnData&&LearnData.LearningURL) {
+            } else if (LearnData && LearnData.LearningURL) {
                 setPending(false)
                 setData(LearnData)
                 setVideoID(youtube_id(LearnData.LearningURL))
@@ -99,21 +99,21 @@ export default memo(function Learn({ LearnData, Admin }) {
         }
     }, [LearnData])
     const showComment = async () => {
-        if (feature != 'approval'){
+        if (feature != 'approval') {
             try {
-                const res = await axios.post(`/api/get-comments`, { lesson_id: lesson || subid});
+                const res = await axios.post(`/api/get-comments`, { lesson_id: lesson || subid });
                 console.log(res)
                 setComments(res.data.message)
             } catch (error) {
                 console.log(error)
             }
         }
-        
+
     }
     useEffect(() => {
         showComment();
         // console.log('testest')
-    }, [lesson,subid])
+    }, [lesson, subid])
     const handleLesson = (lesson_url, lesson_id, status) => {
         let url = '/learn/';
         if (Admin) {
@@ -152,8 +152,8 @@ export default memo(function Learn({ LearnData, Admin }) {
         <div id="left-learning">
             <div className="breadcrumb">
                 <Link className="breadcrumb-item" to="/"><i className="fas fa-home"></i></Link>
-                <Link className="breadcrumb-item" to={`/list-course/${dataLearning.CourseMainType&&dataLearning.CourseMainType.COURSE_MAINTYPE_ID}`}>{dataLearning.CourseMainType&&dataLearning.CourseMainType.TYPE_NAME}</Link>
-                <Link className="breadcrumb-item" to={`/list-course/null/${dataLearning.CourseType&&dataLearning.CourseType.COURSE_SUBTYPE_ID}`}>{dataLearning.CourseType&&dataLearning.CourseType.TYPE_NAME}</Link>
+                <Link className="breadcrumb-item" to={`/list-course/${dataLearning.CourseMainType && dataLearning.CourseMainType.COURSE_MAINTYPE_ID}`}>{dataLearning.CourseMainType && dataLearning.CourseMainType.TYPE_NAME}</Link>
+                <Link className="breadcrumb-item" to={`/list-course/null/${dataLearning.CourseType && dataLearning.CourseType.COURSE_SUBTYPE_ID}`}>{dataLearning.CourseType && dataLearning.CourseType.TYPE_NAME}</Link>
                 <span className="breadcrumb-item active">{dataLearning.CourseTitle}</span>
             </div>
             <div className="video-learning">
@@ -164,7 +164,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                     <div className="info-learning-content">
                         <div className="tabs-bar">
                             <div className="tab-item selected-tab">Trao đổi</div>
-                          
+
                         </div>
                         <div className="info-learning-comment">
                             <UserComment updateComment={showComment} />
@@ -203,9 +203,9 @@ export default memo(function Learn({ LearnData, Admin }) {
 
         </div>
         <div id="right-learning">
-            <RightHeader learnt={dataLearning.ListLearn && dataLearning.ListLearn.reduce((a, b) => a + b.Lesson.filter(e => e.LESSON_ID <= dataLearning.LastLessonLearnt).length, 0)} 
-            totalLesson={dataLearning.ListLearn && dataLearning.ListLearn.reduce((a, b) => a + b.Lesson.length, 0)} 
-            title={dataLearning.ListLearn && dataLearning.CourseTitle}/>
+            <RightHeader learnt={dataLearning.ListLearn && dataLearning.ListLearn.reduce((a, b) => a + b.Lesson.filter(e => e.LESSON_ID <= dataLearning.LastLessonLearnt).length, 0)}
+                totalLesson={dataLearning.ListLearn && dataLearning.ListLearn.reduce((a, b) => a + b.Lesson.length, 0)}
+                title={dataLearning.ListLearn && dataLearning.CourseTitle} />
             {dataLearning.ListLearn && dataLearning.ListLearn.map((item, index) => {
                 return (
                     <Collapsible className="playlist-wrapper" key={index}>
@@ -221,11 +221,11 @@ export default memo(function Learn({ LearnData, Admin }) {
                                     } else if (less.LESSON_ID > dataLearning.LastLessonLearnt + 1) {
                                         status = 'block-item'
                                     }
-                                    if ((!Admin &&less.LESSON_ID == lesson )|| less.LESSON_ID == subid ||  subid==index2) {
+                                    if ((!Admin && less.LESSON_ID == lesson) || less.LESSON_ID == subid || subid == index2) {
                                         status += ' learning-item'
                                     }
                                     return (
-                                        <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID??index2} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={msecToTime(less.DURATION)} />
+                                        <Lession status={status} handleLesson={handleLesson} lesson_id={less.LESSON_ID ?? index2} videoURL={less.LESSON_URL} key={index2} title={less.LESSON_NAME} duration={msecToTime(less.DURATION)} />
                                     );
                                 })}
                         </div>
@@ -388,7 +388,7 @@ function Comment(props) {
                         </span>
                     </span>
                     <span onClick={() => { props.handleRepl(props.index, props.parent_index, props.repl, props.parentComment) }} className="comment-repl" href="">Trả lời</span>
-                    <span className="comment-datetime">{moment(props.Time,"YYYY-MM-DD HH:mm:ss").fromNow()}</span>
+                    <span className="comment-datetime">{moment(props.Time, "YYYY-MM-DD HH:mm:ss").fromNow()}</span>
                 </div>
             </div>
         </div>
@@ -423,7 +423,7 @@ function Lession({ title, duration, handleLesson, videoURL, lesson_id, status })
 }
 function RightHeader(props) {
     return (
-        <header className="playlist-header" style={{ '--process':(props.learnt/props.totalLesson*100).toFixed(2)+'%'}}>
+        <header className="playlist-header" style={{ '--process': (props.learnt / props.totalLesson * 100).toFixed(2) + '%' }}>
             <div className="background-process">
             </div>
             <div className="playlist-header-content">
@@ -432,7 +432,7 @@ function RightHeader(props) {
                     <p className="playlist-description">
                         Hoàn thành
                         <strong> {props.learnt}</strong>/<strong>{props.totalLesson} </strong>
-                        bài học (<strong>{(props.learnt/props.totalLesson*100).toFixed(2)} %</strong>)
+                        bài học (<strong>{(props.learnt / props.totalLesson * 100).toFixed(2)} %</strong>)
                     </p>
                 </div>
             </div>

@@ -192,7 +192,6 @@ function PageOne(props) {
         return []
     });
     useEffect(() => {
-        console.log('???')
         if (ListCategory[props.Data.Category - 1111]) {
             setSubList(ListCategory[props.Data.Category - 1111].subCatogory)
         }
@@ -206,7 +205,7 @@ function PageOne(props) {
         props.handleOnchange([['SubCategory', id]])
     }
     function formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+\b)/g, ",")
+        return num?num.toString().replace(/\B(?=(\d{3})+\b)/g, ","):"0";
     }
     const onPriceChange = (e) => {
         if (/[a-zA-Z]/.test(e.target.value.toString())) {
@@ -235,7 +234,7 @@ function PageOne(props) {
             <div className="page-one-input">
                 <div className="create-course-input-item">
                     <div className="input-field">
-                        <input autoFocus type="text" name="CourseTitle" value={props.Data.CourseTitle} onChange={(e) => props.handleOnchange([[e.target.name, e.target.value]])} className="create-course-form-input" placeholder=" " />
+                        <input autoFocus type="text" name="CourseTitle" value={props.Data.CourseTitle || ''} onChange={(e) => props.handleOnchange([[e.target.name, e.target.value]])} className="create-course-form-input" placeholder=" " />
                         <label htmlFor="title" className="create-course-form-label">Tên khóa học</label>
                     </div>
                 </div>
@@ -247,7 +246,7 @@ function PageOne(props) {
                 </div>
                 {props.Admin&&<div className="create-course-input-item">
                     <div className="input-field">
-                        <input type="text" name="Price" value={formatNumber(props.Data.Commission)} onChange={(e) => onCommissionChange(e)} className="create-course-form-input" placeholder=" " />
+                        <input type="text" name="Commission" value={formatNumber(props.Data.Commission)} onChange={(e) => onCommissionChange(e)} className="create-course-form-input" placeholder=" " />
                         <label htmlFor="title" className="create-course-form-label">Hoa hồng</label>
                     </div>
                 </div>}
@@ -595,7 +594,7 @@ function PageFour(props) {
                                                     <input className="text-input-simple mw-100 border-0 h6" placeholder="Tiêu đề của bài học" type="text" name="title" value={data.title} onChange={(e) => OnChangeHandle(e, index)} />
                                                     <br />
                                                     <input className="text-input-simple mw-100 border-0" placeholder="URL của bài học" type="text" name="URL" value={data.URL} onChange={(e) => OnChangeHandle(e, index)} />
-                                                    {!data.id && <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>}
+                                                    {(!data.id )&& <i onClick={() => DeleteHandle(index)} className="fas fa-trash"></i>}
                                                 </div>
                                             )}
 

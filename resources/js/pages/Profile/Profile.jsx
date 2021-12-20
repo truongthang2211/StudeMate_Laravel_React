@@ -14,7 +14,7 @@ function Profile(props) {
     useEffect(async () => {
         const res = await axios.post('/api/get-user', { user_id: user_id })
         setUser(res.data.message)
-    }, [])
+    }, [user_id])
     useEffect(() => {
 
         axios.post('/api/get-course-item',{ user_id: user_id}).then(res => {

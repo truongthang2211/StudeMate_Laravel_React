@@ -174,7 +174,7 @@ class CourseController extends Controller
                 array_push($result1, $obj);
             }
             $course2 = DB::table('courses')
-                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname','courses.author_id')
+                ->select('courses.course_id','courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname','courses.author_id')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $courseMainType2->COURSE_MAINTYPE_ID)->where('COURSE_STATE', 'Công khai')
@@ -685,7 +685,7 @@ class CourseController extends Controller
                 $course->IMG = $path . "/" . $fileName;
             }
             $course->COURSE_DESC = $course_data->Description;
-            $course->COURSE_STATE = $course_data->State;
+            $course->COURSE_STATE = 'Công khai';
             $course->COMMISSION = $course_data->Commission;
             $course->COURSE_NAME = $course_data->CourseTitle;
             $course->COURSE_TYPE_ID = $course_data->SubCategory;
@@ -965,7 +965,8 @@ class CourseController extends Controller
     {
         try {
             //code...
-            $search_course = DB::select("SELECT b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname, enrolled, upVote,downVote
+            $search_course = DB::select("SELECT b.course_id,b.course_name,b.fee,b.course_desc,b.img,b.created_at,b.user_id,b.fullname, 
+            IFNULL(enrolled,0) enrolled, IFNULL(upVote,0) upVote, IFNULL(downVote,0) downVote
             FROM (
                 SELECT a.*,u.*
                 FROM (

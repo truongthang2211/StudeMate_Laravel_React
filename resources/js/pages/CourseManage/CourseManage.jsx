@@ -37,7 +37,7 @@ const columns2 = [
     },
     {
         name: 'Tên khóa học',
-        selector: row => row.CourseTitle,
+        selector: row => <Link to={`/course/${row.CourseID}`} >{row.CourseTitle}</Link>,
     },
     {
         name: 'Ngày đăng ký',

@@ -152,18 +152,28 @@ function AdminPage({ User }) {
 function Overview() {
     const topUserColumn = [
         {
-            name: 'UserID',
-            selector: row => row.USER_ID,
-            sortable: true,
-        },
-        {
             name: 'Họ tên',
-            selector: row => row.FULLNAME,
+            selector: row => <Link to={`/profile/${row.USER_ID}`} target="_blank">{row.FULLNAME}</Link>,
             sortable: true,
         },
         {
-            name: 'Số vote up',
-            selector: row => row.voted,
+            name: 'Vote từ cmt',
+            selector: row => row.cmt,
+            sortable: true,
+        },
+        {
+            name: 'Sô bài học',
+            selector: row => row.baihoc,
+            sortable: true,
+        },
+        {
+            name: 'Vote từ khóa học',
+            selector: row => row.khoahoc,
+            sortable: true,
+        },
+        {
+            name: 'Chỉ số tích cực',
+            selector: row => row.total,
             sortable: true,
         },
     ]
@@ -280,21 +290,22 @@ function Overview() {
                     <div className="overview-info-left-top">
                         <div className="card-body p-3 text-center border-shadow-box">
                             <p className="text text-center" style={{ color: "green" }} >
-                                {!data ? "Loading..." : (data.RevenueToDay - data.RevenueYesterDay)
-                                    / (data.RevenueToDay + data.RevenueYesterDay) == 0 ? 1 : (data.RevenueToDay + data.RevenueYesterDay)}%</p>
+                                {!data ? "Loading..." :((data.RevenueToDay - data.RevenueYesterDay)*100
+                                    / ((data.RevenueToDay + data.RevenueYesterDay) == 0 ? 1 : (data.RevenueToDay + data.RevenueYesterDay))).toFixed(2)}%</p>
                             <div className="h1 m-0">{!data ? "Loading..." : formatNumber(data.RevenueToDay)} đ</div>
                             <p className="text  mb-4" color="gray">Doanh thu hôm nay</p>
                         </div>
                         <div className="card-body p-3 text-center border-shadow-box">
                             <p className="text text-center" style={{ color: "green" }} >
-                                {!data ? "Loading..." : (data.UserToDay - data.UserYesterDay)
-                                    / (data.UserToDay + data.UserYesterDay) == 0 ? 1 : (data.UserToDay + data.UserYesterDay)}%</p>
+                                {!data ? "Loading..." : ((data.UserToDay - data.UserYesterDay)*100
+                                    / ((data.UserToDay + data.UserYesterDay) == 0 ? 1 : (data.UserToDay + data.UserYesterDay))).toFixed(2)}%</p>
                             <div className="h1 m-0">{!data ? "Loading..." : data.UserToDay}</div>
                             <p className="text  mb-4" color="gray">Người dùng hôm nay</p>
                         </div>
                         <div className="card-body p-3 text-center border-shadow-box">
                             <p className="text text-center" style={{ color: "green" }} >
-                                {(CourseToday - CourseYesterday) / (CourseToday + CourseYesterday) == 0 ? 1 : (CourseToday + CourseYesterday)}%</p>
+                                {((CourseToday - CourseYesterday) *100/ 
+                                ((CourseToday + CourseYesterday) == 0 ? 1 : (CourseToday + CourseYesterday))).toFixed(2)}%</p>
                             <div className="h1 m-0">{CourseToday}</div>
                             <p className="text  mb-4" color="gray">Khóa học hôm nay</p>
                         </div>
@@ -302,8 +313,8 @@ function Overview() {
                     <div className="overview-info-left-bottom">
                         <div className="card-body p-3 text-center border-shadow-box">
                             <p className="text text-center" style={{ color: "green" }} >
-                                {!data ? "Loading..." : (data.RevenueToDay - data.RevenueYesterDay)
-                                    / (data.TotalRevenue) == 0 ? 1 : (data.TotalRevenue)}%</p>
+                                {!data ? "Loading..." : ((data.RevenueToDay - data.RevenueYesterDay)
+                                    / ((data.TotalRevenue) == 0 ? 1 : (data.TotalRevenue))).toFixed(4)}%</p>
                             <div className="h1 m-0">{!data ? "Loading..." : formatNumber(data.TotalRevenue)} đ</div>
                             <p className="text  mb-4" color="gray">Tổng doanh thu</p>
                         </div>
@@ -414,7 +425,7 @@ const usermanageColumn = [
     },
     {
         name: 'Hành động',
-        selector: row => <UpdateAction view="/profile" edit={"edit/" + row.USER_ID} />,
+        selector: row => <UpdateAction view={`/profile/${row.USER_ID}`} edit={"edit/" + row.USER_ID} />,
         minWidth: '200px',
     },
 ];
@@ -463,7 +474,7 @@ function Approval(props) {
         },
         {
             name: 'Tác giả',
-            selector: row => row.Author.FullName,
+            selector: row => <Link to={`/profile/${row.Author.UserID}`}>{row.Author.FullName}</Link>,
             sortable: true,
         },
         {
@@ -473,7 +484,7 @@ function Approval(props) {
         },
         {
             name: 'Giá',
-            selector: row => row.Fee,
+            selector: row => formatNumber(row.Fee),
             sortable: true,
         },
         {
