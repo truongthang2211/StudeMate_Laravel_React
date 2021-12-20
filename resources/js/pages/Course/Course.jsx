@@ -282,9 +282,6 @@ export default function Course({ User, handleShowForm,callback }) {
         }
     }
 
-    console.log(checkEnrolled);
-    console.log(checkOwner);
-
     return (
         <>
             <div id="main">
@@ -367,10 +364,8 @@ export default function Course({ User, handleShowForm,callback }) {
                             <div className="course-purchase">
                                 <div className="course-thumb">
                                     <img src={course && "/" + course.course_general[0].img} alt="course-thumb" className="center" />
-                                    <i className="fas fa-play-circle"></i>
-                                    <p>Xem giới thiệu khóa học</p>
                                 </div>
-                                <h5 className="course-fee">Miễn phí</h5>
+                                <h5 className="course-fee">{course && course.course_general[0].fee == 0 ? "Miễn phí" : "Có tính phí"}</h5>
                                 <Link to={checkEnrolled || checkOwner ? "/learn/" + courseId : "/course/" + courseId} onClick={checkEnrolled || checkOwner ? handleAfterEnroll : handleRegister} className="course-btn">
                                     {checkEnrolled || checkOwner ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
                                 </Link>

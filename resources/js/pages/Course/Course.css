@@ -197,7 +197,7 @@ position: fixed;
 }
 #main .course-thumb{
 position: relative;
-cursor: pointer;
+max-width: 400px;
 }
 #main .course-thumb i{
 position: absolute;
