@@ -56,7 +56,7 @@ function Profile(props) {
             <div className="all-profile">
                 <link rel="stylesheet" href="/css/override-container.css" />
                 <div className="profile-background">
-                    <img src={User.BACKGROUND_IMG && `/${User.BACKGROUND_IMG}` || "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} alt="" />
+                    <img src={User.BACKGROUND_IMG && `/${User.BACKGROUND_IMG}` || "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/265477733_1261787384297990_7861327918471454977_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=ae9488&_nc_ohc=TKEOtuPOWaEAX-_NLwH&tn=XQUZnIFZbTB2qDYS&_nc_ht=scontent.fsgn5-6.fna&oh=03_AVKv7IDaMciyI5YV2gu_5w3YZDkUXV98-fgz0iQ5MdWkFQ&oe=61E6E335"} alt="" />
                     <div className="profile-background-shadow"></div>
                 </div>
                 <div className="container main-profile">

@@ -3,6 +3,7 @@ import HomeCourseItem from '../../components/HomeCourseItem';
 import axios from 'axios';
 import './Home.css'
 import { Link } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -441,6 +442,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <Footer  />
         </>
     );
 }

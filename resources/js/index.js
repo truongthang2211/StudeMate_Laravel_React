@@ -13,7 +13,6 @@ import Course from './pages/Course/Course';
 import Learn from './pages/Learn/Learn';
 import CreateCourse from './pages/CreateCourse/CreateCourse';
 import CourseManage from './pages/CourseManage/CourseManage';
-import MyCourse from './pages/MyCourse/MyCourse';
 import Admin from './pages/Admin/Admin';
 import ListCourse from './pages/ListCourse/ListCourse';
 import Search from './pages/Search/Search';
@@ -83,6 +82,7 @@ function UserLayout({ User, ShowForm, handleShowForm }) {
         <>
             <Navbar User={User} ShowForm={ShowForm} handleShowForm={handleShowForm} />
             <Outlet />
+
         </>
     );
 }

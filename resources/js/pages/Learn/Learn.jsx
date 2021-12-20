@@ -12,7 +12,7 @@ import My404 from '../My404/My404'
 import { ListCourse } from '../../Data.js'
 
 const ThisUserID = new URLSearchParams(document.cookie.replaceAll("; ", "&")).get('StudyMate');
-export default memo(function Learn({ LearnData, Admin }) {
+export default memo(function Learn({ LearnData, Admin ,User}) {
     const [pending, setPending] = useState(true);
     const { course, lesson } = useParams();
     const { feature, id, subid } = useParams();
@@ -167,7 +167,7 @@ export default memo(function Learn({ LearnData, Admin }) {
 
                         </div>
                         <div className="info-learning-comment">
-                            <UserComment updateComment={showComment} />
+                            <UserComment User={User} updateComment={showComment} />
                             <div className="person-comment-block">
                                 <ul>
                                     {comments.map((item, index) => {
@@ -179,7 +179,7 @@ export default memo(function Learn({ LearnData, Admin }) {
                                                     commentID={item.commentID} updateComment={showComment} />
                                                 {item.SubComments.map((item2, index2) => {
                                                     if (item2.thisuser) {
-                                                        return (<UserComment key={index2} parent_index={index} updateComment={showComment}
+                                                        return (<UserComment key={index2} parent_index={index} updateComment={showComment} User={User}
                                                             index={index2} repl parentComment={item2.parent_comment} handleCancel={onClickCancel} />);
                                                     } else {
                                                         return (
@@ -283,7 +283,7 @@ function UserComment(props) {
         <div id="user-comment-block">
             <div className={ClassName}>
                 <div className="comment-avt">
-                    <img className="CommentBox_myAvatar__3Mi09" src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.6435-9/123519836_2709233069342309_404418965952590855_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=i1SBPX81GKUAX_deJFe&_nc_ht=scontent.fsgn5-11.fna&oh=d685f02a12ebb0131217f4705e5c5795&oe=61C416A0" alt="Thang Nguyen" />
+                    <img className="CommentBox_myAvatar__3Mi09" src={props.User && props.User.AVATAR_IMG ? `/${props.User.AVATAR_IMG}` : "https://genk.mediacdn.vn/thumb_w/600/2015/screen-shot-2015-07-30-at-2-31-57-pm-1438334096188.png"} alt="Thang Nguyen" />
                 </div>
                 <div className="comment-content align-items-end">
                     <textarea ref={commentRef} className="comment-input" autoFocus

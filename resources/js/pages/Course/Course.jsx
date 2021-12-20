@@ -115,12 +115,12 @@ function Review(props) {
     return (
         <div className="wrap-review">
             <div className="user-avatar">
-                <img src={props.img} />
+                <img src={props.img && `/${props.img}` || "https://genk.mediacdn.vn/thumb_w/600/2015/screen-shot-2015-07-30-at-2-31-57-pm-1438334096188.png"} />
             </div>
             <div className="review-content">
                 <div className="review-body">
                     <div className="review-user">
-                        <a href="#"><strong>{props.username}</strong></a>
+                        <Link to={`/profile/${props.userid}`}><strong>{props.username}</strong></Link>
                     </div>
                     <div className="review-text">{props.content}</div>
                 </div>
@@ -180,7 +180,7 @@ export default function Course({ User, handleShowForm,callback }) {
     useEffect(async () => {
         try {
             const resCheck = await axios.post('/api/check-enrolled', { courseId });
-            const flag = resCheck && resCheck.data.message.USER_ID == user_id && resCheck.data.message.COURSE_ID == courseId;
+            const flag = resCheck.data.message && resCheck.data.message.USER_ID == user_id && resCheck.data.message.COURSE_ID == courseId;
             setCheckEnrolled(flag);
             console.log(resCheck);
         } catch (error) {
@@ -356,7 +356,7 @@ export default function Course({ User, handleShowForm,callback }) {
                                     <div className="list-review-block">
                                         {reviews.map((review, index) => {
                                             return (
-                                                <Review key={index} img={review.user.AVATAR_IMG} username={review.user.FULLNAME} content={review.review_content} state={review.review_state} />
+                                                <Review key={index} userid={review.user.USER_ID} img={review.user.AVATAR_IMG} username={review.user.FULLNAME} content={review.review_content} state={review.review_state} />
                                             )
                                         })}
                                     </div>

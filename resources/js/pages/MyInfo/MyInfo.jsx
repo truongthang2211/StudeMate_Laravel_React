@@ -226,7 +226,7 @@ function MyInfo({ User }) {
 
                                             <div className="col-md-6 col-xs-12">
                                                 <div className="row myinfo-avt">
-                                                    <img id="AvtPreview" src={userInfo.AVATAR_IMG ? `/${userInfo.AVATAR_IMG}` : "https://genk.mediacdn.vn/thumb_w/600/2015/screen-shot-2015-07-30-at-2-31-57-pm-1438334096188.png"} className="no-img" />
+                                                    <img id="AvtPreview" src={userInfo.AVATAR_IMG ?(userInfo.AVATAR_IMG.substring(0,3)=='img' ? `/${userInfo.AVATAR_IMG}`:`${userInfo.AVATAR_IMG}`) : "https://genk.mediacdn.vn/thumb_w/600/2015/screen-shot-2015-07-30-at-2-31-57-pm-1438334096188.png"} className="no-img" />
                                                 </div>
                                                 <div className="row avatar-selector">
                                                     <div className="form-group UploadAvatar">
@@ -238,7 +238,7 @@ function MyInfo({ User }) {
                                             </div>
                                             <div className="col-md-6 col-xs-12">
                                                 <div className="row myinfo-background">
-                                                    <img id="BackGroundPreview" src={userInfo.BACKGROUND_IMG ? `/${userInfo.BACKGROUND_IMG}` : "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} className="no-img" />
+                                                    <img id="BackGroundPreview" src={userInfo.BACKGROUND_IMG ?(userInfo.BACKGROUND_IMG.substring(0,3)=='img' ? `/${userInfo.BACKGROUND_IMG}`:`${userInfo.BACKGROUND_IMG}`) : "https://c.wallhere.com/photos/78/3f/FeelsBadMan_Pepe_meme_memes-43635.png!d"} className="no-img" />
 
                                                 </div>
                                                 <div className="row avatar-selector">

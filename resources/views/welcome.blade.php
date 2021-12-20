@@ -19,7 +19,9 @@
 
 <body>
 
-    <div id="root"></div>
+    <div id="root" style=" min-height: 100vh;
+    display: flex;
+    flex-direction: column;"></div>
     <script src="/js/app.js"></script>
 </body>
 
