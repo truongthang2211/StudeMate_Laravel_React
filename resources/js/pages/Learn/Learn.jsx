@@ -127,7 +127,7 @@ export default memo(function Learn({ LearnData, Admin }) {
     }
     let TimerId = 0;
     const handleVideoPlaying = async (e) => {
-        if (e.data == 1 && !Admin) {
+        if (e.data == 1 && !Admin && ThisUserID != dataLearning.Author) {
             TimerId = setInterval(() => {
                 if (e.target.getCurrentTime() / e.target.getDuration() > 0.8) {
                     if (dataLearning.LastLessonLearnt + 1 == lesson || dataLearning.LastLessonLearnt == -1) {

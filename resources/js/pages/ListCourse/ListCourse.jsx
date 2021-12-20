@@ -400,7 +400,7 @@ function ListCourse() {
                         </ul>
                     </div>
                     <div className="col-lg-9 banner-right-new">
-                        <img src="https://i.ytimg.com/vi/8xLEec2NiV8/maxresdefault.jpg" alt="" />
+                        <img src="\img\courses\5417525.jpg" alt="" />
                     </div>
                 </div>
             </div>

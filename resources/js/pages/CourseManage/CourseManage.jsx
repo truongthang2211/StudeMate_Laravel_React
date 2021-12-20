@@ -65,7 +65,7 @@ const columns2 = [
     },
     {
         name: 'Tiền kiếm được',
-        selector: row => row.Earn + ' VND',
+        selector: row => formatNumber(row.Earn) + ' VND',
     },
     {
         name: 'Số người đăng ký',

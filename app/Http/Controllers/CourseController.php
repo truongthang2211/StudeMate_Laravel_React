@@ -174,7 +174,7 @@ class CourseController extends Controller
                 array_push($result1, $obj);
             }
             $course2 = DB::table('courses')
-                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname')
+                ->select('courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname','courses.author_id')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $courseMainType2->COURSE_MAINTYPE_ID)->where('COURSE_STATE', 'Công khai')
@@ -580,12 +580,12 @@ class CourseController extends Controller
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
                 $enroll = Enrollment::where('USER_ID',$id)->where('COURSE_ID',$course_id)->first();
-                if (!$enroll){
+                $this_course = Course::where('COURSE_ID', $course_id)->first();
+                if (!$enroll && $id != $this_course->AUTHOR_ID){
                     return response()->json([
                         'status' => 201,
                     ]);
                 }
-                $this_course = Course::where('COURSE_ID', $course_id)->first();
                 $CourseType = Course_SubType::where('COURSE_SUBTYPE_ID', $this_course->COURSE_TYPE_ID)->first();
                 $CourseMainType = Course_MainType::where('COURSE_MAINTYPE_ID', $CourseType->PARENT_TYPE_ID)->first();
                 $chapters = Course_Chapter::where('COURSE_ID', $course_id);

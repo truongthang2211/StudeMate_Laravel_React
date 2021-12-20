@@ -17,7 +17,7 @@ function Profile(props) {
     }, [])
     useEffect(() => {
 
-        axios.get('/api/get-course-item').then(res => {
+        axios.post('/api/get-course-item',{ user_id: user_id}).then(res => {
             console.log(res);
             if (res.data.status === 200) {
                 setCourseItem(res.data.courses);
@@ -26,7 +26,7 @@ function Profile(props) {
             }
         });
 
-    }, []);
+    }, [user_id]);
 
 
     // const showCourseInfo = async () => {
@@ -196,7 +196,7 @@ export function ProfileHeader({ User }) {
         </div >
     );
 }
-export function ProfileCourseItem({ Option, className, courseItem }) {
+export function ProfileCourseItem({ Option, className, courseItem}) {
 
     // const [author, setAuthor] = useState({
     //     AUTHOR_ID: courseItem.AUTHOR_ID,
@@ -221,14 +221,14 @@ export function ProfileCourseItem({ Option, className, courseItem }) {
             </div>
             <div className="course-info">
                 <div className="course-info-title">
-                    <a href="#">
+                    <Link to={`/course/${courseItem.COURSE_ID}`}>
                         <h4>{courseItem.COURSE_NAME}</h4>
-                    </a>
+                    </Link>
                 </div>
                 <div className="course-info-author">
-                    <a href="#">
+                    <Link to={`/profile/${courseItem.USER_ID}`}>
                         <p>{courseItem.FULLNAME}</p>
-                    </a>
+                    </Link>
                 </div>
             </div>
             {Option && <div className="course-manage-options">
