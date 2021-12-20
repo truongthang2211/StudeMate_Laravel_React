@@ -116,15 +116,14 @@ class CourseController extends Controller
             ->take(8)
             ->get();
         $courses = array();
-        foreach ($list_courses as $course) 
-        {
-            $total_upvote = DB::table('courses')
-                ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+        foreach ($list_courses as $course) {
+            $total_upvote = DB::table('course_reviews')
+                ->where('course_id', $course->course_id)
                 ->where('course_review_state', 1)
                 ->select(DB::raw('COUNT(*) as numOfUpvote'))
                 ->get();
-            $total_downvote = DB::table('courses')
-                ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+            $total_downvote = DB::table('course_reviews')
+                ->where('course_id', $course->course_id)
                 ->where('course_review_state', 0)
                 ->select(DB::raw('COUNT(*) as numOfDownvote'))
                 ->get();
@@ -156,13 +155,13 @@ class CourseController extends Controller
                 ->take(8)
                 ->get();
             foreach ($course1 as $course) {
-                $total_upvote = DB::table('courses')
-                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                $total_upvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
                     ->where('course_review_state', 1)
                     ->select(DB::raw('COUNT(*) as numOfUpvote'))
                     ->get();
-                $total_downvote = DB::table('courses')
-                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                $total_downvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
                     ->where('course_review_state', 0)
                     ->select(DB::raw('COUNT(*) as numOfDownvote'))
                     ->get();
@@ -181,13 +180,13 @@ class CourseController extends Controller
                 ->take(8)
                 ->get();
             foreach ($course2 as $course) {
-                $total_upvote = DB::table('courses')
-                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                $total_upvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
                     ->where('course_review_state', 1)
                     ->select(DB::raw('COUNT(*) as numOfUpvote'))
                     ->get();
-                $total_downvote = DB::table('courses')
-                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                $total_downvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
                     ->where('course_review_state', 0)
                     ->select(DB::raw('COUNT(*) as numOfDownvote'))
                     ->get();
@@ -222,13 +221,13 @@ class CourseController extends Controller
                 ->get();
             $courses = array();
             foreach ($list_course as $course) {
-                $total_upvote = DB::table('courses')
-                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                $total_upvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
                     ->where('course_review_state', 1)
                     ->select(DB::raw('COUNT(*) as numOfUpvote'))
                     ->get();
-                $total_downvote = DB::table('courses')
-                    ->join('course_reviews', 'courses.course_id', '=', 'course_reviews.course_id')
+                $total_downvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
                     ->where('course_review_state', 0)
                     ->select(DB::raw('COUNT(*) as numOfDownvote'))
                     ->get();
@@ -255,12 +254,31 @@ class CourseController extends Controller
     {
         try {
             $id = $request->maintypeId;
-            $courses = DB::table('courses')
+            $list_course = DB::table('courses')
                 ->select('courses.course_id', 'courses.course_name', 'courses.fee', 'courses.course_desc', 'courses.img', 'users.fullname', 'courses.author_id')
                 ->join('users', 'courses.author_id', '=', 'users.user_id')
                 ->join('course_subtypes', 'courses.course_type_id', '=', 'course_subtypes.course_subtype_id')
                 ->where('course_subtypes.parent_type_id', $id)->where('COURSE_STATE', 'Công khai')
                 ->get();
+            $courses = array();
+            foreach ($list_course as $course) {
+                $total_upvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
+                    ->where('course_review_state', 1)
+                    ->select(DB::raw('COUNT(*) as numOfUpvote'))
+                    ->get();
+                $total_downvote = DB::table('course_reviews')
+                    ->where('course_id', $course->course_id)
+                    ->where('course_review_state', 0)
+                    ->select(DB::raw('COUNT(*) as numOfDownvote'))
+                    ->get();
+                $obj = (object)[
+                    'course' => $course,
+                    'upVote' => $total_upvote,
+                    'downVote' => $total_downvote
+                ];
+                array_push($courses, $obj);
+            }
             return response()->json([
                 'status' => 200,
                 'message' => $courses
@@ -311,8 +329,7 @@ class CourseController extends Controller
                     ->where('course_id', $request->courseId)
                     ->select(DB::raw('COUNT(*) as result'))
                     ->first();
-                if ($ans->result == 1) 
-                {
+                if ($ans->result == 1) {
                     return response()->json([
                         'status' => 200,
                         'message' => true
@@ -579,9 +596,9 @@ class CourseController extends Controller
         try {
             if (isset($_COOKIE['StudyMate'])) {
                 $id = $_COOKIE['StudyMate'];
-                $enroll = Enrollment::where('USER_ID',$id)->where('COURSE_ID',$course_id)->first();
+                $enroll = Enrollment::where('USER_ID', $id)->where('COURSE_ID', $course_id)->first();
                 $this_course = Course::where('COURSE_ID', $course_id)->first();
-                if (!$enroll && $id != $this_course->AUTHOR_ID){
+                if (!$enroll && $id != $this_course->AUTHOR_ID) {
                     return response()->json([
                         'status' => 201,
                     ]);
