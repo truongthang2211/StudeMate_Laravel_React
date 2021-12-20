@@ -378,7 +378,7 @@ function Home() {
                         </ul>
                     </div>
                     <div className="col-lg-9 banner-right-new">
-                        <img src="\img\courses\5417525.jpg" alt="" />
+                        <img src="\img\courses\studymate1.jpg" alt="" />
                     </div>
                 </div>
             </div>
