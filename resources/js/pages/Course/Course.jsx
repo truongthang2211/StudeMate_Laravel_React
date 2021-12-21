@@ -365,7 +365,7 @@ export default function Course({ User, handleShowForm,callback }) {
                                 <div className="course-thumb">
                                     <img src={course && "/" + course.course_general[0].img} alt="course-thumb" className="center" />
                                 </div>
-                                <h5 className="course-fee">{course && course.course_general[0].fee == 0 ? "Miễn phí" : "Có tính phí"}</h5>
+                                <h5 className="course-fee">{course && course.course_general[0].fee == 0 ? "Miễn phí" : course && modifyCourseFee(course.course_general[0].fee)}</h5>
                                 <Link to={checkEnrolled || checkOwner ? "/learn/" + courseId : "/course/" + courseId} onClick={checkEnrolled || checkOwner ? handleAfterEnroll : handleRegister} className="course-btn">
                                     {checkEnrolled || checkOwner ? "VÀO HỌC" : "ĐĂNG KÝ HỌC"}
                                 </Link>
@@ -399,12 +399,6 @@ export default function Course({ User, handleShowForm,callback }) {
                                                     {course ? " " + course.course_general[0].fullname : ""}
                                                 </Link>
                                             </strong>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <i className="fas fa-coins"></i>
-                                        <span>
-                                            Học phí <strong>{course && modifyCourseFee(course.course_general[0].fee)}</strong>
                                         </span>
                                     </li>
                                 </ul>
