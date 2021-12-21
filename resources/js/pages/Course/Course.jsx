@@ -75,7 +75,7 @@ function InputReviewBlock(props) {
     return (
         <div className="input-review-block">
             <div className="user-avatar">
-                <img src={props.userImg} />
+                <img src={props.userImg?`/${props.userImg}`:'https://genk.mediacdn.vn/thumb_w/600/2015/screen-shot-2015-07-30-at-2-31-57-pm-1438334096188.png'} />
             </div>
             <div className="input-review-content">
                 <textarea className="review-input"

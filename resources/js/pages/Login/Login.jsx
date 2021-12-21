@@ -1,5 +1,6 @@
 import React, { useEffect, memo } from 'react';
 import SignUpForm from '../../components/SignUpForm';
+import Footer from '../../components/Footer';
 
 import './Login.css'
 function Login() {
@@ -163,7 +164,7 @@ function Login() {
                     
                 </div>
             </div>
-
+            <Footer></Footer>
         </>
     );
 }

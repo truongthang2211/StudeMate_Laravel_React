@@ -39,7 +39,7 @@ export default function Search() {
     }
     return (
         <div id="content" className="container">
-            <div className="content-section" style={{ padding: '32px 12px' }}>
+            <div className="content-section" style={{ padding: '32px 0px' }}>
                 <h2 className="section-heading">Kết quả tìm kiếm cho: <strong>{key}</strong> ({Data && Data.length} kết quả)</h2>
                 <div className="u-hot-cate hidden-xs">
                     <span className="order-new-seo">
