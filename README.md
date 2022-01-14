@@ -14,7 +14,7 @@ node -v
 ```
 composer -v
 ```
-
+#### Tải driver MôngDB ở đây https://pecl.php.net/package/mongodb/1.12.0/windows rồi bỏ vào xampp/php/ext
 #### Mở cmd và trỏ đến thư mục của project và chạy các lệnh sau
 *Cài đặt các thư viện cần thiết cho React*
 ```
