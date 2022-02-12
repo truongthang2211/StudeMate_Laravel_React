@@ -26,11 +26,7 @@ composer i
 ```
 
 #### Sửa file .env.example trong project thành .env (~~.env.example~~ -> .env	)
-#### Thêm 2 dòng này vào .env
-```
-GOOGLE_CLIENT_ID=389042498386-7qmq4ehsdcf1b70qup9sbsfspm6bh58c.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
-```
+
 #### Tạo APP_KEY cho Laravel
 ```
 php artisan key:generate
